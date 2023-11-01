@@ -4,7 +4,7 @@ import os
 
 app = Flask(__name__)
 
-host = os.environ.get('HOST', 'localhost')
+host = os.environ.get('HOST', '0.0.0.0')
 port = os.environ.get('PORT', 8080)
 
 @app.route('/<int:sleep_time>/<int:status_code>')
