@@ -1,6 +1,11 @@
 from flask import Flask, jsonify, make_response , Response
 import time
+import os
+
 app = Flask(__name__)
+
+host = os.environ.get('HOST', 'localhost')
+port = os.environ.get('PORT', 8080)
 
 @app.route('/<int:sleep_time>/<int:status_code>')
 def index(sleep_time, status_code):
@@ -25,5 +30,5 @@ def only_status_code(status_code, sleep_time=0):
         return make_response(jsonify(err="Not status code"), 400)
 
 if __name__ == '__main__':
-    app.run()
+    app.run(host=host, port=port)
 
