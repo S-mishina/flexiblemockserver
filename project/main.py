@@ -1,15 +1,52 @@
 from flask import Flask, jsonify, make_response, Response, request
+import logging
+from logging.config import dictConfig
 import time
 import os
 
 app = Flask(__name__)
+
+@app.before_request
+def before_request():
+    request.start_time = time.time()
+
+@app.after_request
+def after_request(response):
+    latency = time.time() - request.start_time
+    response_log = {
+        "response_time": latency,
+        "request_header": dict(request.headers),
+        "response_header": dict(response.headers),
+        "query_params": request.args.to_dict(),
+    }
+    app.logger.info(response_log)
+    return response
+
+dictConfig({
+    'version': 1,
+    'formatters': {
+        'default': {
+            'format': '[%(asctime)s] in %(module)s: %(message)s',
+        }
+    },
+    'handlers': {
+        'wsgi': {
+            'class': 'logging.StreamHandler',
+            'stream': 'ext://flask.logging.wsgi_errors_stream',
+            'formatter': 'default'
+        }
+    },
+    'root': {
+        'level': 'INFO',
+        'handlers': ['wsgi']
+    }
+})
 
 host = os.environ.get('HOST', '0.0.0.0')
 port = os.environ.get('PORT', 8080)
 
 HTTP_METHODS = ['GET', 'HEAD', 'POST', 'PUT',
                 'DELETE', 'CONNECT', 'OPTIONS', 'TRACE', 'PATCH']
-
 
 @app.route('/')
 def top():
