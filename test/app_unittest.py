@@ -18,7 +18,19 @@ class TestApp(unittest.TestCase):
         self.assertEqual(response.json['sleep_time'], 5)
         self.assertEqual(response.json['status_code'], 200)
 
+    def test_index_route_1(self):
+        response = self.app.get('/5/200/')
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(response.json['sleep_time'], 5)
+        self.assertEqual(response.json['status_code'], 200)
+
     def test_only_sleep_time_route(self):
+        response = self.app.get('/sleep/3')
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(response.json['sleep_time'], 3)
+        self.assertEqual(response.json['status_code'], 200)
+
+    def test_only_sleep_time_route_1(self):
         response = self.app.get('/sleep/3/')
         self.assertEqual(response.status_code, 200)
         self.assertEqual(response.json['sleep_time'], 3)
@@ -26,6 +38,11 @@ class TestApp(unittest.TestCase):
 
     def test_only_status_code_route(self):
         response = self.app.get('/status/404')
+        self.assertEqual(response.status_code, 404)
+        self.assertEqual(response.json['status_code'], 404)
+
+    def test_only_status_code_route(self):
+        response = self.app.get('/status/404/')
         self.assertEqual(response.status_code, 404)
         self.assertEqual(response.json['status_code'], 404)
 

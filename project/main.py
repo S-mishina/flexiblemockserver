@@ -15,8 +15,8 @@ HTTP_METHODS = ['GET', 'HEAD', 'POST', 'PUT',
 def top():
     return make_response(jsonify(top='Hello mock server'), 200)
 
-
 @app.route('/<int:sleep_time>/<int:status_code>', methods=HTTP_METHODS)
+@app.route('/<int:sleep_time>/<int:status_code>/', methods=HTTP_METHODS)
 def index(sleep_time, status_code):
     if 100 <= status_code <= 599:
         time.sleep(sleep_time)
@@ -24,21 +24,20 @@ def index(sleep_time, status_code):
     else:
         return make_response(jsonify(err="Not status code"), 400)
 
-
-@app.route('/sleep/<int:sleep_time>/', defaults={'status_code': 200}, methods=HTTP_METHODS)
-def only_sleep_time(sleep_time, status_code):
+@app.route('/sleep/<int:sleep_time>', methods=HTTP_METHODS)
+@app.route('/sleep/<int:sleep_time>/', methods=HTTP_METHODS)
+def only_sleep_time(sleep_time):
     time.sleep(sleep_time)
-    return make_response(jsonify(sleep_time=sleep_time, status_code=status_code), status_code)
-
+    return make_response(jsonify(sleep_time=sleep_time, status_code=200), 200)
 
 @app.route('/status/<int:status_code>', methods=HTTP_METHODS)
+@app.route('/status/<int:status_code>/', methods=HTTP_METHODS)
 def only_status_code(status_code, sleep_time=0):
     if 100 <= status_code <= 599:
         time.sleep(sleep_time)
         return make_response(jsonify(sleep_time=sleep_time, status_code=status_code), status_code)
     else:
         return make_response(jsonify(err="Not status code"), 400)
-
 
 @app.route('/<int:sleep_time>/<int:status_code>/query', methods=HTTP_METHODS)
 def index_query(sleep_time, status_code):
