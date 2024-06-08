@@ -66,6 +66,9 @@ def only_status_code_query(status_code, sleep_time=0):
     else:
         return make_response(jsonify(err="Not status code"), 400)
 
+@app.errorhandler(404)
+def page_not_found(e):
+    return make_response(jsonify(err="Nonexistent Path"), 404)
 
 if __name__ == '__main__':
     app.run(host=host, port=port)
