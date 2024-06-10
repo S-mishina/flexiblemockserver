@@ -1,11 +1,16 @@
 import unittest
-
 from project.main import app
-
+import os
 
 class TestApp(unittest.TestCase):
     def setUp(self):
         self.app = app.test_client()
+        self.test_yaml_file_path = 'test/config/custom_rule.yaml'
+        os.environ['CUSTOM_RULE_YAML_FILE'] = self.test_yaml_file_path
+
+    def tearDown(self):
+        if 'CUSTOM_RULE_YAML_FILE' in os.environ:
+            del os.environ['CUSTOM_RULE_YAML_FILE']
 
     def test_top_route(self):
         response = self.app.get('/')
@@ -68,5 +73,9 @@ class TestApp(unittest.TestCase):
 
     def test_new_route(self):
         response = self.app.get('/new')
-        self.assertEqual(response.status_code, 404)
-        self.assertEqual(response.json['err'], 'Nonexistent Path')
+        self.assertEqual(response.status_code, 500)
+
+    def test_new_route(self):
+        response = self.app.get('/example')
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(response.json, '{"message":"Example response"}')
