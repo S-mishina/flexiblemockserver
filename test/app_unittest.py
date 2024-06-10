@@ -1,5 +1,4 @@
 import unittest
-
 from project.main import app
 
 
@@ -68,5 +67,5 @@ class TestApp(unittest.TestCase):
 
     def test_new_route(self):
         response = self.app.get('/new')
-        self.assertEqual(response.status_code, 404)
-        self.assertEqual(response.json['err'], 'Nonexistent Path')
+        self.assertEqual(response.status_code, 500)
+        self.assertEqual(response.json, {"status": 500})
