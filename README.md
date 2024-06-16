@@ -12,6 +12,13 @@ docker run -p 8080:8080 ghcr.io/s-mishina/flexiblemockserver:latest
 
 ## Example
 
+Here are the environment variables for changing the port and endpoint of a Flask application:
+
+* `HOST`: The host that the Flask application will use.
+* `PORT`: The port on which the Flask application will run.
+
+These environment variables allow you to customize the configuration of your Flask application as needed.
+
 ### default
 
 #### GET sleep 1s status 200(/<sleep_time>/<status_code>)
@@ -176,7 +183,7 @@ custom_rule:
 {"response","Hello, World!"}
 ```
 
-```
+```terminal:
 ❯ curl http://127.0.0.1:8080/example -v
 *   Trying 127.0.0.1:8080...
 * Connected to 127.0.0.1 (127.0.0.1) port 8080 (#0)
