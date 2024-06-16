@@ -108,6 +108,56 @@ docker run -p 8080:8080 ghcr.io/s-mishina/flexiblemockserver:latest
 
 ### custom rule
 
+You can load custom rules by setting the `CUSTOM_RULE_YAML_FILE` before running the flexiblemockserver.
+
+By default, config/custom_rule.yaml is applied.
+
+The schema for custom_rule is as follows:
+
+```json:custom_rule.yaml
+    "type": "object",
+    "properties": {
+        "custom_rule": {
+            "type": "array",
+            "items": {
+                "type": "object",
+                "properties": {
+                    "name": {"type": "string"},
+                    "rule": {
+                        "type": "object",
+                        "properties": {
+                            "path": {"type": "string"},
+                            "method": {"type": "string"},
+                            "sleep_time": {"type": "integer", "minimum": 0},
+                            "status_code": {"type": "integer", "minimum": 100, "maximum": 599},
+                            "response_body_path": {"type": "string"},
+                            "response_header": {"type": "string"}
+                        },
+                        "required": ["path", "method", "status_code"],
+                        "additionalProperties": False
+                    }
+                },
+                "required": ["name", "rule"],
+                "additionalProperties": False
+            }
+        }
+    },
+    "required": ["custom_rule"],
+    "additionalProperties": False
+}
+```
+
+```yaml:
+custom_rule:
+  - name: <rule_name> string # Required
+    rule: # Required
+        path: <path> string # Required
+        method: <method> string # Required
+        sleep_time: <sleep_time> integer 0 ~ # Option
+        status_code: <status_code> integer 100 ~ 599 # Required
+        response_body_path: <esponse_body_path> string # Option
+```
+
 * config/custom_rule.yaml
 
 ```terminal:config/custom_rule.yaml
@@ -145,4 +195,10 @@ custom_rule:
 <
 "{\"response\",\"Hello, World!\"}\n"
 * Closing connection 0
+```
+
+#### How to Execute
+
+```terminal:
+docker run -p 8080:8080 -e CUSTOM_RULE_YAML_FILE=/config/custom_rule.yaml ghcr.io/s-mishina/flexiblemockserver:latest
 ```
