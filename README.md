@@ -1,6 +1,6 @@
 # introduction
 
-Mock server that can change status code and response time
+This is a mock server used to verify the operation of service mesh tools. Service mesh tools refer to Istio, Linkerd, and Kuma.
 
 ## usage rules
 
