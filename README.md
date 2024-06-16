@@ -156,13 +156,13 @@ The schema for custom_rule is as follows:
 
 ```yaml:
 custom_rule:
-  - name: <rule_name> string # Required
-    rule: # Required
-        path: <path> string # Required
-        method: <method> string # Required
-        sleep_time: <sleep_time> integer 0 ~ # Option
-        status_code: <status_code> integer 100 ~ 599 # Required
-        response_body_path: <esponse_body_path> string # Option
+  - name: <rule_name> # string (Required)
+    rule: # (Required)
+        path: <path> # string (Required)
+        method: <method> # string (Required)
+        sleep_time: <sleep_time> # integer 0 ~ (Optional)
+        status_code: <status_code> # integer 100 ~ 599 (Required)
+        response_body_path: <response_body_path> # string (Optional)
 ```
 
 * config/custom_rule.yaml
