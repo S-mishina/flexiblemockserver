@@ -116,10 +116,7 @@ These environment variables allow you to customize the configuration of your Fla
 ### custom rule
 
 You can load custom rules by setting the `CUSTOM_RULE_YAML_FILE` before running the flexiblemockserver.
-
-By default, config/custom_rule.yaml is applied.
-
-The schema for custom_rule is as follows:
+By default, config/custom_rule.yaml is applied. The schema for custom_rule is as follows:
 
 ```json:custom_rule.yaml
     "type": "object",
