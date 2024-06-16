@@ -5,3 +5,22 @@ custom_rule:
         method: "GET"
         status_code: 200
         response_body_path: "test/config/json/response.json"
+  - name: "Custom Rule1"
+    rule:
+        path: "/example"
+        method: "POST"
+        status_code: 500
+        response_body_path: "test/config/json/response.json"
+  - name: "Custom Rule2"
+    rule:
+        path: "/example1"
+        method: "GET"
+        status_code: 200
+        response_body_path: "test/config/json/response1.json"
+  - name: "Custom Rule3"
+    rule:
+        path: "/example2"
+        method: "GET"
+        status_code: 200
+        sleep_time: 5
+        response_body_path: "test/config/json/response.json"

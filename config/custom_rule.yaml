@@ -1,7 +1,0 @@
-custom_rule:
-  - name: "Custom Rule"
-    rule:
-        path: "/example"
-        method: "GET"
-        status_code: 200
-        response_body_path: "config/json/response.json"

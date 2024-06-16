@@ -3,26 +3,11 @@ from logging.config import dictConfig
 from jsonschema import validate
 import time
 import os
-import logging
 import yaml
-import logging
 import sys
 
-@app.before_request
-def before_request():
-    request.start_time = time.time()
-
-@app.after_request
-def after_request(response):
-    latency = time.time() - request.start_time
-    response_log = {
-        "response_time": latency,
-        "request_header": dict(request.headers),
-        "response_header": dict(response.headers),
-        "query_params": request.args.to_dict(),
-    }
-    app.logger.info(response_log)
-    return response
+def get_yaml_file_path():
+    return os.getenv('CUSTOM_RULE_YAML_FILE', 'config/custom_rule.yaml')
 
 dictConfig({
     'version': 1,
@@ -64,18 +49,22 @@ schema = {
                         "properties": {
                             "path": {"type": "string"},
                             "method": {"type": "string"},
+                            "sleep_time": {"type": "integer", "minimum": 0},
                             "status_code": {"type": "integer", "minimum": 100, "maximum": 599},
                             "response_body_path": {"type": "string"},
                             "response_header": {"type": "string"}
                         },
-                        "required": ["path", "method", "status_code"]
+                        "required": ["path", "method", "status_code"],
+                        "additionalProperties": False
                     }
                 },
-                "required": ["name", "rule"]
+                "required": ["name", "rule"],
+                "additionalProperties": False
             }
         }
     },
-    "required": ["custom_rule"]
+    "required": ["custom_rule"],
+    "additionalProperties": False
 }
 
 @app.before_request
@@ -86,6 +75,9 @@ def before_request():
 def after_request(response):
     latency = time.time() - request.start_time
     response_log = {
+        "path": request.path,
+        "method": request.method,
+        "status_code": response.status_code,
         "response_time": latency,
         "request_header": dict(request.headers),
         "response_header": dict(response.headers),
@@ -93,26 +85,6 @@ def after_request(response):
     }
     app.logger.info(response_log)
     return response
-
-dictConfig({
-    'version': 1,
-    'formatters': {
-        'default': {
-            'format': '[%(asctime)s] in %(module)s: %(message)s',
-        }
-    },
-    'handlers': {
-        'wsgi': {
-            'class': 'logging.StreamHandler',
-            'stream': 'ext://flask.logging.wsgi_errors_stream',
-            'formatter': 'default'
-        }
-    },
-    'root': {
-        'level': 'INFO',
-        'handlers': ['wsgi']
-    }
-})
 
 host = os.environ.get('HOST', '0.0.0.0')
 port = os.environ.get('PORT', 8080)
@@ -172,7 +144,8 @@ def only_status_code_query(status_code, sleep_time=0):
         return make_response(jsonify(err="Not status code"), 400)
 
 @app.route('/<path:path>', methods=HTTP_METHODS)
-def custom_rule(path, yaml_file="config/custom_rule.yaml"):
+def custom_rule(path):
+    yaml_file = get_yaml_file_path()
     path = '/' + path
     with open(yaml_file, "r") as yaml_file:
         yaml_data = yaml.safe_load(yaml_file)
@@ -182,6 +155,8 @@ def custom_rule(path, yaml_file="config/custom_rule.yaml"):
                 try:
                     with open(response_body_pathx, "r") as response_body_file:
                         response_body = response_body_file.read()
+                        if sleep_time := yaml_data["custom_rule"][i]["rule"].get("sleep_time"):
+                            time.sleep(sleep_time)
                     return make_response(jsonify(response_body), yaml_data["custom_rule"][i]["rule"]["status_code"])
                 except Exception as e:
                     app.logger.info(e)
@@ -193,11 +168,10 @@ def page_not_found(e):
     return make_response(404)
 
 if __name__ == '__main__':
-    app.logger.setLevel(logging.INFO)
-    handler = logging.StreamHandler(sys.stdout)
-    app.logger.addHandler(handler)
+    yaml_file = get_yaml_file_path()
     if not os.path.exists(yaml_file):
         app.logger.info("{} not found".format(yaml_file))
+        sys.exit(1)
     else:
         app.logger.info("{} file check ok".format(yaml_file))
         with open(yaml_file, "r") as yaml_file:
