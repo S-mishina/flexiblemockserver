@@ -42,11 +42,28 @@ ref: [Use discovery selectors to configure namespaces for your Istio service mes
 #### Security
 
 自分もあまりIstioのcertificatesの部分について詳しくはないのでこのドキュメントあたりが参考になると思うので貼っておきます。
+
 ref: [Security](https://istio.io/latest/docs/concepts/security/)
 
-## Istioで提供されるproxyについて
+## Istioで提供されるProxyについて
 
-TUB
+Istioで提供されるProxyはEnvoyをベースに作られています。
+
+ドキュメントには以下のように書かれています。
+
+最初から、IstioはLyftによって初めて構築された高性能サービスプロキシであるEnvoyプロキシによって駆動されてきました。IstioはEnvoyを採用した最初のプロジェクトであり、Istioチームは最初の外部コミッターでした。Envoyはその後、Google Cloudを支えるロードバランサーおよびほぼすべての他のサービスメッシュプラットフォームのプロキシとなりました。
+
+Istioは、Envoyのすべてのパワーと柔軟性を引き継ぎ、Istioチームによって開発されたWebAssemblyを使用した世界クラスの拡張性を備えています。
+
+> From the beginning, Istio has been powered by the Envoy proxy, a high performance service proxy initially built by Lyft. Istio was the first project to adopt Envoy, and the Istio team were the first external committers. Envoy would go on to become the load balancer that powers Google Cloud as well as the proxy for almost every other service mesh platform.
+
+Istio inherits all the power and flexibility of Envoy, including world-class extensibility using WebAssembly that was developed in Envoy by the Istio team.
+
+ref: [The Envoy proxy](https://istio.io/latest/docs/overview/why-choose-istio/#envoy)
+
+基本的にIstioとはEnvoyの設定を抽象化したものであり、開発者がEnvoyのconfigを簡略化されたCRDを書いてそれをKubernetes clusterにapplyすると、それをIstio Control Planeが解釈してProxy(Envoy)に設定を注入します。
+
+なので、IstioにおけるProxy(Istio-Proxy)とはすなわちEnvoyだと思っていただいて問題ないと思います。
 
 ## Istioで提供されるproxyモードについて
 
