@@ -93,18 +93,22 @@ TUB
 
 ## 各機能の検証
 
-### GatewayAPI
+### 新方式　(現在開発中(移行前))
+
+#### GatewayAPI
 
 [GatewayAPIの検証](./VirtualService/README.md)
 
-### ServiceEntry
+### 現行　(現在の主流)
+
+#### ServiceEntry
 
 [ServiceEntryの検証](./ServiceEntry/README.md)
 
-### VirtualService
+#### VirtualService
 
 [VirtualServiceの検証](./VirtualService/README.md)
 
-### DestinationRule
+#### DestinationRule
 
 [DestinationRuleの検証](./DestinationRule/README.md)
