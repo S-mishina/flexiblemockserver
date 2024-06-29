@@ -56,7 +56,6 @@ Istioで提供されるProxyはEnvoyをベースに作られています。
 Istioは、Envoyのすべてのパワーと柔軟性を引き継ぎ、Istioチームによって開発されたWebAssemblyを使用した世界クラスの拡張性を備えています。
 
 > From the beginning, Istio has been powered by the Envoy proxy, a high performance service proxy initially built by Lyft. Istio was the first project to adopt Envoy, and the Istio team were the first external committers. Envoy would go on to become the load balancer that powers Google Cloud as well as the proxy for almost every other service mesh platform.
-
 Istio inherits all the power and flexibility of Envoy, including world-class extensibility using WebAssembly that was developed in Envoy by the Istio team.
 
 ref: [The Envoy proxy](https://istio.io/latest/docs/overview/why-choose-istio/#envoy)
