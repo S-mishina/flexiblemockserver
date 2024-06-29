@@ -88,6 +88,12 @@ ref: [How it works(ambient mode)](https://istio.io/latest/docs/overview/what-is-
 
 #### 補足の解説
 
+##### サイドカーモードとは何か？
+
+TUB
+
+##### アンビエントモードとは何か？
+
 TUB
 
 ## 各機能の検証
