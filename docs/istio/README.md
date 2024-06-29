@@ -94,7 +94,10 @@ TUB
 
 ##### アンビエントモードとは何か？
 
-TUB
+> [!NOTE]
+> アンビエントモードはv.1.22でベータ版に昇格してます。<br>
+ref: [Say goodbye to your sidecars: Istio's ambient mode reaches Beta in v1.22](https://istio.io/latest/blog/2024/ambient-reaches-beta/)
+
 
 ## 各機能の検証
 
