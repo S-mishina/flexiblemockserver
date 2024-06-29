@@ -71,6 +71,7 @@ ref: [The Envoy proxy](https://istio.io/latest/docs/overview/why-choose-istio/#e
 
 ドキュメントには以下のように書かれています。
 
+クラスター内で起動する各ポッドと一緒にEnvoyプロキシが展開されるか、またはVM上で稼働するサービスの横で実行されます。
 
 > which deploys an Envoy proxy along with each pod that you start in your cluster, or running alongside services running on VMs.
 
@@ -80,11 +81,15 @@ ref: [How it works(sidecar mode)](https://istio.io/latest/docs/overview/what-is-
 
 ドキュメントには以下のように書かれています。
 
+各ノードにLayer 4プロキシを使用し、オプションで各ネームスペースにLayer 7機能を持つEnvoyプロキシを使用します。
 
 > which uses a per-node Layer 4 proxy, and optionally a per-namespace Envoy proxy for Layer 7 features.
 
 ref: [How it works(ambient mode)](https://istio.io/latest/docs/overview/what-is-istio/#how-it-works)
 
+#### 補足の解説
+
+TUB
 
 ## 各機能の検証
 
