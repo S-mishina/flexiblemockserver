@@ -42,7 +42,7 @@ ref: [Use discovery selectors to configure namespaces for your Istio service mes
 #### Security
 
 自分もあまりIstioのcertificatesの部分について詳しくはないのでこのドキュメントあたりが参考になると思うので貼っておきます。
-ref: [Use discovery selectors to configure namespaces for your Istio service mesh](https://istio.io/latest/docs/concepts/security/)
+ref: [Security](https://istio.io/latest/docs/concepts/security/)
 
 ## Istioで提供されるproxyについて
 
