@@ -92,6 +92,18 @@ ref: [How it works(ambient mode)](https://istio.io/latest/docs/overview/what-is-
 
 サイドカーモードとは、ProxyをKubenretesのPodのサイドカーとして稼働させる方式のことです。
 
+ドキュメントには以下のように書かれています。
+
+サイドカーは、アタッチされているワークロードインスタンスへのインバウンドおよびアウトバウンド通信を仲介するサイドカープロキシの設定を記述します。デフォルトでは、Istioはメッシュ内のすべてのサイドカープロキシを、メッシュ内のすべてのワークロードインスタンスに到達するために必要な設定と、ワークロードに関連するすべてのポートでトラフィックを受け入れるための設定でプログラムします。サイドカー設定は、プロキシがワークロードへのトラフィックを転送する際に受け入れるポートやプロトコルのセットを微調整する方法を提供します。さらに、ワークロードインスタンスからのアウトバウンドトラフィックを転送する際に、プロキシが到達できるサービスのセットを制限することも可能です。
+
+> Sidecar describes the configuration of the sidecar proxy that mediates inbound and outbound communication to the workload instance it is attached to. By default, Istio will program all sidecar proxies in the mesh with the necessary configuration required to reach every workload instance in the mesh, as well as accept traffic on all the ports associated with the workload. The Sidecar configuration provides a way to fine tune the set of ports, protocols that the proxy will accept when forwarding traffic to and from the workload. In addition, it is possible to restrict the set of services that the proxy can reach when forwarding outbound traffic from workload instances.
+
+ref: [Sidecar](https://istio.io/latest/docs/reference/config/networking/sidecar/)
+
+図で書くと以下のようになります。
+
+TUB
+
 > [!TIP]
 > アンビエントモードも下記で紹介でも解説されていますが、現状サイドカーモードがサポートされなくなるわけではありません。(2024/06/30現在)
 > > Sidecars are not going away, and remain first-class citizens in Istio. You can continue to use sidecars, and they will remain fully supported. For any feature outside of the Alpha or Beta scope for ambient mode, you should consider using the sidecar mode until the feature is added to ambient mode. Some use cases, such as traffic shifting based on source labels, will continue to be best implemented using the sidecar mode. While we believe most use cases will be best served with a mesh in ambient mode, the Istio project remains committed to ongoing sidecar mode support.<br>
@@ -102,7 +114,6 @@ ref: [How it works(ambient mode)](https://istio.io/latest/docs/overview/what-is-
 > [!NOTE]
 > アンビエントモードはv.1.22でベータ版に昇格してます。<br>
 ref: [Say goodbye to your sidecars: Istio's ambient mode reaches Beta in v1.22](https://istio.io/latest/blog/2024/ambient-reaches-beta/)
-
 
 ## 各機能の検証
 
