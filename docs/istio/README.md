@@ -27,14 +27,20 @@ Istioは、Istio Control Planeによって通信の設定が追加、更新、�
 
 ![Istioの構成1](../image/5.png)
 
-日本語の図に直すとこんな形になります。ざっくりいうと開発者がサービスメッシュに関わる設定をapplyするとIstio Control Planeがクラスター内に無数にあるproxyに対して、設定を追加、更新、削除を行なってくれるということです。
+日本語の図に直すとこんな形になります。
+
+開発者がサービスメッシュに関わる設定をapplyするとIstio Control Planeがクラスター内に無数にあるproxyに対して、設定を追加、更新、削除を行なってくれるということです。
 
 ## 各機能の検証
 
+### Gateway-API
+
+[Gateway-APIの検証](./VirtualService/README.md)
+
 ### VirtualService
 
-TUB
+[VirtualServiceの検証](./VirtualService/README.md)
 
 ### DestinationRule
 
-TUB
+[DestinationRuleの検証](./DestinationRule/README.md)
