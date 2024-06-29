@@ -37,7 +37,7 @@ ref: [Use discovery selectors to configure namespaces for your Istio service mes
 
 ![Configuration](../image/6.png)
 
-開発者がサービスメッシュに関わる設定をapplyするとIstio Control Planeがクラスター内に無数にあるproxyに対して、設定を追加、更新、削除を行なってくれるということです。
+開発者がサービスメッシュに関係する設定をapplyすると、Istio Control Planeがクラスター内に無数にあるproxyに対して、設定を追加、更新、削除を行います。
 
 #### Security
 
