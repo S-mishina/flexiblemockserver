@@ -61,7 +61,7 @@ Istio inherits all the power and flexibility of Envoy, including world-class ext
 
 ref: [The Envoy proxy](https://istio.io/latest/docs/overview/why-choose-istio/#envoy)
 
-基本的にIstioとはEnvoyの設定を抽象化したものであり、開発者がEnvoyのconfigを簡略化されたCRDを書いてそれをKubernetes clusterにapplyすると、それをIstio Control Planeが解釈してProxy(Envoy)に設定を注入します。
+基本的にIstioとはEnvoyの設定を抽象化したものであり、開発者がEnvoyのconfigを簡略化されたマニフェスト(GatewayAPIやVirtualService、DestinationRule、ServiceEntryなど...)を書いてそれをKubernetes clusterにapplyすると、それをIstio Control Planeが解釈してProxy(Envoy)に設定を注入します。
 
 なので、IstioにおけるProxy(Istio-Proxy)とはすなわちEnvoyだと思っていただいて問題ないと思います。
 
@@ -93,9 +93,13 @@ TUB
 
 ## 各機能の検証
 
-### Gateway-API
+### GatewayAPI
 
-[Gateway-APIの検証](./VirtualService/README.md)
+[GatewayAPIの検証](./VirtualService/README.md)
+
+### ServiceEntry
+
+[ServiceEntryの検証](./ServiceEntry/README.md)
 
 ### VirtualService
 
