@@ -100,9 +100,9 @@ ref: [How it works(ambient mode)](https://istio.io/latest/docs/overview/what-is-
 
 ref: [Sidecar](https://istio.io/latest/docs/reference/config/networking/sidecar/)
 
-図で書くと以下のようになります。
+上記で言ってることを図にすると以下のようになります。
 
-TUB
+![Istioの構成](../image/7.png)
 
 > [!TIP]
 > アンビエントモードも下記で紹介でも解説されていますが、現状サイドカーモードがサポートされなくなるわけではありません。(2024/06/30現在)
