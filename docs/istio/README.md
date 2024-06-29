@@ -100,7 +100,8 @@ TUB
 > > * In Istio APIs, a Gateway configures an existing gateway Deployment/Service that has been deployed. In the Gateway APIs, the Gateway resource both configures and deploys a gateway. See Deployment Methods for more information.
 > > * In the Istio VirtualService, all protocols are configured within a single resource. In the Gateway APIs, each protocol type has its own resource, such as HTTPRoute and TCPRoute.
 > > * While the Gateway APIs offer a lot of rich routing functionality, it does not yet cover 100% of Istio’s feature set. Work is ongoing to extend the API to cover these use cases, as well as utilizing the APIs extensibility to better expose Istio functionality.
-> ref: [Differences from Istio APIs](https://istio.io/latest/docs/tasks/traffic-management/ingress/gateway-api/#differences-from-istio-apis)
+
+ref: [Differences from Istio APIs](https://istio.io/latest/docs/tasks/traffic-management/ingress/gateway-api/#differences-from-istio-apis)
 
 [GatewayAPIの検証](./VirtualService/README.md)
 
