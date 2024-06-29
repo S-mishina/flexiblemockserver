@@ -51,9 +51,9 @@ REDHADのドキュメントによると、サービスメッシュとは以下�
 
 ## 各サービスメッシュを使った検証
 
-* [istio](./istio/README.md) (TUB)
-* [Linkerd]() (TUB)
-* [Kuma]() (TUB)
+* [istio](./istio/README.md) (作成中)
+* [Linkerd]() (作成前)
+* [Kuma]() (作成前)
 
 ## flexiblemockserverの使い方
 

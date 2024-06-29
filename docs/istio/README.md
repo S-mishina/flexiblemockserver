@@ -23,17 +23,19 @@ Istioは、Istio Control Planeによって通信の設定が追加、更新、�
 
 これにより、Istioはマイクロサービス間の通信を効率的かつセキュアに管理することができます。
 
-### もう少しわかりやすく図を書くと...
+### もう少しわかりやすく図を書くと
 
 #### Discovery
 
-TUB
+![Discovery](../image/5.png)
+
+Istioが有効化された状態でかつ、proxyがServiceに導入されることが有効化された状態で新規サービスをKubernetes上に構築すると、Istio Control Planeによって新しいサービスに自動的にProxyが注入されます。
+
+ref: [Use discovery selectors to configure namespaces for your Istio service mesh](https://istio.io/latest/blog/2021/discovery-selectors/)
 
 #### Configuration
 
-![Configuration](../image/5.png)
-
-日本語の図に直すとこんな形になります。
+![Configuration](../image/6.png)
 
 開発者がサービスメッシュに関わる設定をapplyするとIstio Control Planeがクラスター内に無数にあるproxyに対して、設定を追加、更新、削除を行なってくれるということです。
 
