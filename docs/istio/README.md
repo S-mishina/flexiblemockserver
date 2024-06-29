@@ -10,11 +10,11 @@ istioとは、ざっくり説明すると数あるサービスメッシュツー
 
 > A service mesh is an infrastructure layer that gives applications capabilities like zero-trust security, observability, and advanced traffic management, without code changes. Istio is the most popular, powerful, and trusted service mesh. Founded by Google, IBM and Lyft in 2016, Istio is a graduated project in the Cloud Native Computing Foundation alongside projects like Kubernetes and Prometheus.
 
-ref: https://istio.io/latest/about/service-mesh/#what-is-istio
+ref: [The Istio service mesh](https://istio.io/latest/about/service-mesh/#what-is-istio)
 
 ![Istioの構成](../image/4.svg)
 
-ref: https://istio.io/latest/about/service-mesh/
+ref: [The Istio service mesh](https://istio.io/latest/about/service-mesh/)
 
 サービスメッシュの該当でも解説したことと重複するところもありますが、
 Istioは、Istio Control Planeによって通信の設定が追加、更新、削除されると、連携しているプロキシ設定を注入することができます。
