@@ -39,9 +39,10 @@ ref: [Use discovery selectors to configure namespaces for your Istio service mes
 
 開発者がサービスメッシュに関わる設定をapplyするとIstio Control Planeがクラスター内に無数にあるproxyに対して、設定を追加、更新、削除を行なってくれるということです。
 
-#### certificates
+#### Security
 
-TUB
+自分もあまりIstioのcertificatesの部分について詳しくはないのでこのドキュメントあたりが参考になると思うので貼っておきます。
+ref: [Use discovery selectors to configure namespaces for your Istio service mesh](https://istio.io/latest/docs/concepts/security/)
 
 ## Istioで提供されるproxyについて
 
