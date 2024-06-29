@@ -45,6 +45,10 @@ TUB
 
 ## Istioで提供されるproxyについて
 
+TUB
+
+## Istioで提供されるproxyモードについて
+
 ### サイドカーモード
 
 TUB
