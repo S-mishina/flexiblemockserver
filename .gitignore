@@ -3,3 +3,4 @@
 config/*
 config/json/*
 .vscode/
+.DS_Store
