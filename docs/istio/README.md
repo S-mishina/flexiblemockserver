@@ -92,6 +92,17 @@ ref: [How it works(ambient mode)](https://istio.io/latest/docs/overview/what-is-
 
 サイドカーモードとは、ProxyをKubenretesのPodのサイドカーとして稼働させる方式のことです。
 
+##### サイドカーの導入について
+
+ドキュメントには以下のように書かれています。
+
+
+サイドカーは、Istioが提供する変換Webhookアドミッションコントローラーを使用して、適用可能なKubernetesポッドに自動的に追加されます。
+
+> Sidecars can be automatically added to applicable Kubernetes pods using a mutating webhook admission controller provided by Istio.
+
+ref: [Installing the Sidecar](https://istio.io/latest/docs/setup/additional-setup/sidecar-injection/)
+
 ##### proxyの構成設定について
 
 ドキュメントには以下のように書かれています。
@@ -103,7 +114,6 @@ ProxyConfigは、プロキシレベルの構成オプションを公開します
 > ProxyConfig exposes proxy level configuration options. ProxyConfig can be configured on a per-workload basis, a per-namespace basis, or mesh-wide. ProxyConfig is not a required resource; there are default values in place, which are documented inline with each field.
 >
 > NOTE: fields in ProxyConfig are not dynamically configured - changes will require restart of workloads to take effect.
-
 
 ref: [ProxyConfig](https://istio.io/latest/docs/reference/config/networking/proxy-config/)
 
@@ -118,6 +128,8 @@ ref: [ProxyConfig](https://istio.io/latest/docs/reference/config/networking/prox
 ref: [Sidecar](https://istio.io/latest/docs/reference/config/networking/sidecar/)
 
 上記で言ってることを図にすると以下のようになります。
+
+##### サイドカーモードを図にすると
 
 ![Istioの構成](../image/7.png)
 
