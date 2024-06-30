@@ -166,15 +166,19 @@ ref: [Differences from Istio APIs](https://istio.io/latest/docs/tasks/traffic-ma
 
 ### 現行　(現在の主流)
 
-#### ServiceEntry
+### kindを使って検証用Kubernetes クラスターを用意する
+
+TUB
+
+##### ServiceEntry
 
 [ServiceEntryの検証](./ServiceEntry/README.md)
 
-#### VirtualService
+##### VirtualService
 
 [VirtualServiceの検証](./VirtualService/README.md)
 
-#### DestinationRule
+##### DestinationRule
 
 [DestinationRuleの検証](./DestinationRule/README.md)
 
