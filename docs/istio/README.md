@@ -168,11 +168,9 @@ ref: [Differences from Istio APIs](https://istio.io/latest/docs/tasks/traffic-ma
 
 ### kindを使って検証用Kubernetes クラスターを用意する
 
-TUB
+```:bash
 
-##### ServiceEntry
-
-[ServiceEntryの検証](./ServiceEntry/README.md)
+```
 
 ##### VirtualService
 
@@ -181,6 +179,14 @@ TUB
 ##### DestinationRule
 
 [DestinationRuleの検証](./DestinationRule/README.md)
+
+##### Gateway
+
+[Gatewayの検証](./Gateway/README.md)
+
+##### ServiceEntry
+
+[ServiceEntryの検証](./ServiceEntry/README.md)
 
 ## 参考資料
 
