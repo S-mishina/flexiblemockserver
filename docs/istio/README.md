@@ -95,6 +95,7 @@ ref: [How it works(ambient mode)](https://istio.io/latest/docs/overview/what-is-
 ##### proxyの構成設定について
 
 TUB
+
 ref: [ProxyConfig](https://istio.io/latest/docs/reference/config/networking/proxy-config/)
 
 ##### Sidecarの通信制御について
