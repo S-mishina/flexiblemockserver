@@ -136,7 +136,7 @@ ref: [Sidecar](https://istio.io/latest/docs/reference/config/networking/sidecar/
 ![Istioの構成](../image/7.png)
 
 > [!TIP]
-> アンビエントモードも下記で紹介でも解説されていますが、現状サイドカーモードがサポートされなくなるわけではありません。(2024/06/30現在)
+> アンビエントモード紹介ドキュメントの下記でも解説されていますが、現状サイドカーモードがサポートされなくなるわけではありません。(2024/06/30現在)
 > > Sidecars are not going away, and remain first-class citizens in Istio. You can continue to use sidecars, and they will remain fully supported. For any feature outside of the Alpha or Beta scope for ambient mode, you should consider using the sidecar mode until the feature is added to ambient mode. Some use cases, such as traffic shifting based on source labels, will continue to be best implemented using the sidecar mode. While we believe most use cases will be best served with a mesh in ambient mode, the Istio project remains committed to ongoing sidecar mode support.<br>
 > > ref: [What about sidecars?](https://istio.io/latest/blog/2024/ambient-reaches-beta/#what-about-sidecars)
 
