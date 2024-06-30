@@ -88,11 +88,13 @@ ref: [How it works(ambient mode)](https://istio.io/latest/docs/overview/what-is-
 
 #### 補足の解説
 
-##### サイドカーモードとは何か？
+##### サイドカー
+
+###### サイドカーモードとは何か？
 
 サイドカーモードとは、ProxyをKubenretesのPodのサイドカーとして稼働させる方式のことです。
 
-##### サイドカーの導入について
+###### サイドカーの導入について
 
 ドキュメントには以下のように書かれています。
 
@@ -103,7 +105,7 @@ ref: [How it works(ambient mode)](https://istio.io/latest/docs/overview/what-is-
 
 ref: [Installing the Sidecar](https://istio.io/latest/docs/setup/additional-setup/sidecar-injection/)
 
-##### proxyの構成設定について
+###### proxyの構成設定について
 
 ドキュメントには以下のように書かれています。
 
@@ -117,7 +119,7 @@ ProxyConfigは、プロキシレベルの構成オプションを公開します
 
 ref: [ProxyConfig](https://istio.io/latest/docs/reference/config/networking/proxy-config/)
 
-##### Sidecarの通信制御について
+###### Sidecarの通信制御について
 
 ドキュメントには以下のように書かれています。
 
@@ -129,7 +131,7 @@ ref: [Sidecar](https://istio.io/latest/docs/reference/config/networking/sidecar/
 
 上記で言ってることを図にすると以下のようになります。
 
-##### サイドカーモードを図にすると
+###### サイドカーモードを図にすると
 
 ![Istioの構成](../image/7.png)
 
