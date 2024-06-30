@@ -94,11 +94,22 @@ ref: [How it works(ambient mode)](https://istio.io/latest/docs/overview/what-is-
 
 ##### proxyの構成設定について
 
-TUB
+ドキュメントには以下のように書かれています。
+
+ProxyConfigは、プロキシレベルの構成オプションを公開します。ProxyConfigは、ワークロードごと、ネームスペースごと、またはメッシュ全体で設定できます。ProxyConfigは必須のリソースではありません。各フィールドにインラインで記載されているデフォルト値があります。
+
+注意: ProxyConfigのフィールドは動的に構成されるものではなく、変更を反映させるにはワークロードの再起動が必要です。
+
+> ProxyConfig exposes proxy level configuration options. ProxyConfig can be configured on a per-workload basis, a per-namespace basis, or mesh-wide. ProxyConfig is not a required resource; there are default values in place, which are documented inline with each field.
+>
+> NOTE: fields in ProxyConfig are not dynamically configured - changes will require restart of workloads to take effect.
+
 
 ref: [ProxyConfig](https://istio.io/latest/docs/reference/config/networking/proxy-config/)
 
 ##### Sidecarの通信制御について
+
+ドキュメントには以下のように書かれています。
 
 サイドカーは、アタッチされているワークロードインスタンスへのインバウンドおよびアウトバウンド通信を仲介するサイドカープロキシの設定を記述します。デフォルトでは、Istioはメッシュ内のすべてのサイドカープロキシを、メッシュ内のすべてのワークロードインスタンスに到達するために必要な設定と、ワークロードに関連するすべてのポートでトラフィックを受け入れるための設定でプログラムします。サイドカー設定は、プロキシがワークロードへのトラフィックを転送する際に受け入れるポートやプロトコルのセットを微調整する方法を提供します。さらに、ワークロードインスタンスからのアウトバウンドトラフィックを転送する際に、プロキシが到達できるサービスのセットを制限することも可能です。
 
