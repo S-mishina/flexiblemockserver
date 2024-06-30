@@ -163,3 +163,7 @@ ref: [Differences from Istio APIs](https://istio.io/latest/docs/tasks/traffic-ma
 #### DestinationRule
 
 [DestinationRuleの検証](./DestinationRule/README.md)
+
+## 参考資料
+
+[istio-sandbox](https://github.com/yokawasa/istio-sandbox)
