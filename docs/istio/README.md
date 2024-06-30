@@ -115,6 +115,8 @@ ref: [Sidecar](https://istio.io/latest/docs/reference/config/networking/sidecar/
 > アンビエントモードはv.1.22でベータ版に昇格してます。<br>
 ref: [Say goodbye to your sidecars: Istio's ambient mode reaches Beta in v1.22](https://istio.io/latest/blog/2024/ambient-reaches-beta/)
 
+TUB
+
 ## 各機能の検証
 
 ### 新方式　(現在開発中(移行前))
