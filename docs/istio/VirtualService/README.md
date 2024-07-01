@@ -1,10 +1,20 @@
 # VirtualServiceの検証
 
-TUB
-
 ## VirtualServiceとは？
 
-TUB
+ドキュメントには以下のように書かれています。
+
+トラフィックのルーティングに影響を与える設定。
+
+> Configuration affecting traffic routing.
+
+ref: [VirtualService](https://istio.io/latest/docs/reference/config/networking/virtual-service/#VirtualService)
+
+## Envoyの設定で言うと、VirtualServiceはなんの設定に当たるのか
+
+![VirtualServiceとEnvoyの関係性](../../image/8.png)
+
+ref: [Debugging Your Debugging Tools: What to do When Your Service Mesh Goes Down](https://www.slideshare.net/slideshow/debugging-your-debugging-tools-what-to-do-when-your-service-mesh-goes-down/237797183#19)
 
 ## 検証
 
