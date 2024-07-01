@@ -170,13 +170,11 @@ ref: [Differences from Istio APIs](https://istio.io/latest/docs/tasks/traffic-ma
 
 #### サイドカーモードで検証する場合
 
+以下のコマンドを実行すると、サイドカーモードのIstioを検証するための環境がセットアップされます。以降のパラグラフを順番に確認していってください
+
 ```:bash
 
 ```
-
-#### アンビエントモードで検証する場合
-
-TUB
 
 ##### VirtualService
 
@@ -193,6 +191,10 @@ TUB
 ##### ServiceEntry
 
 [ServiceEntryの検証](./ServiceEntry/README.md)
+
+#### アンビエントモードで検証する場合
+
+TUB
 
 ## 参考資料
 
