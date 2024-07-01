@@ -10,7 +10,7 @@
 
 ref: [VirtualService](https://istio.io/latest/docs/reference/config/networking/virtual-service/#VirtualService)
 
-## Envoyの設定で言うと、VirtualServiceはなんの設定に当たるのか
+## Envoyで言うと、VirtualServiceはなんの設定に当たるのか
 
 ![VirtualServiceとEnvoyの関係性](../../image/8.png)
 
