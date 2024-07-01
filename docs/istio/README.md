@@ -98,7 +98,6 @@ ref: [How it works(ambient mode)](https://istio.io/latest/docs/overview/what-is-
 
 ドキュメントには以下のように書かれています。
 
-
 サイドカーは、Istioが提供する変換Webhookアドミッションコントローラーを使用して、適用可能なKubernetesポッドに自動的に追加されます。
 
 > Sidecars can be automatically added to applicable Kubernetes pods using a mutating webhook admission controller provided by Istio.
@@ -180,7 +179,7 @@ TUB
 
 #### サイドカーモードで検証する場合
 
-#### kindを使って検証用Kubernetes クラスターを用意する(サイドカーモード)
+##### kindを使って検証用Kubernetes クラスターを用意する(サイドカーモード)
 
 以下のコマンドを実行すると、サイドカーモードのIstioを検証するための環境がセットアップされます。以降のパラグラフを順番に確認していってください。
 
@@ -188,19 +187,19 @@ TUB
 
 ```
 
-##### VirtualService
+###### VirtualService
 
 [VirtualServiceの検証](./VirtualService/README.md)
 
-##### DestinationRule
+###### DestinationRule
 
 [DestinationRuleの検証](./DestinationRule/README.md)
 
-##### Gateway
+###### Gateway
 
 [Gatewayの検証](./Gateway/README.md)
 
-##### ServiceEntry
+###### ServiceEntry
 
 [ServiceEntryの検証](./ServiceEntry/README.md)
 
