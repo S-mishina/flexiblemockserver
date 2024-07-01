@@ -16,8 +16,11 @@ ref: [VirtualService](https://istio.io/latest/docs/reference/config/networking/v
 
 ref: [Debugging Your Debugging Tools: What to do When Your Service Mesh Goes Down](https://www.slideshare.net/slideshow/debugging-your-debugging-tools-what-to-do-when-your-service-mesh-goes-down/237797183#19)
 
-該当のスライドでも述べられていますが、VirtualServiceの設定で言うところの[listener](https://www.envoyproxy.io/docs/envoy/latest/configuration/listeners/listeners)と[route](https://www.envoyproxy.io/docs/envoy/latest/api-v3/http_routes/http_routes)に当たります。
+該当のスライドでも述べられていますが、VirtualServiceの設定で言うところの[listener](https://www.envoyproxy.io/docs/envoy/latest/configuration/listeners/listeners)と[routes](https://www.envoyproxy.io/docs/envoy/latest/api-v3/http_routes/http_routes)に当たります。
 
+## VirtualServiceの機能を図で書くと
+
+TUB
 
 ## 検証
 
