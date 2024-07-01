@@ -162,6 +162,24 @@ TUB
 
 ref: [Differences from Istio APIs](https://istio.io/latest/docs/tasks/traffic-management/ingress/gateway-api/#differences-from-istio-apis)
 
+### kindを使って検証用Kubernetes クラスターを用意する
+
+> [!NOTE]
+> この検証を行うためには、Docker、kind、istioctlがインストールされていることが全体になります。
+
+#### GatewayAPIをサイドカーモードで検証する場合
+
+以下のコマンドを実行すると、サイドカーモードのIstioを検証するための環境がセットアップされます。以降のパラグラフを順番に確認していってください。
+
+TUB
+
+#### GatewayAPIをアンビエントモードで検証する場合
+
+以下のコマンドを実行すると、アンビエントモードのIstioを検証するための環境がセットアップされます。以降のパラグラフを順番に確認していってください。
+
+TUB
+
+
 [GatewayAPIの検証](./VirtualService/README.md)
 
 ### 現行　(現在の主流)
@@ -196,6 +214,15 @@ ref: [Differences from Istio APIs](https://istio.io/latest/docs/tasks/traffic-ma
 [ServiceEntryの検証](./ServiceEntry/README.md)
 
 #### アンビエントモードで検証する場合
+
+### kindを使って検証用Kubernetes クラスターを用意する
+
+> [!NOTE]
+> この検証を行うためには、Docker、kind、istioctlがインストールされていることが全体になります。
+
+#### アンビエントモードで検証する場合
+
+以下のコマンドを実行すると、アンビエントモードのIstioを検証するための環境がセットアップされます。以降のパラグラフを順番に確認していってください。
 
 TUB
 
