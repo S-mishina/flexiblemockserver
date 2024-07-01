@@ -168,9 +168,12 @@ ref: [Differences from Istio APIs](https://istio.io/latest/docs/tasks/traffic-ma
 
 ### kindを使って検証用Kubernetes クラスターを用意する
 
+> [!NOTE]
+> この検証を行うためには、Docker、kind、istioctlがインストールされていることが全体になります。
+
 #### サイドカーモードで検証する場合
 
-以下のコマンドを実行すると、サイドカーモードのIstioを検証するための環境がセットアップされます。以降のパラグラフを順番に確認していってください
+以下のコマンドを実行すると、サイドカーモードのIstioを検証するための環境がセットアップされます。以降のパラグラフを順番に確認していってください。
 
 ```:bash
 
