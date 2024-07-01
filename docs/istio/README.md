@@ -168,9 +168,15 @@ ref: [Differences from Istio APIs](https://istio.io/latest/docs/tasks/traffic-ma
 
 ### kindを使って検証用Kubernetes クラスターを用意する
 
+#### サイドカーモードで検証する場合
+
 ```:bash
 
 ```
+
+#### アンビエントモードで検証する場合
+
+TUB
 
 ##### VirtualService
 
