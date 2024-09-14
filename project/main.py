@@ -16,6 +16,8 @@ from opentelemetry.sdk.resources import Resource
 from opentelemetry.exporter.zipkin.json import ZipkinExporter
 from opentelemetry.semconv.resource import ResourceAttributes
 
+from opentelemetry.exporter.otlp.proto.http.trace_exporter import OTLPSpanExporter
+from opentelemetry.exporter.otlp.proto.http.metric_exporter import OTLPMetricExporter
 from opentelemetry import metrics
 from opentelemetry.sdk.metrics import MeterProvider
 from opentelemetry.sdk.metrics.export import (
@@ -83,8 +85,8 @@ def check_open_telemetry():
             processor = BatchSpanProcessor(zipkin_exporter)
             provider.add_span_processor(processor)
             trace.set_tracer_provider(provider)
-        elif os.getenv('OPEN_TELEMETRY_OTLP_FLG', 'False') == 'True':
-            processor = BatchSpanProcessor(OTLPSpanExporter(endpoint=os.getenv('OTLP_HOST', 'http://localhost/v1/traces')))
+        elif os.getenv('OPEN_TELEMETRY_OTLP_FLG', 'Flase') == 'True':
+            processor = BatchSpanProcessor(OTLPSpanExporter(endpoint=os.getenv('OTLP_HOST', 'http://localhost:4318/v1/traces')))
             provider.add_span_processor(processor)
             trace.set_tracer_provider(provider)
             reader = PeriodicExportingMetricReader(
@@ -92,8 +94,8 @@ def check_open_telemetry():
             )
             meterProvider = MeterProvider(metric_readers=[reader])
             metrics.set_meter_provider(meterProvider)
-        elif os.getenv('OPEN_TELEMETRY_PROMETHEUS_FLG', 'False') == 'True':
-            start_http_server(port=os.getenv('PROMETHEHEUS_PORT', '9464'), addr=os.getenv('PROMETHEHEUS_HOST', 'localhost'))
+        elif os.getenv('OPEN_TELEMETRY_PROMETHEUS_FLG', 'True') == 'True':
+            start_http_server(port=int(os.getenv('PROMETHEHEUS_PORT', '9090')), addr=os.getenv('PROMETHEHEUS_HOST', 'localhost'))
             reader = PrometheusMetricReader()
             provider = MeterProvider(metric_readers=[reader])
             metrics.set_meter_provider(provider)
