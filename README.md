@@ -4,11 +4,7 @@ This is a mock server used to verify the operation of service mesh tools. Servic
 
 ## usage rules
 
-* docker
-
-```:terminal
-docker run -p 8080:8080 ghcr.io/s-mishina/flexiblemockserver:latest
-```
+[usage rules README](./sample_manifest/README.md)
 
 ## Example
 
