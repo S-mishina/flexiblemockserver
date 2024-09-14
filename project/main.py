@@ -5,9 +5,24 @@ import time
 import os
 import yaml
 import sys
+from opentelemetry import trace
+from opentelemetry.sdk.trace import TracerProvider
+from opentelemetry.sdk.trace.export import (
+    BatchSpanProcessor,
+    ConsoleSpanExporter,
+)
+from opentelemetry.instrumentation.flask import FlaskInstrumentor
+from opentelemetry import trace
+from opentelemetry.sdk.trace import TracerProvider
+from opentelemetry.sdk.resources import Resource
+from opentelemetry.exporter.zipkin.json import ZipkinExporter
+from opentelemetry.semconv.resource import ResourceAttributes
 
 def get_yaml_file_path():
     return os.getenv('CUSTOM_RULE_YAML_FILE', 'config/custom_rule.yaml')
+
+def get_open_telemetry_flg():
+    return os.getenv('OPEN_TELEMETRY_FLG', 'True')
 
 def get_file_check(yaml_file,log_flag):
     if not os.path.exists(yaml_file):
@@ -36,6 +51,24 @@ def config_check(yaml_file):
         app.logger.info("YAML file does not match schema: %s" % str(e))
         sys.exit(1)
 
+def check_open_telemetry():
+    if get_open_telemetry_flg():
+        if os.getenv('OTEL_SERVICE_NAME') is None:
+            os.environ['OTEL_SERVICE_NAME'] = 'mock-server'
+        if os.getenv('OPEN_TELEMETRY_ZIPKIN_FLG', 'False') == 'True':
+            zipkin_exporter = ZipkinExporter(endpoint=os.getenv('ZIPKIN_HOST', 'http://localhost:9411/api/v2/spans'))
+            provider = TracerProvider()
+            processor = BatchSpanProcessor(zipkin_exporter)
+            provider.add_span_processor(processor)
+            trace.set_tracer_provider(provider)
+        else:
+            provider = TracerProvider()
+            processor = BatchSpanProcessor(ConsoleSpanExporter())
+            provider.add_span_processor(processor)
+            trace.set_tracer_provider(provider)
+            tracer = trace.get_tracer("my.tracer.name")
+
+
 dictConfig({
     'version': 1,
     'formatters': {
@@ -59,6 +92,11 @@ dictConfig({
 host = os.environ.get('HOST', '0.0.0.0')
 port = os.environ.get('PORT', 8080)
 app = Flask(__name__)
+
+if get_open_telemetry_flg() == 'True':
+    check_open_telemetry()
+    FlaskInstrumentor().instrument_app(app)
+
 HTTP_METHODS = ['GET', 'HEAD', 'POST', 'PUT',
                 'DELETE', 'CONNECT', 'OPTIONS', 'TRACE', 'PATCH']
 yaml_file = 'config/custom_rule.yaml'
@@ -93,6 +131,7 @@ schema = {
     "required": ["custom_rule"],
     "additionalProperties": False
 }
+
 
 @app.before_request
 def before_request():
@@ -192,6 +231,10 @@ def custom_rule(path):
                     app.logger.info(e)
                     return make_response(jsonify(status=500), 500)
     return make_response(jsonify(status=500), 500)
+
+@app.route('/favicon.ico')
+def favicon():
+    return '', 204  # 空のレスポンスで204 No Contentを返す
 
 @app.errorhandler(404)
 def page_not_found(e):
