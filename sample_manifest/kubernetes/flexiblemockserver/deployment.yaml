@@ -25,7 +25,7 @@ spec:
     spec:
       containers:
       - name: flexiblemockserver
-        image: ghcr.io/s-mishina/flexiblemockserver:78ce5ed43b5d405ef23bb63c3adfece78be5e482
+        image: ghcr.io/s-mishina/flexiblemockserver:latest
         imagePullPolicy: IfNotPresent
         ports:
         - containerPort: 8080
