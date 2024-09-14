@@ -1,0 +1,42 @@
+# configmap
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: custom-rule
+  namespace: mockserver
+  annotations:
+    reloader.stakater.com/match: "true"
+data:
+  custom_rule.yaml: |
+    custom_rule:
+    - name: "Custom Rule"
+      rule:
+          path: "/example"
+          method: "GET"
+          status_code: 200
+          response_body_path: "config/json/response1.json"
+    - name: "liveness"
+      rule:
+          path: "/liveness"
+          method: "GET"
+          status_code: 200
+          response_body_path: "config/json/response1.json"
+    - name: "readiness"
+      rule:
+          path: "/readiness"
+          method: "GET"
+          status_code: 200
+          response_body_path: "config/json/response1.json"
+# ref: https://github.com/S-mishina/flexiblemockserver?tab=readme-ov-file#custom-rule
+---
+# configmap
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: response
+  namespace: test
+  annotations:
+    reloader.stakater.com/match: "true"
+data:
+  response1.json: |
+    {"response","Hello, World!"}
