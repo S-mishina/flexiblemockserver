@@ -12,17 +12,29 @@ from opentelemetry.sdk.trace.export import (
     ConsoleSpanExporter,
 )
 from opentelemetry.instrumentation.flask import FlaskInstrumentor
-from opentelemetry import trace
-from opentelemetry.sdk.trace import TracerProvider
 from opentelemetry.sdk.resources import Resource
 from opentelemetry.exporter.zipkin.json import ZipkinExporter
 from opentelemetry.semconv.resource import ResourceAttributes
+
+from opentelemetry import metrics
+from opentelemetry.sdk.metrics import MeterProvider
+from opentelemetry.sdk.metrics.export import (
+    PeriodicExportingMetricReader,
+    ConsoleMetricExporter
+)
+
+from prometheus_client import start_http_server
+from opentelemetry.exporter.prometheus import PrometheusMetricReader
+
 
 def get_yaml_file_path():
     return os.getenv('CUSTOM_RULE_YAML_FILE', 'config/custom_rule.yaml')
 
 def get_open_telemetry_flg():
     return os.getenv('OPEN_TELEMETRY_FLG', 'True')
+
+def get_debug_flg():
+    return os.getenv('DEBUG_FLG', 'False')
 
 def get_file_check(yaml_file,log_flag):
     if not os.path.exists(yaml_file):
@@ -53,21 +65,43 @@ def config_check(yaml_file):
 
 def check_open_telemetry():
     if get_open_telemetry_flg():
+        flags = [
+        os.getenv('OPEN_TELEMETRY_ZIPKIN_FLG'),
+        os.getenv('OPEN_TELEMETRY_OTLP_FLG'),
+        os.getenv('OPEN_TELEMETRY_PROMETHEUS_FLG')
+        ]
+        enabled_flags_count = sum(1 for flag in flags if flag)
+        if enabled_flags_count >= 2:
+            app.logger.info("Please set only one of OPEN_TELEMETRY_ZIPKIN_FLG and OPEN_TELEMETRY_OTLP_FLG")
+            exit(1)
         if os.getenv('OTEL_SERVICE_NAME') is None:
+            app.logger.info("Please set OTEL_SERVICE_NAME default: mock-server")
             os.environ['OTEL_SERVICE_NAME'] = 'mock-server'
+        provider = TracerProvider()
         if os.getenv('OPEN_TELEMETRY_ZIPKIN_FLG', 'False') == 'True':
             zipkin_exporter = ZipkinExporter(endpoint=os.getenv('ZIPKIN_HOST', 'http://localhost:9411/api/v2/spans'))
-            provider = TracerProvider()
             processor = BatchSpanProcessor(zipkin_exporter)
             provider.add_span_processor(processor)
             trace.set_tracer_provider(provider)
+        elif os.getenv('OPEN_TELEMETRY_OTLP_FLG', 'False') == 'True':
+            processor = BatchSpanProcessor(OTLPSpanExporter(endpoint=os.getenv('OTLP_HOST', 'http://localhost/v1/traces')))
+            provider.add_span_processor(processor)
+            trace.set_tracer_provider(provider)
+            reader = PeriodicExportingMetricReader(
+                OTLPMetricExporter(endpoint=os.getenv('OTLP_HOST', 'http://localhost/v1/traces'))
+            )
+            meterProvider = MeterProvider(metric_readers=[reader])
+            metrics.set_meter_provider(meterProvider)
+        elif os.getenv('OPEN_TELEMETRY_PROMETHEUS_FLG', 'False') == 'True':
+            start_http_server(port=os.getenv('PROMETHEHEUS_PORT', '9464'), addr=os.getenv('PROMETHEHEUS_HOST', 'localhost'))
+            reader = PrometheusMetricReader()
+            provider = MeterProvider(metric_readers=[reader])
+            metrics.set_meter_provider(provider)
         else:
-            provider = TracerProvider()
             processor = BatchSpanProcessor(ConsoleSpanExporter())
             provider.add_span_processor(processor)
             trace.set_tracer_provider(provider)
             tracer = trace.get_tracer("my.tracer.name")
-
 
 dictConfig({
     'version': 1,
@@ -246,4 +280,8 @@ if __name__ == '__main__':
     app.logger.info("file_flag: %s" % file_flag)
     if file_flag==True:
         config_check(yaml_file)
-    app.run(host=host, port=port)
+    if get_debug_flg() == 'True':
+        app.run(host=host, port=port, debug=True)
+    else:
+        app.run(host=host, port=port)
+
