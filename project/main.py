@@ -172,6 +172,7 @@ if __name__ == '__main__':
     if not os.path.exists(yaml_file):
         app.logger.info("{} not found".format(yaml_file))
         sys.exit(1)
+        # TODO: When the file does not exist, a 404 should be generated when the custom_rule function is executed.
     else:
         app.logger.info("{} file check ok".format(yaml_file))
         with open(yaml_file, "r") as yaml_file:
