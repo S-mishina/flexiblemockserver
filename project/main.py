@@ -9,6 +9,33 @@ import sys
 def get_yaml_file_path():
     return os.getenv('CUSTOM_RULE_YAML_FILE', 'config/custom_rule.yaml')
 
+def get_file_check(yaml_file,log_flag):
+    if not os.path.exists(yaml_file):
+        if log_flag==True:
+            app.logger.info("{} not found".format(yaml_file))
+        return False
+    else:
+        if log_flag==True:
+            app.logger.info("{} file check ok".format(yaml_file))
+        return True
+
+def config_check(yaml_file):
+    with open(yaml_file, "r") as yaml_file:
+        yaml_data = yaml.safe_load(yaml_file)
+    try:
+        validate(instance=yaml_data, schema=schema)
+        app.logger.info("The YAML file is consistent with the schema.")
+        for i in range(len(yaml_data["custom_rule"])):
+            try:
+                with open(yaml_data["custom_rule"][i]["rule"].get("response_body_path"), "r") as response_body_file:
+                    response_body = response_body_file.read()
+            except Exception as e:
+                app.logger.info("response_body_path not found: %s" % str(e))
+                sys.exit(1)
+    except Exception as e:
+        app.logger.info("YAML file does not match schema: %s" % str(e))
+        sys.exit(1)
+
 dictConfig({
     'version': 1,
     'formatters': {
@@ -146,6 +173,9 @@ def only_status_code_query(status_code, sleep_time=0):
 @app.route('/<path:path>', methods=HTTP_METHODS)
 def custom_rule(path):
     yaml_file = get_yaml_file_path()
+    file_flag=get_file_check(yaml_file,False)
+    if file_flag==False:
+        return make_response(404)
     path = '/' + path
     with open(yaml_file, "r") as yaml_file:
         yaml_data = yaml.safe_load(yaml_file)
@@ -169,25 +199,8 @@ def page_not_found(e):
 
 if __name__ == '__main__':
     yaml_file = get_yaml_file_path()
-    if not os.path.exists(yaml_file):
-        app.logger.info("{} not found".format(yaml_file))
-        sys.exit(1)
-        # TODO: When the file does not exist, a 404 should be generated when the custom_rule function is executed.
-    else:
-        app.logger.info("{} file check ok".format(yaml_file))
-        with open(yaml_file, "r") as yaml_file:
-            yaml_data = yaml.safe_load(yaml_file)
-        try:
-            validate(instance=yaml_data, schema=schema)
-            app.logger.info("The YAML file is consistent with the schema.")
-            for i in range(len(yaml_data["custom_rule"])):
-                try:
-                    with open(yaml_data["custom_rule"][i]["rule"].get("response_body_path"), "r") as response_body_file:
-                        response_body = response_body_file.read()
-                except Exception as e:
-                    app.logger.info("response_body_path not found: %s" % str(e))
-                    sys.exit(1)
-        except Exception as e:
-            app.logger.info("YAML file does not match schema: %s" % str(e))
-            sys.exit(1)
+    file_flag=get_file_check(yaml_file,True)
+    app.logger.info("file_flag: %s" % file_flag)
+    if file_flag==True:
+        config_check(yaml_file)
     app.run(host=host, port=port)
