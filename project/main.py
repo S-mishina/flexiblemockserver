@@ -19,6 +19,23 @@ def get_file_check(yaml_file,log_flag):
             app.logger.info("{} file check ok".format(yaml_file))
         return True
 
+def config_check(yaml_file):
+    with open(yaml_file, "r") as yaml_file:
+        yaml_data = yaml.safe_load(yaml_file)
+    try:
+        validate(instance=yaml_data, schema=schema)
+        app.logger.info("The YAML file is consistent with the schema.")
+        for i in range(len(yaml_data["custom_rule"])):
+            try:
+                with open(yaml_data["custom_rule"][i]["rule"].get("response_body_path"), "r") as response_body_file:
+                    response_body = response_body_file.read()
+            except Exception as e:
+                app.logger.info("response_body_path not found: %s" % str(e))
+                sys.exit(1)
+    except Exception as e:
+        app.logger.info("YAML file does not match schema: %s" % str(e))
+        sys.exit(1)
+
 dictConfig({
     'version': 1,
     'formatters': {
@@ -158,7 +175,7 @@ def custom_rule(path):
     yaml_file = get_yaml_file_path()
     file_flag=get_file_check(yaml_file,False)
     if file_flag==False:
-        return make_response(jsonify(status=404), 404)
+        return make_response(404)
     path = '/' + path
     with open(yaml_file, "r") as yaml_file:
         yaml_data = yaml.safe_load(yaml_file)
@@ -185,19 +202,5 @@ if __name__ == '__main__':
     file_flag=get_file_check(yaml_file,True)
     app.logger.info("file_flag: %s" % file_flag)
     if file_flag==True:
-        with open(yaml_file, "r") as yaml_file:
-            yaml_data = yaml.safe_load(yaml_file)
-        try:
-            validate(instance=yaml_data, schema=schema)
-            app.logger.info("The YAML file is consistent with the schema.")
-            for i in range(len(yaml_data["custom_rule"])):
-                try:
-                    with open(yaml_data["custom_rule"][i]["rule"].get("response_body_path"), "r") as response_body_file:
-                        response_body = response_body_file.read()
-                except Exception as e:
-                    app.logger.info("response_body_path not found: %s" % str(e))
-                    sys.exit(1)
-        except Exception as e:
-            app.logger.info("YAML file does not match schema: %s" % str(e))
-            sys.exit(1)
+        config_check(yaml_file)
     app.run(host=host, port=port)
