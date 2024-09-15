@@ -81,21 +81,30 @@ def check_open_telemetry():
             os.environ['OTEL_SERVICE_NAME'] = 'mock-server'
         provider = TracerProvider()
         if os.getenv('OPEN_TELEMETRY_ZIPKIN_FLG', 'False') == 'True':
+            app.logger.info("OpenTelemetry Zipkin Exporter")
             zipkin_exporter = ZipkinExporter(endpoint=os.getenv('ZIPKIN_HOST', 'http://localhost:9411/api/v2/spans'))
             processor = BatchSpanProcessor(zipkin_exporter)
             provider.add_span_processor(processor)
             trace.set_tracer_provider(provider)
-        elif os.getenv('OPEN_TELEMETRY_OTLP_FLG', 'Flase') == 'True':
-            processor = BatchSpanProcessor(OTLPSpanExporter(endpoint=os.getenv('OTLP_HOST', 'http://localhost:4318/v1/traces')))
+        elif os.getenv('OPEN_TELEMETRY_OTLP_FLG', 'True') == 'True':
+            app.logger.info("OpenTelemetry OTLP Exporter")
+            oltp_host = os.getenv('OTLP_HOST', 'http://localhost:4318/v1/traces')
+            app.logger.info("OTLP_HOST: %s" % oltp_host)
+            processor = BatchSpanProcessor(OTLPSpanExporter(endpoint=oltp_host))
             provider.add_span_processor(processor)
             trace.set_tracer_provider(provider)
             reader = PeriodicExportingMetricReader(
-                OTLPMetricExporter(endpoint=os.getenv('OTLP_HOST', 'http://localhost/v1/traces'))
+                OTLPMetricExporter(endpoint=oltp_host)
             )
             meterProvider = MeterProvider(metric_readers=[reader])
             metrics.set_meter_provider(meterProvider)
-        elif os.getenv('OPEN_TELEMETRY_PROMETHEUS_FLG', 'True') == 'True':
-            start_http_server(port=int(os.getenv('PROMETHEHEUS_PORT', '9090')), addr=os.getenv('PROMETHEHEUS_HOST', 'localhost'))
+        elif os.getenv('OPEN_TELEMETRY_PROMETHEUS_FLG', 'Flase') == 'True':
+            app.logger.info("OpenTelemetry Prometheus Exporter")
+            prometheus_host = os.getenv('PROMETHEHEUS_HOST', 'localhost')
+            prometheus_port = os.getenv('PROMETHEHEUS_PORT', '9090')
+            app.logger.info("PROMETHEUS_PORT: %s" % os.getenv('PROMETHEHEUS_PORT', '9090'))
+            app.logger.info("PROMETHEHEUS_HOST: %s" % os.getenv('PROMETHEHEUS_HOST', 'localhost'))
+            start_http_server(poirt=ortprometheus_port, addr=prometheus_host)
             reader = PrometheusMetricReader()
             provider = MeterProvider(metric_readers=[reader])
             metrics.set_meter_provider(provider)
