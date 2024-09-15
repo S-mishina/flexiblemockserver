@@ -33,7 +33,7 @@ def get_yaml_file_path():
     return os.getenv('CUSTOM_RULE_YAML_FILE', 'config/custom_rule.yaml')
 
 def get_open_telemetry_flg():
-    return os.getenv('OPEN_TELEMETRY_FLG', 'True')
+    return os.getenv('OPEN_TELEMETRY_FLG', 'False')
 
 def get_debug_flg():
     return os.getenv('DEBUG_FLG', 'False')
@@ -70,7 +70,8 @@ def check_open_telemetry():
         flags = [
         os.getenv('OPEN_TELEMETRY_ZIPKIN_FLG'),
         os.getenv('OPEN_TELEMETRY_OTLP_FLG'),
-        os.getenv('OPEN_TELEMETRY_PROMETHEUS_FLG')
+        os.getenv('OPEN_TELEMETRY_PROMETHEUS_FLG'),
+        os.getenv('OPEN_TELEMETRY_CONSOLE_FLG')
         ]
         enabled_flags_count = sum(1 for flag in flags if flag)
         if enabled_flags_count >= 2:
@@ -108,7 +109,7 @@ def check_open_telemetry():
             reader = PrometheusMetricReader()
             provider = MeterProvider(metric_readers=[reader])
             metrics.set_meter_provider(provider)
-        else:
+        elif os.getenv('OPEN_TELEMETRY_CONSOLE_FLG', 'False') == 'True':
             processor = BatchSpanProcessor(ConsoleSpanExporter())
             provider.add_span_processor(processor)
             trace.set_tracer_provider(provider)
