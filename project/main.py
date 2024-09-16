@@ -15,7 +15,7 @@ from opentelemetry.sdk.resources import Resource
 from opentelemetry.exporter.zipkin.json import ZipkinExporter
 from opentelemetry.semconv.resource import ResourceAttributes
 
-if os.getenv('OPEN_TELEMETRY_GRPC_FLG', 'True') == 'True':
+if os.getenv('OPEN_TELEMETRY_GRPC_FLG', 'False') == 'True':
     from opentelemetry.exporter.otlp.proto.grpc.trace_exporter import OTLPSpanExporter
     from opentelemetry.exporter.otlp.proto.grpc.metric_exporter import OTLPMetricExporter
 else:
@@ -96,10 +96,10 @@ def check_open_telemetry():
             trace.set_tracer_provider(provider)
 
         # OTLP Exporter
-        elif os.getenv('OPEN_TELEMETRY_OTLP_FLG', 'True') == 'True':
+        elif os.getenv('OPEN_TELEMETRY_OTLP_FLG', 'False') == 'True':
             app.logger.info("OpenTelemetry OTLP Exporter")
 
-            if os.getenv('OPEN_TELEMETRY_GRPC_FLG', 'True') == 'True':
+            if os.getenv('OPEN_TELEMETRY_GRPC_FLG', 'False') == 'True':
                 app.logger.info("OpenTelemetry OTLP gRPC Exporter")
                 trace.set_tracer_provider(TracerProvider())
                 tracer = trace.get_tracer(__name__)
@@ -110,10 +110,9 @@ def check_open_telemetry():
                 app.logger.info("OpenTelemetry OTLP HTTP Exporter")
                 oltp_host = os.getenv('OTLP_HOST', 'http://localhost:4318/v1/traces')
                 app.logger.info("OTLP_HOST: %s" % oltp_host)
-                processor = BatchSpanProcessor(OTLPHttpTraceExporter(endpoint=oltp_host))
+                processor = BatchSpanProcessor(OTLPSpanExporter(endpoint=oltp_host))
                 provider.add_span_processor(processor)
                 trace.set_tracer_provider(provider)
-
         # Prometheus Exporter
         elif os.getenv('OPEN_TELEMETRY_PROMETHEUS_FLG', 'False') == 'True':
             app.logger.info("OpenTelemetry Prometheus Exporter")
@@ -162,7 +161,7 @@ app = Flask(__name__)
 if get_open_telemetry_flg() == 'True':
     check_open_telemetry()
     FlaskInstrumentor().instrument_app(app)
-    if os.getenv('OPEN_TELEMETRY_GRPC_FLG', 'True') == 'True':
+    if os.getenv('OPEN_TELEMETRY_GRPC_FLG', 'False') == 'True':
         app.logger.info("OpenTelemetry gRPC Exporter")
         RequestsInstrumentor().instrument()
 
