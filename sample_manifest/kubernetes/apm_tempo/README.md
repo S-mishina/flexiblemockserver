@@ -36,6 +36,8 @@ Execute the following command
 
 ## Step2: OpenTelemetry Controller Install
 
+TBU
+
 Execute the following command
 
 ```:terminal
@@ -52,4 +54,8 @@ Execute the following command
 
 ## Step4: operation check
 
-TBU
+Execute the following command
+
+```:terminal
+❯ kubectl apply -k sample_manifest/kubernetes/apm_tempo/flexiblemockserver/
+```
