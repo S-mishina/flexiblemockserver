@@ -36,7 +36,7 @@ Execute the following command
 
 ## Step2: OpenTelemetry Controller Install
 
-TBU
+TBU(Can work without install)
 
 Execute the following command
 
