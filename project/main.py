@@ -101,13 +101,12 @@ def check_open_telemetry():
 
             if os.getenv('OPEN_TELEMETRY_GRPC_FLG', 'False') == 'True':
                 app.logger.info("OpenTelemetry OTLP gRPC Exporter")
-                trace.set_tracer_provider(TracerProvider())
-                tracer = trace.get_tracer(__name__)
                 oltp_host = os.getenv('OTLP_HOST', 'localhost:4317')
                 app.logger.info("OTLP_HOST: %s" % oltp_host)
                 otlp_exporter = OTLPSpanExporter(endpoint=oltp_host, insecure=True)
                 span_processor = BatchSpanProcessor(otlp_exporter)
-                trace.get_tracer_provider().add_span_processor(span_processor)
+                provider.add_span_processor(span_processor)
+                trace.set_tracer_provider(provider)
             else:
                 app.logger.info("OpenTelemetry OTLP HTTP Exporter")
                 oltp_host = os.getenv('OTLP_HOST', 'http://localhost:4318/v1/traces')
