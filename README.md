@@ -2,9 +2,20 @@
 
 This is a mock server used to verify the operation of service mesh tools. Service mesh tools refer to Istio, Linkerd, and Kuma.
 
-## usage rules
+## Usage
 
-[usage rules README](./sample_manifest/README.md)
+For use cases where you just want to check the operation of ServiceMesh, please click here.
+
+* ServiceMesh
+  * [Usage README](./sample_manifest/README.md)
+
+Click here to use Open Telemetry
+
+* OpenTelemetry
+  * Docker-Compose(GrafanaTempo)
+    * [Usage README](./sample_manifest/docker-compose/tempo/)
+  * Kubenretes(GrafanaTempo)
+    * [Usage README](./sample_manifest/kubernetes/apm_tempo)
 
 ## Example
 

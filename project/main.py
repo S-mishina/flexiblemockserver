@@ -103,7 +103,9 @@ def check_open_telemetry():
                 app.logger.info("OpenTelemetry OTLP gRPC Exporter")
                 trace.set_tracer_provider(TracerProvider())
                 tracer = trace.get_tracer(__name__)
-                otlp_exporter = OTLPSpanExporter(endpoint="localhost:4317", insecure=True)
+                oltp_host = os.getenv('OTLP_HOST', 'localhost:4317')
+                app.logger.info("OTLP_HOST: %s" % oltp_host)
+                otlp_exporter = OTLPSpanExporter(endpoint=oltp_host, insecure=True)
                 span_processor = BatchSpanProcessor(otlp_exporter)
                 trace.get_tracer_provider().add_span_processor(span_processor)
             else:
@@ -219,9 +221,6 @@ def after_request(response):
     }
     app.logger.info(response_log)
     return response
-
-host = os.environ.get('HOST', '0.0.0.0')
-port = os.environ.get('PORT', 8080)
 
 @app.route('/')
 def top():
