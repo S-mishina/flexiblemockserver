@@ -4,5 +4,18 @@ apiVersion: kind.x-k8s.io/v1alpha4
 nodes:
 - role: control-plane
 - role: worker
+  extraPortMappings:
+    - containerPort: 8080
+      hostPort: 8081
+      protocol: TCP
+    - containerPort: 3000
+      hostPort: 3001
+      protocol: TCP
+    - containerPort: 9411
+      hostPort: 9412
+      protocol: TCP
+    - containerPort: 9412
+      hostPort: 9413
+      protocol: TCP
 - role: worker
 - role: worker
