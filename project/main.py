@@ -1,32 +1,34 @@
+import os
+import sys
+import time
+import yaml
 from flask import Flask, jsonify, make_response, Response, request
 from logging.config import dictConfig
-from jsonschema import validate
-import time
-import os
-import yaml
-import sys
-from opentelemetry import trace
+
+from opentelemetry import trace, metrics
 from opentelemetry.sdk.trace import TracerProvider
-from opentelemetry.sdk.trace.export import (
-    BatchSpanProcessor,
-    ConsoleSpanExporter,
-)
+from opentelemetry.sdk.trace.export import BatchSpanProcessor
+from opentelemetry.sdk.metrics import MeterProvider
+from opentelemetry.sdk.metrics.export import PeriodicExportingMetricReader
 from opentelemetry.instrumentation.flask import FlaskInstrumentor
 from opentelemetry.sdk.resources import Resource
 from opentelemetry.exporter.zipkin.json import ZipkinExporter
 from opentelemetry.semconv.resource import ResourceAttributes
 
-from opentelemetry.exporter.otlp.proto.http.trace_exporter import OTLPSpanExporter
-from opentelemetry.exporter.otlp.proto.http.metric_exporter import OTLPMetricExporter
-from opentelemetry import metrics
-from opentelemetry.sdk.metrics import MeterProvider
-from opentelemetry.sdk.metrics.export import (
-    PeriodicExportingMetricReader,
-    ConsoleMetricExporter
-)
+if os.getenv('OPEN_TELEMETRY_GRPC_FLG', 'False') == 'True':
+    from opentelemetry.exporter.otlp.proto.grpc.trace_exporter import OTLPSpanExporter
+    from opentelemetry.exporter.otlp.proto.grpc.metric_exporter import OTLPMetricExporter
+else:
+    from opentelemetry.exporter.otlp.proto.http.trace_exporter import OTLPSpanExporter
+    from opentelemetry.exporter.otlp.proto.http.metric_exporter import OTLPMetricExporter
+from opentelemetry.instrumentation.requests import RequestsInstrumentor
 
-from prometheus_client import start_http_server
 from opentelemetry.exporter.prometheus import PrometheusMetricReader
+
+from jsonschema import validate
+from prometheus_client import start_http_server
+
+from opentelemetry.instrumentation.requests import RequestsInstrumentor
 
 
 def get_yaml_file_path():
@@ -68,52 +70,70 @@ def config_check(yaml_file):
 def check_open_telemetry():
     if get_open_telemetry_flg():
         flags = [
-        os.getenv('OPEN_TELEMETRY_ZIPKIN_FLG'),
-        os.getenv('OPEN_TELEMETRY_OTLP_FLG'),
-        os.getenv('OPEN_TELEMETRY_PROMETHEUS_FLG'),
-        os.getenv('OPEN_TELEMETRY_CONSOLE_FLG')
+            os.getenv('OPEN_TELEMETRY_ZIPKIN_FLG'),
+            os.getenv('OPEN_TELEMETRY_OTLP_FLG'),
+            os.getenv('OPEN_TELEMETRY_PROMETHEUS_FLG'),
+            os.getenv('OPEN_TELEMETRY_CONSOLE_FLG')
         ]
         enabled_flags_count = sum(1 for flag in flags if flag)
+
         if enabled_flags_count >= 2:
             app.logger.info("Please set only one of OPEN_TELEMETRY_ZIPKIN_FLG and OPEN_TELEMETRY_OTLP_FLG")
             exit(1)
+
         if os.getenv('OTEL_SERVICE_NAME') is None:
             app.logger.info("Please set OTEL_SERVICE_NAME default: mock-server")
             os.environ['OTEL_SERVICE_NAME'] = 'mock-server'
+
         provider = TracerProvider()
+
+        # Zipkin Exporter
         if os.getenv('OPEN_TELEMETRY_ZIPKIN_FLG', 'False') == 'True':
             app.logger.info("OpenTelemetry Zipkin Exporter")
             zipkin_exporter = ZipkinExporter(endpoint=os.getenv('ZIPKIN_HOST', 'http://localhost:9411/api/v2/spans'))
             processor = BatchSpanProcessor(zipkin_exporter)
             provider.add_span_processor(processor)
             trace.set_tracer_provider(provider)
-        elif os.getenv('OPEN_TELEMETRY_OTLP_FLG', 'True') == 'True':
+
+        # OTLP Exporter
+        elif os.getenv('OPEN_TELEMETRY_OTLP_FLG', 'False') == 'True':
             app.logger.info("OpenTelemetry OTLP Exporter")
-            oltp_host = os.getenv('OTLP_HOST', 'http://localhost:4318/v1/traces')
-            app.logger.info("OTLP_HOST: %s" % oltp_host)
-            processor = BatchSpanProcessor(OTLPSpanExporter(endpoint=oltp_host))
-            provider.add_span_processor(processor)
-            trace.set_tracer_provider(provider)
-            reader = PeriodicExportingMetricReader(
-                OTLPMetricExporter(endpoint=oltp_host)
-            )
-            meterProvider = MeterProvider(metric_readers=[reader])
-            metrics.set_meter_provider(meterProvider)
-        elif os.getenv('OPEN_TELEMETRY_PROMETHEUS_FLG', 'Flase') == 'True':
+
+            if os.getenv('OPEN_TELEMETRY_GRPC_FLG', 'False') == 'True':
+                app.logger.info("OpenTelemetry OTLP gRPC Exporter")
+                oltp_host = os.getenv('OTLP_HOST', 'localhost:4317')
+                app.logger.info("OTLP_HOST: %s" % oltp_host)
+                otlp_exporter = OTLPSpanExporter(endpoint=oltp_host, insecure=True)
+                span_processor = BatchSpanProcessor(otlp_exporter)
+                provider.add_span_processor(span_processor)
+                trace.set_tracer_provider(provider)
+            else:
+                app.logger.info("OpenTelemetry OTLP HTTP Exporter")
+                oltp_host = os.getenv('OTLP_HOST', 'http://localhost:4318/v1/traces')
+                app.logger.info("OTLP_HOST: %s" % oltp_host)
+                processor = BatchSpanProcessor(OTLPSpanExporter(endpoint=oltp_host))
+                provider.add_span_processor(processor)
+                trace.set_tracer_provider(provider)
+        # Prometheus Exporter
+        elif os.getenv('OPEN_TELEMETRY_PROMETHEUS_FLG', 'False') == 'True':
             app.logger.info("OpenTelemetry Prometheus Exporter")
             prometheus_host = os.getenv('PROMETHEHEUS_HOST', 'localhost')
-            prometheus_port = os.getenv('PROMETHEHEUS_PORT', '9090')
-            app.logger.info("PROMETHEUS_PORT: %s" % os.getenv('PROMETHEHEUS_PORT', '9090'))
-            app.logger.info("PROMETHEHEUS_HOST: %s" % os.getenv('PROMETHEHEUS_HOST', 'localhost'))
-            start_http_server(poirt=ortprometheus_port, addr=prometheus_host)
+            prometheus_port = int(os.getenv('PROMETHEHEUS_PORT', '9090'))
+            app.logger.info("PROMETHEUS_PORT: %s" % prometheus_port)
+            app.logger.info("PROMETHEHEUS_HOST: %s" % prometheus_host)
+            start_http_server(port=prometheus_port, addr=prometheus_host)
             reader = PrometheusMetricReader()
             provider = MeterProvider(metric_readers=[reader])
             metrics.set_meter_provider(provider)
+
+        # Console Exporter
         elif os.getenv('OPEN_TELEMETRY_CONSOLE_FLG', 'False') == 'True':
+            app.logger.info("OpenTelemetry Console Exporter")
             processor = BatchSpanProcessor(ConsoleSpanExporter())
             provider.add_span_processor(processor)
             trace.set_tracer_provider(provider)
             tracer = trace.get_tracer("my.tracer.name")
+
 
 dictConfig({
     'version': 1,
@@ -142,6 +162,9 @@ app = Flask(__name__)
 if get_open_telemetry_flg() == 'True':
     check_open_telemetry()
     FlaskInstrumentor().instrument_app(app)
+    if os.getenv('OPEN_TELEMETRY_GRPC_FLG', 'False') == 'True':
+        app.logger.info("OpenTelemetry gRPC Exporter")
+        RequestsInstrumentor().instrument()
 
 HTTP_METHODS = ['GET', 'HEAD', 'POST', 'PUT',
                 'DELETE', 'CONNECT', 'OPTIONS', 'TRACE', 'PATCH']
@@ -197,9 +220,6 @@ def after_request(response):
     }
     app.logger.info(response_log)
     return response
-
-host = os.environ.get('HOST', '0.0.0.0')
-port = os.environ.get('PORT', 8080)
 
 @app.route('/')
 def top():
