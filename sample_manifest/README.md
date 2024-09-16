@@ -65,7 +65,7 @@ Image: "ghcr.io/s-mishina/flexiblemockserver:latest" with ID "sha256:96b36be4d13
 
 ### step 3
 
-**If you want to use Open Telemetry, please refer to this document to install flexiblemockserver.**
+**If you want to use Open Telemetry, please refer to this document to install flexiblemockserver.** <br>
 [link](./kubernetes/apm_tempo/README.md)
 
 Finally, let's apply the manifest!

@@ -8,7 +8,7 @@ For use cases where you just want to check the operation of ServiceMesh, please 
 
 * ServiceMesh
   * [Usage README](./sample_manifest/README.md)
-
+    * Please click here to see the install for clusters.
 Click here to use Open Telemetry
 
 * OpenTelemetry
