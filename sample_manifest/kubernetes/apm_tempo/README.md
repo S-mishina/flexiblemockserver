@@ -23,7 +23,7 @@ kubectl apply -f https://github.com/cert-manager/cert-manager/releases/download/
 Execute the following command
 
 ```:terminal
-kubectl apply -f https://raw.githubusercontent.com/grafana/tempo-operator/main/minio.yaml
+❯ kubectl apply -f https://raw.githubusercontent.com/grafana/tempo-operator/main/minio.yaml
 ```
 
 ### 1.4. Install TempoCR
