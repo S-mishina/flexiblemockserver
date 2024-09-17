@@ -9,7 +9,7 @@ This README summarizes how to use grafana tempo with Kubernetes.
 Execute the following command
 
 ```:terminal
-kubectl apply -f https://github.com/cert-manager/cert-manager/releases/download/v1.15.3/cert-manager.yaml
+❯ kubectl apply -f https://github.com/cert-manager/cert-manager/releases/download/v1.15.3/cert-manager.yaml
 ```
 
 ### 1.2. GrafanaTempo Operator Install
@@ -49,11 +49,7 @@ Execute the following command
 Execute the following command
 
 ```:terminal
-❯ kind load docker-image grafana/grafana:latest grafana/grafana:latest -n sandbox-test
-```
-
-```:terminal
-❯ kubectl apply -k grafana
+❯ kubectl apply -k sample_manifest/kubernetes/apm_tempo/grafana
 ```
 
 ## Step4: operation check
