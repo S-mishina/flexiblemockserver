@@ -40,6 +40,8 @@ spec:
           value: "True"
         - name: OPEN_TELEMETRY_GRPC_FLG
           value: "True"
+        - name: OTLP_HOST
+          value: tempo-simplest-distributor.my-tempo:4317
         volumeMounts:
         - name: custom-rule
           mountPath: /config

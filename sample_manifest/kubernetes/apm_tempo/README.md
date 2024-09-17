@@ -59,3 +59,25 @@ Execute the following command
 ```:terminal
 ❯ kubectl apply -k sample_manifest/kubernetes/apm_tempo/flexiblemockserver/
 ```
+
+```:terminal
+❯ curl http://localhost:8081/sleep/1 -v
+*   Trying [::1]:8081...
+* Connected to localhost (::1) port 8081
+> GET /sleep/1 HTTP/1.1
+> Host: localhost:8081
+> User-Agent: curl/8.4.0
+> Accept: */*
+>
+< HTTP/1.1 200 OK
+< Server: Werkzeug/3.0.3 Python/3.12.6
+< Date: Tue, 17 Sep 2024 05:46:55 GMT
+< Content-Type: application/json
+< Content-Length: 35
+< Connection: close
+<
+{"sleep_time":1,"status_code":200}
+* Closing connection
+```
+
+![image](./image/image.png)
