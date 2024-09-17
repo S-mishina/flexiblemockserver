@@ -49,6 +49,10 @@ Execute the following command
 Execute the following command
 
 ```:terminal
+❯ kind load docker-image grafana/grafana:latest grafana/grafana:latest -n sandbox-test
+```
+
+```:terminal
 ❯ kubectl apply -k grafana
 ```
 
