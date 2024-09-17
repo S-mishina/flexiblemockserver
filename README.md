@@ -6,7 +6,7 @@ This is a mock server used to verify the operation of service mesh tools. Servic
 
 For use cases where you just want to check the operation of ServiceMesh, please click here.
 
-* ServiceMesh
+* lsuter build and pure mockserver install
   * [Usage README](./sample_manifest/README.md)
     * Please click here to see the install for clusters.
 Click here to use Open Telemetry
@@ -24,6 +24,9 @@ Click here to use Open Telemetry
     * TBU
   * Kubernetes(Jaeger)
     * TBU
+
+* OpenTelemetry + ServiceMesh
+  * TBU
 
 ## Example
 

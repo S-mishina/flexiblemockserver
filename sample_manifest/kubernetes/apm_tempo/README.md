@@ -9,7 +9,7 @@ This README summarizes how to use grafana tempo with Kubernetes.
 Execute the following command
 
 ```:terminal
-kubectl apply -f https://github.com/cert-manager/cert-manager/releases/download/v1.15.3/cert-manager.yaml
+❯ kubectl apply -f https://github.com/cert-manager/cert-manager/releases/download/v1.15.3/cert-manager.yaml
 ```
 
 ### 1.2. GrafanaTempo Operator Install
@@ -23,7 +23,7 @@ kubectl apply -f https://github.com/cert-manager/cert-manager/releases/download/
 Execute the following command
 
 ```:terminal
-kubectl apply -f https://raw.githubusercontent.com/grafana/tempo-operator/main/minio.yaml
+❯ kubectl apply -f https://raw.githubusercontent.com/grafana/tempo-operator/main/minio.yaml
 ```
 
 ### 1.4. Install TempoCR
@@ -49,7 +49,7 @@ Execute the following command
 Execute the following command
 
 ```:terminal
-❯ kubectl apply -k grafana
+❯ kubectl apply -k sample_manifest/kubernetes/apm_tempo/grafana
 ```
 
 ## Step4: operation check
