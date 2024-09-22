@@ -40,19 +40,29 @@ TBU(Can work without install)
 
 Execute the following command
 
-```:terminal
+### 2.1. OpenTelemetry Operator Install
 
+```:terminal
+kubectl apply -f https://github.com/open-telemetry/opentelemetry-operator/releases/latest/download/opentelemetry-operator.yaml
+```
+
+### 2.2. Install OpenTelemetry Collector Configuration
+
+```:terminal
+kubectl apply -f otel-controller/config.yaml
 ```
 
 ## Step3: Grafana Install
 
+## Step4: Prometheus Install
+
 Execute the following command
 
 ```:terminal
-❯ kubectl apply -k sample_manifest/kubernetes/apm_tempo/grafana
+
 ```
 
-## Step4: operation check
+## Step5: operation check
 
 Execute the following command
 
