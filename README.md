@@ -18,7 +18,7 @@ Click here to use Open Telemetry
   * istio DEMO
     * [Usage README](./docs/istio/README.md)
 
-> [!Tips]
+> [!NOTE]
 > When checking the operation of OpenTelemetry + ServiceMesh, it is recommended to start with progressive delivery.
 
 ## Example
