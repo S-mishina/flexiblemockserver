@@ -28,7 +28,7 @@ cluster.yaml		flexiblemockserver
 ```
 
 ```:terminal
-❯ kind create cluster -n sandbox-test --config cluster.yaml
+❯ kind create cluster -n sandbox-test --config sample_manifest/kubernetes/cluster.yaml
 Creating cluster "sandbox-test" ...
  ✓ Ensuring node image (kindest/node:v1.27.3) 🖼
  ✓ Preparing nodes 📦 📦 📦 📦
@@ -73,15 +73,9 @@ Finally, let's apply the manifest!
 ```:terminal
 [kind-sandbox-test|default] :ctx
 [arm64]⚡️
-flexiblemockserver/sample_manifest/kubernetes on  feature/sandbox-k8s-manifest
-❯ ls
-cluster.yaml		flexiblemockserver
+flexiblemockserver on  feature/sandbox-k8s-manifest
 
-[kind-sandbox-test|default] :ctx
-[arm64]⚡️
-flexiblemockserver/sample_manifest/kubernetes on  feature/sandbox-k8s-manifest
-
-❯ kubectl apply -k flexiblemockserver
+❯ kubectl apply -k sample_manifest/kubernetes/flexiblemockserver
 namespace/mockserver created
 configmap/custom-rule created
 configmap/response created

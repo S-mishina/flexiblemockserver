@@ -1,0 +1,17 @@
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  name: tempo-service-monitor
+  labels:
+    release: prometheus-operator
+spec:
+  selector:
+    matchLabels:
+      app.kubernetes.io/component: query-frontend
+  namespaceSelector:
+    matchNames:
+    - my-tempo
+  endpoints:
+  - port: metrics
+    interval: 5s
+    targetPort: 3200

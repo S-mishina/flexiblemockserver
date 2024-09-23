@@ -1,8 +1,11 @@
 apiVersion: opentelemetry.io/v1alpha1
 kind: OpenTelemetryCollector
 metadata:
-  name: simplest
+  name: simplest1
+  namespace: mockserver
 spec:
+  mode: deployment
+  image: otel/opentelemetry-collector-contrib:latest # Contrib イメージを指定
   config: |
     receivers:
       otlp:
@@ -11,7 +14,7 @@ spec:
             endpoint: "0.0.0.0:4317"
     exporters:
       otlp:
-        endpoint: "tempo:4317"
+        endpoint: "tempo-simplest-distributor.my-tempo:4317"
         tls:
           insecure: true
       prometheusremotewrite:
@@ -29,7 +32,7 @@ spec:
           - name: http.method
             default: GET
           - name: http.status_code
-            default: 200
+            default: "200"
     service:
       pipelines:
         traces:

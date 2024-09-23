@@ -3,12 +3,12 @@ datasources:
   - name: Prometheus
     type: prometheus
     access: proxy
-    url: http://prometheus:9090
+    url: http://prometheus-operator.default:8080
     isDefault: false
 
   - name: Tempo
     type: tempo
-    url: http://tempo:3200
+    url: http://tempo-simplest-query-frontend.my-tempo:3200
     jsonData:
       nodeGraph:
         enabled: true
