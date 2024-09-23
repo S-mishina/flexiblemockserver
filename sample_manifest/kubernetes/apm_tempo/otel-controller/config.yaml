@@ -2,7 +2,7 @@ apiVersion: opentelemetry.io/v1alpha1
 kind: OpenTelemetryCollector
 metadata:
   name: simplest1
-  namespace: mockserver
+  namespace: monitoring
 spec:
   mode: deployment
   image: otel/opentelemetry-collector-contrib:latest # Contrib イメージを指定

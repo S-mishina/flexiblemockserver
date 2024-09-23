@@ -49,12 +49,17 @@ Execute the following command
 Execute the following command
 
 ```:terminal
+❯ kubectl create ns monitoring
+```
+
+```:terminal
 ❯ kubectl apply -f sample_manifest/kubernetes/apm_tempo/otel-controller/config.yaml
 ```
 
 ## Step4: [Prometheus Operator](https://github.com/prometheus-operator/prometheus-operator) Install
 
 ### 4.1. Install Prometheus Operator
+
 Execute the following command
 
 ```:terminal
