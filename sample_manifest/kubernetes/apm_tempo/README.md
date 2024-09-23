@@ -2,6 +2,10 @@
 
 This README summarizes how to use grafana tempo with Kubernetes.
 
+> [!NOTE]
+> Please Install istio before starting work on this Document.
+> <br>ref: [link](../../README.md#istio)
+
 ## Step1: GrafanaTempo Install
 
 ### 1.1. [cert-manager](https://cert-manager.io/docs/installation/#default-static-install) Install
