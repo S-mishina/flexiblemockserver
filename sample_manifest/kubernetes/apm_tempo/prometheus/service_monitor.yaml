@@ -1,0 +1,14 @@
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  name: servicemonitor-sample
+  namespace: mockserver
+  labels:
+    team: flexiblemockserver
+spec:
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: simplest1-collector
+  endpoints:
+  - port: otlp-grpc
+    interval: 30s

@@ -54,13 +54,19 @@ Execute the following command
 
 ## Step4: [Prometheus Operator](https://github.com/prometheus-operator/prometheus-operator) Install
 
+### 4.1. Install Prometheus Operator
 Execute the following command
 
 ```:terminal
-LATEST=$(curl -s https://api.github.com/repos/prometheus-operator/prometheus-operator/releases/latest | jq -cr .tag_name)
-curl -sL https://github.com/prometheus-operator/prometheus-operator/releases/download/${LATEST}/bundle.yaml | kubectl apply -f -
+❯ LATEST=$(curl -s https://api.github.com/repos/prometheus-operator/prometheus-operator/releases/latest | jq -cr .tag_name)
+curl -sL https://github.com/prometheus-operator/prometheus-operator/releases/download/${LATEST}/bundle.yaml | kubectl create -f -
 ```
 
+### 4.2. Install Prometheus Controller
+
+```
+❯ kubectl apply -f sample_manifest/kubernetes/apm_tempo/prometheus/prometheus_service.yaml
+```
 
 ## Step4: [Grafana](https://github.com/grafana/grafana) Install
 
