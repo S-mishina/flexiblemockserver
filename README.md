@@ -26,7 +26,9 @@ Click here to use Open Telemetry
     * TBU
 
 * OpenTelemetry + ServiceMesh
-  * TBU
+  * progressive delivery
+    * flagger
+      * TBU
 
 ## Example
 
