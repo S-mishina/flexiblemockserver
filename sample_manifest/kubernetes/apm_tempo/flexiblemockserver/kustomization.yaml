@@ -4,7 +4,6 @@ kind: Kustomization
 namespace: mockserver
 resources:
   - ../../flexiblemockserver
-  - ../otel-controller/config.yaml
 patches:
   - path: deployment.yaml
 
