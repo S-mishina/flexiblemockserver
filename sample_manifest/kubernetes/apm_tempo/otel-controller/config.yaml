@@ -18,7 +18,7 @@ spec:
         tls:
           insecure: true
       prometheusremotewrite:
-        endpoint: http://prometheus-operated.mockserver:9090/api/v1/write
+        endpoint: http://prometheus-operated.monitoring:9090/api/v1/write
         target_info:
           enabled: true
     connectors:

@@ -3,7 +3,7 @@ datasources:
   - name: Prometheus
     type: prometheus
     access: proxy
-    url: http://prometheus-operated.mockserver:9090
+    url: http://prometheus-operated.monitoring:9090
     isDefault: false
 
   - name: Tempo

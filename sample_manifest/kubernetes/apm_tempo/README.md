@@ -64,8 +64,8 @@ curl -sL https://github.com/prometheus-operator/prometheus-operator/releases/dow
 
 ### 4.2. Install Prometheus Controller
 
-```
-❯ kubectl apply -f sample_manifest/kubernetes/apm_tempo/prometheus/prometheus_service.yaml
+```:terminal
+❯ kubectl apply -k sample_manifest/kubernetes/apm_tempo/prometheus/
 ```
 
 ## Step4: [Grafana](https://github.com/grafana/grafana) Install
@@ -103,5 +103,11 @@ Execute the following command
 {"sleep_time":1,"status_code":200}
 * Closing connection
 ```
+
+### Grafana trace
+
+![image](./image/image.png)
+
+### Grafana metric
 
 ![image](./image/image.png)
