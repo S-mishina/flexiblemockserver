@@ -115,4 +115,4 @@ Execute the following command
 
 ### Grafana metric
 
-![image](./image/image.png)
+![image](./image/image2.png)
