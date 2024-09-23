@@ -11,20 +11,6 @@ For use cases where you just want to check the operation of ServiceMesh, please 
     * Please click here to see the install for clusters.
 Click here to use Open Telemetry
 
-* OpenTelemetry
-  * Docker-Compose(GrafanaTempo)
-    * [Usage README](./sample_manifest/docker-compose/tempo/)
-  * Kubenretes(GrafanaTempo)
-    * [Usage README](./sample_manifest/kubernetes/apm_tempo)
-  * Docker-Compose(Zipkin)
-    * TBU
-  * Kubenretes(Zipkin)
-    * TBU
-  * Docker-Compose(Jaeger)
-    * TBU
-  * Kubernetes(Jaeger)
-    * TBU
-
 * OpenTelemetry + ServiceMesh
   * progressive delivery DEMO
     * flagger
