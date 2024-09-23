@@ -26,9 +26,11 @@ Click here to use Open Telemetry
     * TBU
 
 * OpenTelemetry + ServiceMesh
-  * progressive delivery
+  * progressive delivery DEMO
     * flagger
       * TBU
+  * istio DEMO
+    * [Usage README](./docs/istio/README.md)
 
 ## Example
 
