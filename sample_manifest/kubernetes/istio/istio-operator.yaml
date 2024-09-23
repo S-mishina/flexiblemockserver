@@ -1,0 +1,41 @@
+apiVersion: install.istio.io/v1alpha1
+kind: IstioOperator
+metadata:
+  name: istiocontrolplane
+  namespace: istio-system
+spec:
+  profile: demo
+  meshConfig:
+    accessLogFile: /dev/stdout
+    enableTracing: true
+    extensionProviders:
+      - name: otel-tracing
+        opentelemetry:
+          port: 4317
+          service: simplest1-collector.monitoring.svc.cluster.local
+    defaultProviders:
+      tracing:
+        - otel-tracing
+---
+apiVersion: networking.istio.io/v1beta1
+kind: ProxyConfig
+metadata:
+  name: istio-proxyconfig
+  namespace: istio-system
+spec:
+  concurrency: 0
+  environmentVariables:
+    OTEL_RESOURCE_ATTRIBUTES: "service.name=istio-proxy"
+---
+# telemetry.yaml
+apiVersion: telemetry.istio.io/v1
+kind: Telemetry
+metadata:
+  name: otel-tracing
+  namespace: istio-system
+spec:
+  tracing:
+    - providers:
+        - name: otel-tracing
+      randomSamplingPercentage: 100
+

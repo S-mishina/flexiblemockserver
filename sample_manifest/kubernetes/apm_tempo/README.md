@@ -96,6 +96,10 @@ Execute the following command
 ```
 
 ```:terminal
+❯ istioctl install -f sample_manifest/kubernetes/istio/istio-operator.yaml -y
+```
+
+```:terminal
 ❯ curl http://localhost:8081/sleep/1 -v
 *   Trying [::1]:8081...
 * Connected to localhost (::1) port 8081
