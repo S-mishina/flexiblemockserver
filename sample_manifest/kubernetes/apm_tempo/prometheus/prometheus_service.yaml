@@ -1,0 +1,21 @@
+apiVersion: monitoring.coreos.com/v1
+kind: Prometheus
+metadata:
+  name: prometheus-sample
+  namespace: mockserver
+spec:
+  replicas: 1
+  serviceAccountName: prometheus
+  serviceMonitorSelector:
+    matchLabels:
+      team: flexiblemockserver
+  remoteWrite:
+  - url: "http://prometheus-operated.monitoring:9090/api/v1/write"
+  containers:
+  - name: prometheus
+    args:
+    - "--config.file=/etc/prometheus/prometheus.yml" # 設定ファイルの正しいパス
+    - "--storage.tsdb.path=/prometheus"
+    - "--web.console.libraries=/etc/prometheus/console_libraries"
+    - "--web.console.templates=/etc/prometheus/consoles"
+    - "--web.enable-remote-write-receiver"

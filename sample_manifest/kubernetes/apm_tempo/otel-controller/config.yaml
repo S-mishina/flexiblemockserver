@@ -1,0 +1,43 @@
+apiVersion: opentelemetry.io/v1alpha1
+kind: OpenTelemetryCollector
+metadata:
+  name: simplest1
+  namespace: monitoring
+spec:
+  mode: deployment
+  image: otel/opentelemetry-collector-contrib:latest # Contrib イメージを指定
+  config: |
+    receivers:
+      otlp:
+        protocols:
+          grpc:
+            endpoint: "0.0.0.0:4317"
+    exporters:
+      otlp:
+        endpoint: "tempo-simplest-distributor.my-tempo:4317"
+        tls:
+          insecure: true
+      prometheusremotewrite:
+        endpoint: http://prometheus-operated.monitoring:9090/api/v1/write
+        target_info:
+          enabled: true
+    connectors:
+      spanmetrics:
+        namespace: traces.spanmetrics
+        histogram:
+          explicit:
+            buckets: [1ms, 10ms, 100ms, 200ms, 300ms, 400ms, 500ms, 600ms, 700ms, 800ms, 900ms, 1s]
+        metrics_flush_interval: 3s
+        dimensions:
+          - name: http.method
+            default: GET
+          - name: http.status_code
+            default: "200"
+    service:
+      pipelines:
+        traces:
+          receivers: [otlp]
+          exporters: [otlp, spanmetrics]
+        metrics:
+          receivers: [spanmetrics]
+          exporters: [prometheusremotewrite]

@@ -6,3 +6,4 @@ resources:
   - ../../flexiblemockserver
 patches:
   - path: deployment.yaml
+

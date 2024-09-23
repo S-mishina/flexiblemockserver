@@ -28,7 +28,7 @@ cluster.yaml		flexiblemockserver
 ```
 
 ```:terminal
-❯ kind create cluster -n sandbox-test --config cluster.yaml
+❯ kind create cluster -n sandbox-test --config sample_manifest/kubernetes/cluster.yaml
 Creating cluster "sandbox-test" ...
  ✓ Ensuring node image (kindest/node:v1.27.3) 🖼
  ✓ Preparing nodes 📦 📦 📦 📦
@@ -65,23 +65,19 @@ Image: "ghcr.io/s-mishina/flexiblemockserver:latest" with ID "sha256:96b36be4d13
 
 ### step 3
 
-**If you want to use Open Telemetry, please refer to this document to install flexiblemockserver.** <br>
-[link](./kubernetes/apm_tempo/README.md)
+> [!NOTE]
+> **If you want to use Open Telemetry, please refer to this document to install flexiblemockserver.** <br>
+> To get the most out of flexiblemockserver, Open Telemetry use is required.
+> <br>ref: [link](./kubernetes/apm_tempo/README.md)
 
 Finally, let's apply the manifest!
 
 ```:terminal
 [kind-sandbox-test|default] :ctx
 [arm64]⚡️
-flexiblemockserver/sample_manifest/kubernetes on  feature/sandbox-k8s-manifest
-❯ ls
-cluster.yaml		flexiblemockserver
+flexiblemockserver on  feature/sandbox-k8s-manifest
 
-[kind-sandbox-test|default] :ctx
-[arm64]⚡️
-flexiblemockserver/sample_manifest/kubernetes on  feature/sandbox-k8s-manifest
-
-❯ kubectl apply -k flexiblemockserver
+❯ kubectl apply -k sample_manifest/kubernetes/flexiblemockserver
 namespace/mockserver created
 configmap/custom-rule created
 configmap/response created
@@ -102,5 +98,3 @@ The following custom operator
 #### istio
 
 [document](https://istio.io/latest/docs/setup/install/istioctl/)
-
-

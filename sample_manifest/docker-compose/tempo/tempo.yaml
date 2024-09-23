@@ -27,3 +27,9 @@ compactor:
 querier:
   frontend_worker:
     parallelism: 1
+
+metrics_generator:
+    storage:
+        path: "/var/tempo/generator/traces"
+        remote_write:
+          - url: "http://prometheus:9090/api/v1/write"

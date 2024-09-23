@@ -1,0 +1,14 @@
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  namespace: mockserver
+  name: prometheus-rolebinding
+subjects:
+- kind: ServiceAccount
+  name: prometheus
+  namespace: mockserver
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: Role
+  name: prometheus-role
+
