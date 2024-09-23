@@ -18,6 +18,9 @@ Click here to use Open Telemetry
   * istio DEMO
     * [Usage README](./docs/istio/README.md)
 
+> [!Tips]
+> When checking the operation of OpenTelemetry + ServiceMesh, it is recommended to start with progressive delivery.
+
 ## Example
 
 Here are the environment variables for changing the port and endpoint of a Flask application:
