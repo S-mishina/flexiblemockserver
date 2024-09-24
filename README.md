@@ -4,8 +4,6 @@ This is a mock server used to verify the operation of service mesh tools. Servic
 
 ## Usage
 
-For use cases where you just want to check the operation of ServiceMesh, please click here.
-
 * Clsuter build and pure mockserver install
   * [Usage README](./sample_manifest/README.md)
     * Please click here to see the install for clusters.
