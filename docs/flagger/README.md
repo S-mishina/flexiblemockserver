@@ -37,6 +37,10 @@ ref: [link](kubectl apply -k sample_manifest/kubernetes/flagger/)
 
 ### 実際に動作させてみよう
 
+### 検証用のアプリのInstall
+
+TBU
+
 #### 成功パターン
 
 TBU
