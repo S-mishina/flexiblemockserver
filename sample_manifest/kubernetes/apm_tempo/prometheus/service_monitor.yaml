@@ -1,18 +1,15 @@
 apiVersion: monitoring.coreos.com/v1
-kind: ServiceMonitor
+kind: PodMonitor
 metadata:
   name: pod-metrics-monitor
   namespace: monitoring
 spec:
-  selector:
-    matchLabels:
-      app.kubernetes.io/name: kube-state-metrics
-  endpoints:
-  - port: http
+  selector: {}  # ラベルを指定しない
+  podMetricsEndpoints:
+  - path: /metrics
     interval: 30s
   namespaceSelector:
-    matchNames:
-    - kube-system
+    any: true
 ---
 apiVersion: monitoring.coreos.com/v1
 kind: ServiceMonitor

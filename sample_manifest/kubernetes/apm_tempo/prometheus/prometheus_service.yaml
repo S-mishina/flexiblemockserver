@@ -8,3 +8,4 @@ spec:
   serviceAccountName: prometheus
   enableRemoteWriteReceiver: true
   serviceMonitorSelector: {}
+  podMonitorSelector: {}
