@@ -6,7 +6,8 @@ This README summarizes how to use grafana tempo with Kubernetes.
 > Please Install istio before starting work on this Document.
 > ex) <br>
 > ```❯ istioctl install --set profile=default -y```
-> <br>ref: [link](../../README.md#istio)
+> <br> ref: [link](../../README.md#istio)
+
 
 ## Step1: GrafanaTempo Install
 
@@ -62,6 +63,14 @@ Execute the following command
 ❯ kubectl apply -f sample_manifest/kubernetes/apm_tempo/otel-controller/config.yaml
 ```
 
+```:terminal
+❯ istioctl install -y sample_manifest/kubernetes/istio/istio-operator.yaml
+```
+
+## Step3: Install metric servers
+
+TBU
+
 ## Step4: [Prometheus Operator](https://github.com/prometheus-operator/prometheus-operator) Install
 
 ### 4.1. Install Prometheus Operator
@@ -73,13 +82,21 @@ Execute the following command
 curl -sL https://github.com/prometheus-operator/prometheus-operator/releases/download/${LATEST}/bundle.yaml | kubectl create -f -
 ```
 
-### 4.2. Install Prometheus Controller
+### 4.2. Install role & rrole_binding
+
+Execute the following command
+
+```:terminal
+❯ kubectl apply -k sample_manifest/kubernetes/cluster/
+```
+
+### 4.3. Install Prometheus Controller
 
 ```:terminal
 ❯ kubectl apply -k sample_manifest/kubernetes/apm_tempo/prometheus/
 ```
 
-## Step4: [Grafana](https://github.com/grafana/grafana) Install
+## Step5: [Grafana](https://github.com/grafana/grafana) Install
 
 Execute the following command
 
@@ -87,7 +104,7 @@ Execute the following command
 ❯ kubectl apply -k sample_manifest/kubernetes/apm_tempo/grafana
 ```
 
-## Step5: operation check
+## Step6: operation check
 
 Execute the following command
 

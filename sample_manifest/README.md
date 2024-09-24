@@ -28,7 +28,7 @@ cluster.yaml		flexiblemockserver
 ```
 
 ```:terminal
-❯ kind create cluster -n sandbox-test --config sample_manifest/kubernetes/cluster.yaml
+❯ kind create cluster -n sandbox-test --config sample_manifest/kubernetes/cluster/cluster.yaml
 Creating cluster "sandbox-test" ...
  ✓ Ensuring node image (kindest/node:v1.27.3) 🖼
  ✓ Preparing nodes 📦 📦 📦 📦
