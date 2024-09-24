@@ -5,13 +5,15 @@
 このページではprogressive deliveryの動きを目で見て確認しようというものになります。
 このドキュメントでは、Flaggerをベースに解説します。
 
+
+
 ## 前提
 
 Flaggerの動作確認はistioをベースに動作させます。
 
 > [!NOTE]
-> こちらのドキュメントを参考に全ての手順を踏んでから実施してください。
-> <br> ref: [link](../../sample_manifest/kubernetes/apm_tempo/README.md)
+> こちらのドキュメントを参考に全ての手順を踏んでから実施してください。(サービスメッシュの概要)
+> <br> ref: [link](../README.md)
 
 ## progressive deliveryとは？
 
