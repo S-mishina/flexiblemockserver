@@ -4,7 +4,7 @@ metadata:
   name: istiocontrolplane
   namespace: istio-system
 spec:
-  profile: demo
+  profile: default
   meshConfig:
     accessLogFile: /dev/stdout
     enableTracing: true
