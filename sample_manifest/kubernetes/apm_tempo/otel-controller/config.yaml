@@ -5,6 +5,9 @@ metadata:
   namespace: monitoring
 spec:
   mode: deployment
+  podAnnotations:
+    prometheus.io/scrape: 'true'
+    prometheus.io/port: '8888'
   image: otel/opentelemetry-collector-contrib:latest # Contrib イメージを指定
   config: |
     receivers:
