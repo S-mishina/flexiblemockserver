@@ -69,7 +69,11 @@ Execute the following command
 
 ## Step3: Install metric servers
 
-TBU
+Execute the following command
+
+```:terminal
+❯ kubectl apply -f sample_manifest/kubernetes/kube-state-metrics/output.yaml
+```
 
 ## Step4: [Prometheus Operator](https://github.com/prometheus-operator/prometheus-operator) Install
 
