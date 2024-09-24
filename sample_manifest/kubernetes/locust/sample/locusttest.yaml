@@ -1,0 +1,15 @@
+apiVersion: locust.io/v1
+kind: LocustTest
+metadata:
+  name: demo.test
+spec:
+  image: locustio/locust:latest
+  masterCommandSeed:
+    --locustfile /lotest/src/demo_test.py
+    --host http://flexiblemockserver.mockserver.svc.cluster.local
+    --users 100
+    --spawn-rate 1
+    --run-time 1m
+  workerCommandSeed: --locustfile /lotest/src/demo_test.py
+  workerReplicas: 1
+  configMap: demo-test-map
