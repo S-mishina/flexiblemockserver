@@ -7,3 +7,5 @@ configMapGenerator:
   - name: demo-test-map
     files:
       - demo_test.py
+generatorOptions:
+  disableNameSuffixHash: true
