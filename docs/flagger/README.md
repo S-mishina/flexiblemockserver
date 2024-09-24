@@ -30,10 +30,14 @@ ref: [link](https://docs.flagger.app/usage/deployment-strategies#canary-release)
 ### flaggerを動作確認するためのmock serverを用意する
 
 ```:terminal
-kubectl apply -k sample_manifest/kubernetes/flagger/
+❯ kubectl apply -k sample_manifest/kubernetes/flagger/
 ```
 
-ref: [link](kubectl apply -k sample_manifest/kubernetes/flagger/)
+```:terminal
+❯ kubectl apply -f https://raw.githubusercontent.com/fluxcd/flagger/main/artifacts/flagger/crd.yaml
+```
+
+ref: [link]()
 
 ### 実際に動作させてみよう
 

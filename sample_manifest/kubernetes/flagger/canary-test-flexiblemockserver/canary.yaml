@@ -1,0 +1,17 @@
+apiVersion: flagger.app/v1beta1
+kind: Canary
+metadata:
+  name: flexiblemockserver
+spec:
+  targetRef:
+    apiVersion: apps/v1
+    kind: Deployment
+    name: canary-test-flexiblemockserver
+  service:
+    port: 8080
+    name: canary-test-flexiblemockserver
+  analysis:
+    interval: 1m
+    threshold: 10
+    maxWeight: 50
+    stepWeight: 10
