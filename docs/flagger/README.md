@@ -85,6 +85,18 @@ TBU
 
 #### 失敗パターン
 
+labelに差分を入れて、動作を確認してみる。
+
+```:terminal
+TBU
+```
+
+```:terminal
+❯ kubectl apply -k sample_manifest/kubernetes/flagger/canary-test-flexiblemockserver
+```
+
+実際にcanary podが実行されたら、負荷試験ツールを用いてリクエストを流してみる。
+
 ```:terminal
 ❯ kubectl apply -k sample_manifest/kubernetes/locust/sample2/
 ```
