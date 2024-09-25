@@ -30,6 +30,10 @@ progressive deliveryが開始されると、Flaggerは事前に定義されたMe
 
 ## progressive deliveryとは？
 
+> progressive deliveryが開始されると、Flaggerは事前に定義されたMetricTemplateを使用して、各モニタリングプロバイダー（PrometheusやDatadogなど）にクエリを送信し、リリースの健全性を監視します。モニタリングの結果に基づいて、問題がなければIstioのweightを調整し、トラフィックの割合を段階的にCanary環境へ移行させます。万が一、異常が検知された場合は、リリースを自動的に停止またはロールバックします。
+
+ここについてさらに詳細に解説します。
+
 TBU
 
 ref: [link](https://docs.flagger.app/usage/deployment-strategies#canary-release)
