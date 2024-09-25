@@ -5,8 +5,6 @@
 このページではprogressive deliveryの動きを目で見て確認しようというものになります。
 このドキュメントでは、Flaggerをベースに解説します。
 
-
-
 ## 前提
 
 Flaggerの動作確認はistioをベースに動作させます。
@@ -59,29 +57,23 @@ TBU
 ❯ kubectl apply -k sample_manifest/kubernetes/locust/sample/
 ```
 
-開始
+##### 実行中
 
-```:terminal
+![image](../image/14.png)
 
-```
+##### 成功
 
-実行中
-
-```:terminal
-
-```
-
-終了
-
-```:terminal
-
-```
+![image](../image/15.png)
 
 試験が終わったら`locust`を削除しましょう。
 
 ```:terminal
 ❯ kubectl delete -k sample_manifest/kubernetes/locust/sample/
 ```
+
+##### 参考値としてdashboard
+
+![image](../image/15.png)
 
 #### 失敗パターン
 
@@ -140,10 +132,9 @@ TBU
 
 ### tips
 
-#### 今回設定しているparameterの課題感
-
-TBU
-
 #### metric周りのtips
 
-TBU
+##### canaryとprimaryのmetricを分ける
+
+##### flaggerが提供しているmetricを活用する
+
