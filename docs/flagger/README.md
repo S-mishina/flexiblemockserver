@@ -37,6 +37,10 @@ ref: [link](https://docs.flagger.app/usage/deployment-strategies#canary-release)
 ❯ kubectl apply -k sample_manifest/kubernetes/flagger/canary-test-flexiblemockserver
 ```
 
+### Resourceのschema解説
+
+TBU
+
 ### 実際に動作させてみよう
 
 #### 成功パターン
