@@ -75,6 +75,10 @@ Execute the following command
 ❯ kubectl apply -f sample_manifest/kubernetes/kube-state-metrics/output.yaml
 ```
 
+```:terminal
+❯ kubectl apply -f sample_manifest/kubernetes/metric-server/components.yaml
+```
+
 ## Step4: [Prometheus Operator](https://github.com/prometheus-operator/prometheus-operator) Install
 
 ### 4.1. Install Prometheus Operator
