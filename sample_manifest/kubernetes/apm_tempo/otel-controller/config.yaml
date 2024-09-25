@@ -16,7 +16,7 @@ spec:
       otlp:
         protocols:
           grpc:
-            endpoint: "localhost:4317"
+            endpoint: "0.0.0.0:4317"
     exporters:
       otlp:
         endpoint: "tempo-simplest-distributor.my-tempo:4317"
@@ -38,8 +38,8 @@ spec:
             default: GET
           - name: http.status_code
             default: "200"
-          # - name: deployment_name
-          #   from_attribute: k8s.deployment.name
+          - name: deployment_name
+            from_attribute: k8s.deployment.name
     service:
       pipelines:
         traces:
