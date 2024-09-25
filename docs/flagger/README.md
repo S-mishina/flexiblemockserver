@@ -35,22 +35,66 @@ ref: [link](https://docs.flagger.app/usage/deployment-strategies#canary-release)
 ❯ kubectl apply -f https://raw.githubusercontent.com/fluxcd/flagger/main/artifacts/flagger/crd.yaml
 ```
 
-ref: [link]()
-
 ### 実際に動作させてみよう
 
-#### 事前準備
+#### 成功パターン
+
+```:terminal
+❯ kubectl apply -k sample_manifest/kubernetes/locust/sample/
+```
+
+開始
 
 ```:terminal
 
 ```
 
-#### 成功パターン
+実行中
 
-TBU
+```:terminal
+
+```
+
+終了
+
+```:terminal
+
+```
+
+試験が終わったら`locust`を削除しましょう。
+
+```:terminal
+❯ kubectl delete -k sample_manifest/kubernetes/locust/sample/
+```
 
 #### 失敗パターン
 
-TBU
+```:terminal
+❯ kubectl apply -k sample_manifest/kubernetes/locust/sample/
+```
+
+開始
+
+```:terminal
+
+```
+
+実行中
+
+```:terminal
+
+```
+
+終了
+
+```:terminal
+
+```
+
+試験が終わったら`locust`を削除しましょう。
+
+```:terminal
+❯ kubectl delete -k sample_manifest/kubernetes/locust/sample/
+```
 
 ### tips

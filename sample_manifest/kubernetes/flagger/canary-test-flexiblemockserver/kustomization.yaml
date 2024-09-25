@@ -6,6 +6,7 @@ namePrefix: canary-test-
 resources:
   - ../../apm_tempo/flexiblemockserver
   - canary.yaml
+  - sample-metrics.yaml
 patches:
   - path: deployment.yaml
   - patch: |
