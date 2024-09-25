@@ -128,7 +128,7 @@ TBU
 
 ##### 参考値としてdashboard
 
-
+![image](../image/13.png)
 
 ### tips
 
