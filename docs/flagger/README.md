@@ -89,10 +89,6 @@ TBU
 ❯ kubectl apply -k sample_manifest/kubernetes/locust/sample2/
 ```
 
-##### 開始
-
-
-
 ##### 実行中
 
 ![image](../image/11.png)
