@@ -3,7 +3,8 @@
 ## 概要
 
 このページではprogressive deliveryの動きを目で見て確認しようというものになります。
-このドキュメントでは、Flaggerをベースに解説します。
+
+このドキュメントでは、progressive delivery = canary releaseのことを指しています。
 
 ## 前提
 
@@ -108,11 +109,97 @@ spec:
 
 ![image](../image/15.png)
 
+```yaml:yaml
+apiVersion: networking.istio.io/v1beta1
+kind: VirtualService
+metadata:
+  annotations:
+    helm.toolkit.fluxcd.io/driftDetection: disabled
+    kustomize.toolkit.fluxcd.io/reconcile: disabled
+  creationTimestamp: "2024-09-25T05:11:56Z"
+  generation: 38
+  name: canary-test-flexiblemockserver
+  namespace: mockserver
+  ownerReferences:
+  - apiVersion: flagger.app/v1beta1
+    blockOwnerDeletion: true
+    controller: true
+    kind: Canary
+    name: canary-test-flexiblemockserver
+    uid: 83ec2230-110d-4f02-98fe-ecd6f07b9b82
+  resourceVersion: "587738"
+  uid: efa1d284-9c2c-4c41-844f-be07387e789e
+spec:
+  gateways:
+  - mesh
+  hosts:
+  - canary-test-flexiblemockserver
+  http:
+  - route:
+    - destination:
+        host: canary-test-flexiblemockserver-primary
+      weight: 50
+    - destination:
+        host: canary-test-flexiblemockserver-canary
+      weight: 50
+```
+
+promoteフェイズになると、VirtualServiceをcanary:primaryを50:5050にしてDeploymentのミラーリング(canaryからprimaryに昇格)を行います。
+
 ##### 完了後の動き
 
 ![image](../image/16.png)
 
+```yaml:yaml
+apiVersion: networking.istio.io/v1beta1
+kind: VirtualService
+metadata:
+  annotations:
+    helm.toolkit.fluxcd.io/driftDetection: disabled
+    kustomize.toolkit.fluxcd.io/reconcile: disabled
+  creationTimestamp: "2024-09-25T05:11:56Z"
+  generation: 39
+  name: canary-test-flexiblemockserver
+  namespace: mockserver
+  ownerReferences:
+  - apiVersion: flagger.app/v1beta1
+    blockOwnerDeletion: true
+    controller: true
+    kind: Canary
+    name: canary-test-flexiblemockserver
+    uid: 83ec2230-110d-4f02-98fe-ecd6f07b9b82
+  resourceVersion: "588295"
+  uid: efa1d284-9c2c-4c41-844f-be07387e789e
+spec:
+  gateways:
+  - mesh
+  hosts:
+  - canary-test-flexiblemockserver
+  http:
+  - route:
+    - destination:
+        host: canary-test-flexiblemockserver-primary
+      weight: 100
+    - destination:
+        host: canary-test-flexiblemockserver-canary
+      weight: 0
+```
 
+canaryからprimaryにミラーリングを完了させると、VirtualServiceのweightをcanary:primaryを0:100にしてProgressiveDeliveryを完了させます。
+
+eventも載せておきます。
+```:terminal
+Events:
+  Type     Reason  Age                  From     Message
+  ----     ------  ----                 ----     -------
+  Normal   Synced  9m38s (x7 over 8h)   flagger  Starting canary analysis for canary-test-flexiblemockserver.mockserver
+  Normal   Synced  9m38s (x6 over 8h)   flagger  Advance canary-test-flexiblemockserver.mockserver canary weight 10
+  Normal   Synced  8m38s (x6 over 8h)   flagger  Advance canary-test-flexiblemockserver.mockserver canary weight 20
+  Normal   Synced  7m38s (x6 over 8h)   flagger  Advance canary-test-flexiblemockserver.mockserver canary weight 30
+  Normal   Synced  6m38s (x6 over 8h)   flagger  Advance canary-test-flexiblemockserver.mockserver canary weight 40
+  Normal   Synced  5m38s (x5 over 8h)   flagger  Advance canary-test-flexiblemockserver.mockserver canary weight 50
+  Normal   Synced  2m39s (x12 over 8h)  flagger  (combined from similar events): Promotion completed! Scaling down canary-test-flexiblemockserver.mockserver
+```
 
 試験が終わったら`locust`を削除しましょう。
 
