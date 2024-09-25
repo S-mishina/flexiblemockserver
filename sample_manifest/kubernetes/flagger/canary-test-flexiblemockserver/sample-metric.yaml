@@ -7,4 +7,4 @@ spec:
     type: prometheus
     address: http://prometheus-operated.monitoring:9090
   query: |
-    sum by(service_name) (rate(traces_spanmetrics_calls_total{service_name="flexiblemockserver", http_status_code!~"20*"}[5m])) * 60 or 0
+    sum(rate(traces_spanmetrics_calls_total{service_name="flexiblemockserver", http_status_code!~"20*"}[5m])) * 60

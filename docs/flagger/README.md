@@ -35,9 +35,25 @@ ref: [link](https://docs.flagger.app/usage/deployment-strategies#canary-release)
 ❯ kubectl apply -f https://raw.githubusercontent.com/fluxcd/flagger/main/artifacts/flagger/crd.yaml
 ```
 
+```:terminal
+❯ kubectl apply -k sample_manifest/kubernetes/flagger/canary-test-flexiblemockserver
+```
+
 ### 実際に動作させてみよう
 
 #### 成功パターン
+
+labelに差分を入れて、動作を確認してみる。
+
+```:terminal
+TBU
+```
+
+```:terminal
+❯ kubectl apply -k sample_manifest/kubernetes/flagger/canary-test-flexiblemockserver
+```
+
+実際にapplicationが実行されたら、負荷試験ツールを用いてリクエストを流してみる。
 
 ```:terminal
 ❯ kubectl apply -k sample_manifest/kubernetes/locust/sample/
