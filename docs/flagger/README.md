@@ -65,9 +65,54 @@ TBU
 
 ![image](../image/14.png)
 
-##### 成功
+実行されると、weightがあがります。
+
+ここのweightはistioのweightと一致しています。
+
+```yaml:yaml
+apiVersion: networking.istio.io/v1beta1
+kind: VirtualService
+metadata:
+  annotations:
+    helm.toolkit.fluxcd.io/driftDetection: disabled
+    kustomize.toolkit.fluxcd.io/reconcile: disabled
+  creationTimestamp: "2024-09-25T05:11:56Z"
+  generation: 28
+  name: canary-test-flexiblemockserver
+  namespace: mockserver
+  ownerReferences:
+  - apiVersion: flagger.app/v1beta1
+    blockOwnerDeletion: true
+    controller: true
+    kind: Canary
+    name: canary-test-flexiblemockserver
+    uid: 83ec2230-110d-4f02-98fe-ecd6f07b9b82
+  resourceVersion: "583895"
+  uid: efa1d284-9c2c-4c41-844f-be07387e789e
+spec:
+  gateways:
+  - mesh
+  hosts:
+  - canary-test-flexiblemockserver
+  http:
+  - route:
+    - destination:
+        host: canary-test-flexiblemockserver-primary
+      weight: 90
+    - destination:
+        host: canary-test-flexiblemockserver-canary
+      weight: 10
+```
+
+##### Progressive Delivery完了
 
 ![image](../image/15.png)
+
+##### 完了後の動き
+
+![image](../image/16.png)
+
+
 
 試験が終わったら`locust`を削除しましょう。
 
