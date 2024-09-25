@@ -23,7 +23,7 @@ spec:
           namespace: mockserver
         # accepted values
         thresholdRange:
-          max: 120
+          max: 10
         # metric query time window
         interval: 1m
         # custom variables used within the referenced metric template
