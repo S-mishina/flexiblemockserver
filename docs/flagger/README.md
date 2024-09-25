@@ -14,6 +14,10 @@ Flaggerの動作確認はistioをベースに動作させます。
 > こちらのドキュメントを参考に全ての手順を踏んでから実施してください。(サービスメッシュの概要)
 > <br> ref: [link](../README.md)
 
+> [!NOTE]
+> このドキュメントで負荷試験ツールを利用する場合には、locustをinstallする必要があります。
+> <br> ref: [link](../locust/README.md)
+
 ## progressive deliveryとは？
 
 TBU
