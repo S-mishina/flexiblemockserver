@@ -42,9 +42,9 @@ ref: [link](https://docs.flagger.app/usage/deployment-strategies#canary-release)
 
 TBU
 
-### 実際に動作させてみよう
+## 実際に動作させてみよう
 
-#### 成功パターン
+### 成功パターン
 
 labelに差分を入れて、動作を確認してみる。
 
@@ -62,7 +62,7 @@ TBU
 ❯ kubectl apply -k sample_manifest/kubernetes/locust/sample/
 ```
 
-##### 実行中
+#### 実行中
 
 ![image](../image/14.png)
 
@@ -105,7 +105,7 @@ spec:
       weight: 10
 ```
 
-##### Progressive Delivery完了
+#### Progressive Delivery完了
 
 ![image](../image/15.png)
 
@@ -146,7 +146,7 @@ spec:
 
 promoteフェイズになると、VirtualServiceをcanary:primaryを50:5050にしてDeploymentのミラーリング(canaryからprimaryに昇格)を行います。
 
-##### 完了後の動き
+#### 完了後の動き
 
 ![image](../image/16.png)
 
@@ -207,11 +207,11 @@ Events:
 ❯ kubectl delete -k sample_manifest/kubernetes/locust/sample/
 ```
 
-##### 参考値としてdashboard
+#### 参考値としてdashboard
 
 ![image](../image/15.png)
 
-#### 失敗パターン
+### 失敗パターン
 
 labelに差分を入れて、動作を確認してみる。
 
@@ -229,14 +229,14 @@ TBU
 ❯ kubectl apply -k sample_manifest/kubernetes/locust/sample2/
 ```
 
-##### 実行中
+#### 実行中
 
 ![image](../image/11.png)
 
 今回はk9sの画面を表示していますが、`SUSPENDED`の数が増えていることがわかります。
 これは、metric_templateで定義した値がcanaryで設定してる閾値を満たしていないまたは、超えているためです。
 
-##### 失敗
+#### 失敗
 
 ![image](../image/12.png)
 
@@ -262,7 +262,7 @@ TBU
 ❯ kubectl delete -k sample_manifest/kubernetes/locust/sample2/
 ```
 
-##### 参考値としてdashboard
+#### 参考値としてdashboard
 
 ![image](../image/13.png)
 
