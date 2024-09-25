@@ -16,11 +16,11 @@ patches:
       metadata:
         name: flexiblemockserver
         namespace: mockserver
-  - path: |
-      apiVersion: apps/v1
-      kind: Deployment
+  - patch: |
+      $patch: delete
+      apiVersion: v1
+      kind: Namespace
       metadata:
-        annotations:
-          configmap.reloader.stakater.com/reload: '*'
-        name: canary-test-flexiblemockserver
-        namespace: mockserver
+        labels:
+          istio-injection: enabled
+        name: mockserver
