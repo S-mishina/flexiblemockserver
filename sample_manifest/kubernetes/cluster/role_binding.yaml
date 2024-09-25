@@ -57,3 +57,16 @@ subjects:
 - kind: ServiceAccount
   name: prometheus
   namespace: monitoring
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  name: simplest1-collector-binding
+subjects:
+  - kind: ServiceAccount
+    name: simplest1-collector
+    namespace: monitoring
+roleRef:
+  kind: ClusterRole
+  name: simplest1-collector-role
+  apiGroup: rbac.authorization.k8s.io
