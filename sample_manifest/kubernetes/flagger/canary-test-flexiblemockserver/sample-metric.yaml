@@ -1,0 +1,10 @@
+apiVersion: flagger.app/v1beta1
+kind: MetricTemplate
+metadata:
+  name: my-metric
+spec:
+  provider:
+    type: prometheus
+    address: http://prometheus-operated.monitoring:9090
+  query: |
+    sum by(service_name) (rate(traces_spanmetrics_calls_total{service_name="flexiblemockserver", http_status_code!~"20*"}[$__rate_interval])) * 60

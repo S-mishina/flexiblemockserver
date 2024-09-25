@@ -16,3 +16,16 @@ spec:
     maxWeight: 50
     stepWeight: 10
     # skipanalysis: true
+    metrics:
+      - name: "my metric"
+        templateRef:
+          name: my-metric
+          namespace: mockserver
+        # accepted values
+        thresholdRange:
+          max: 120
+        # metric query time window
+        interval: 1m
+        # custom variables used within the referenced metric template
+        templateVariables:
+          direction: inbound

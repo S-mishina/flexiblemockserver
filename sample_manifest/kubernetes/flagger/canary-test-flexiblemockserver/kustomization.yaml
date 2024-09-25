@@ -6,7 +6,7 @@ namePrefix: canary-test-
 resources:
   - ../../apm_tempo/flexiblemockserver
   - canary.yaml
-  - sample-metrics.yaml
+  - sample-metric.yaml
 patches:
   - path: deployment.yaml
   - patch: |
@@ -15,4 +15,12 @@ patches:
       kind: Service
       metadata:
         name: flexiblemockserver
+        namespace: mockserver
+  - path: |
+      apiVersion: apps/v1
+      kind: Deployment
+      metadata:
+        annotations:
+          configmap.reloader.stakater.com/reload: '*'
+        name: canary-test-flexiblemockserver
         namespace: mockserver
