@@ -4,7 +4,7 @@
 
 このページではprogressive deliveryの動きを目で見て確認しようというものになります。
 
-このドキュメントでは、progressive delivery = canary releaseのことを指しています。
+※ このドキュメントでは、progressive delivery = canary releaseのことを指しています。
 
 ## 前提
 
@@ -17,6 +17,14 @@ Flaggerの動作確認はistioをベースに動作させます。
 > [!NOTE]
 > このドキュメントで負荷試験ツールを利用する場合には、locustをinstallする必要があります。
 > <br> ref: [link](../locust/README.md)
+
+## そもそもFlaggerをどう理解すれば良いのか？
+
+Flaggerは、Istioと連携してCanaryリリースやブルー/グリーンデプロイメントといったprogressive deliveryの自動化を実現するオペレーターです。Flaggerは、指定されたアプリケーションに基づいて、Service、VirtualService、DestinationRuleなどのIstioリソースを自動生成します。このプロセスは、resource:canaryに基づいて行われ、アプリケーションのリリース管理が簡素化されます。
+
+progressive deliveryが開始されると、Flaggerは事前に定義されたMetricTemplateを使用して、各モニタリングプロバイダー（PrometheusやDatadogなど）にクエリを送信し、リリースの健全性を監視します。モニタリングの結果に基づいて、問題がなければIstioのweightを調整し、トラフィックの割合を段階的にCanary環境へ移行させます。万が一、異常が検知された場合は、リリースを自動的に停止またはロールバックします。
+
+※ これは個人的な考え方なので、もっと良い表現の仕方があったら教えてください...
 
 ## progressive deliveryとは？
 
