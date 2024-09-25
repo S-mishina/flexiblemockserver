@@ -6,9 +6,9 @@ spec:
   image: locustio/locust:latest
   masterCommandSeed:
     --locustfile /lotest/src/demo_test.py
-    --host http://flexiblemockserver.mockserver.svc.cluster.local
-    --users 100
-    --spawn-rate 1
+    --host http://canary-test-flexiblemockserver.mockserver.svc.cluster.local:8080
+    --users 10
+    --spawn-rate 10
     --run-time 1m
   workerCommandSeed: --locustfile /lotest/src/demo_test.py
   workerReplicas: 1

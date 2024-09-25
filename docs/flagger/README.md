@@ -86,7 +86,7 @@ TBU
 #### 失敗パターン
 
 ```:terminal
-❯ kubectl apply -k sample_manifest/kubernetes/locust/sample/
+❯ kubectl apply -k sample_manifest/kubernetes/locust/sample2/
 ```
 
 開始
