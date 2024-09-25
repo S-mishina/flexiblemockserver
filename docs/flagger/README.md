@@ -89,28 +89,53 @@ TBU
 ❯ kubectl apply -k sample_manifest/kubernetes/locust/sample2/
 ```
 
-開始
+##### 開始
+
+
+
+##### 実行中
+
+![image](../image/11.png)
+
+今回はk9sの画面を表示していますが、`SUSPENDED`の数が増えていることがわかります。
+これは、metric_templateで定義した値がcanaryで設定してる閾値を満たしていないまたは、超えているためです。
+
+##### 失敗
+
+![image](../image/12.png)
+
+今回はk9sの画面を表示していますが、`SUSPENDED`の数が設定している数を超えたため失敗したことがわかります。
+
+イベントは以下のように表示されています。
 
 ```:terminal
-
-```
-
-実行中
-
-```:terminal
-
-```
-
-終了
-
-```:terminal
-
+  Warning  Synced  10m                  flagger  Halt canary-test-flexiblemockserver.mockserver advancement my metric 91.57 > 10
+  Warning  Synced  9m38s                flagger  Halt canary-test-flexiblemockserver.mockserver advancement my metric 133.65 > 10
+  Warning  Synced  8m24s                flagger  Halt canary-test-flexiblemockserver.mockserver advancement my metric 74.69 > 10
+  Warning  Synced  7m38s                flagger  Halt canary-test-flexiblemockserver.mockserver advancement my metric 55.80 > 10
+  Warning  Synced  6m38s                flagger  Halt canary-test-flexiblemockserver.mockserver advancement my metric 65.24 > 10
+  Warning  Synced  5m38s                flagger  Halt canary-test-flexiblemockserver.mockserver advancement my metric 91.61 > 10
+  Warning  Synced  4m38s                flagger  Halt canary-test-flexiblemockserver.mockserver advancement my metric 170.53 > 10
+  Warning  Synced  3m38s                flagger  Halt canary-test-flexiblemockserver.mockserver advancement my metric 94.74 > 10
+  Warning  Synced  38s (x4 over 2m38s)  flagger  (combined from similar events): Canary failed! Scaling down canary-test-flexiblemockserver.mockserver
 ```
 
 試験が終わったら`locust`を削除しましょう。
 
 ```:terminal
-❯ kubectl delete -k sample_manifest/kubernetes/locust/sample/
+❯ kubectl delete -k sample_manifest/kubernetes/locust/sample2/
 ```
 
+##### 参考値としてdashboard
+
+
+
 ### tips
+
+#### 今回設定しているparameterの課題感
+
+TBU
+
+#### metric周りのtips
+
+TBU
