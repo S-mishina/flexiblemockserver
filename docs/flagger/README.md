@@ -26,6 +26,8 @@ progressive deliveryが開始されると、Flaggerは事前に定義されたMe
 
 ※ これは個人的な考え方なので、もっと良い表現の仕方があったら教えてください...
 
+※後で図を入れる。
+
 ## progressive deliveryとは？
 
 TBU
