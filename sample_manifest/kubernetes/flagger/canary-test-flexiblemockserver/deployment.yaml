@@ -20,7 +20,7 @@ spec:
       labels:
         app: flexiblemockserver
         istio-injection: enabled
-        test: "test5"
+        test: "test6"
 
     spec:
       containers:

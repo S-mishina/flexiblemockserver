@@ -19,7 +19,7 @@ spec:
     metrics:
       - name: "my metric"
         templateRef:
-          name: my-metric
+          name: canary-test-my-metric
           namespace: mockserver
         # accepted values
         thresholdRange:
