@@ -26,15 +26,38 @@ progressive deliveryが開始されると、Flaggerは事前に定義されたMe
 
 ※ これは個人的な考え方なので、もっと良い表現の仕方があったら教えてください...
 
-※後で図を入れる。
+```:yaml
+apiVersion: flagger.app/v1beta1
+kind: Canary
+metadata:
+  name: flexiblemockserver
+spec:
+  service:
+    # Wrapping Service Resources
+    port: 8080
+    name: canary-test-flexiblemockserver
+    # Wrapping VirtualService Resource
+    #retries:
+    #  attempts: 3
+    #  perTryTimeout: 1s
+    #  retryOn: "5xx"
+```
+
+詳細はFlaggerのCanary Resourceのschemaを確認してください。
+
+ref: [CRD](https://github.com/fluxcd/flagger/blob/b6ac5e19aa7fa2949bbc8bf37a0f6c1e31b1745d/charts/flagger/crds/crd.yaml#L176-L907)
+
+ref: [schema](https://github.com/fluxcd/flagger/blob/b6ac5e19aa7fa2949bbc8bf37a0f6c1e31b1745d/pkg/apis/flagger/v1beta1/canary.go#L122-L221)
 
 ## Flaggerにおけるprogressive deliveryとは？
 
 > progressive deliveryが開始されると、Flaggerは事前に定義されたMetricTemplateを使用して、各モニタリングプロバイダー（PrometheusやDatadogなど）にクエリを送信し、リリースの健全性を監視します。モニタリングの結果に基づいて、問題がなければIstioのweightを調整し、トラフィックの割合を段階的にCanary環境へ移行させます。万が一、異常が検知された場合は、リリースを自動的に停止またはロールバックします。
 
-ここについてさらに詳細に解説します。
+ここについてさらに詳細について図を用いて解説します。
 
-TBU
+図で書くとこんな感じ
+
+![image](../image/18.png)
 
 ref: [link](https://docs.flagger.app/usage/deployment-strategies#canary-release)
 
