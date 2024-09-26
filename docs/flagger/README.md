@@ -227,7 +227,7 @@ Events:
 
 #### 参考値としてdashboard
 
-![image](../image/15.png)
+![image](../image/17.png)
 
 ### 失敗パターン
 
