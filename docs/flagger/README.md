@@ -313,5 +313,43 @@ TBU
 
 ##### canaryとprimaryのmetricを分ける
 
+```:yaml
+apiVersion: flagger.app/v1beta1
+kind: MetricTemplate
+metadata:
+  name: my-metric
+spec:
+  provider:
+    type: prometheus
+    address: http://prometheus-operated.monitoring:9090
+  query: |
+    sum(rate(traces_spanmetrics_calls_total{service_name="canary-test-flexiblemockserver", http_status_code!~"20*"}[1m])) * 60 or vector(0)
+```
+
+現状のQueryだと、primaryとcanaryの両方のデータを足した値が表示されます。
+ただ、本来canary releaseとはcanary側がデグレーションを起こしてないかを確認するものなのでcanaryとprimaryにどのような差があるか、もしくは、canary側に絞るといったような対応をしてあるとさらに良い対応ができるでしょう。
+
+修正版
+
+```:yaml
+apiVersion: flagger.app/v1beta1
+kind: MetricTemplate
+metadata:
+  name: my-metric
+spec:
+  provider:
+    type: prometheus
+    address: http://prometheus-operated.monitoring:9090
+  query: |
+    sum(rate(traces_spanmetrics_calls_total{service_name="canary-test-flexiblemockserver", http_status_code!~"20*",k8s_deployment_name="canary-test-flexiblemockserve"}[1m])) * 60 or vector(0)
+```
+
+dashboardによる可視化
+
+TBU
+
 ##### flaggerが提供しているmetricを活用する
 
+#### flaggerを採用する際に気を付けること
+
+TBU
