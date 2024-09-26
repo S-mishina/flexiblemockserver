@@ -5,7 +5,7 @@ namespace: default
 resources:
 - locusttest.yaml
 configMapGenerator:
-  - name: demo-test-map1
+  - name: demo-test-map
     files:
       - demo_test.py
 generatorOptions:

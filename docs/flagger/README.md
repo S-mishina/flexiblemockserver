@@ -313,7 +313,7 @@ TBU
 
 ##### canaryとprimaryのmetricを分ける
 
-```:yaml
+```yaml:yaml
 apiVersion: flagger.app/v1beta1
 kind: MetricTemplate
 metadata:
@@ -329,9 +329,9 @@ spec:
 現状のQueryだと、primaryとcanaryの両方のデータを足した値が表示されます。
 ただ、本来canary releaseとはcanary側がデグレーションを起こしてないかを確認するものなのでcanaryとprimaryにどのような差があるか、もしくは、canary側に絞るといったような対応をしてあるとさらに良い対応ができるでしょう。
 
-修正版
+修正版(canary側に絞る例)
 
-```:yaml
+```yaml:yaml
 apiVersion: flagger.app/v1beta1
 kind: MetricTemplate
 metadata:
@@ -349,6 +349,8 @@ dashboardによる可視化
 TBU
 
 ##### flaggerが提供しているmetricを活用する
+
+TBU
 
 #### flaggerを採用する際に気を付けること
 
