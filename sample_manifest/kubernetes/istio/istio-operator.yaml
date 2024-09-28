@@ -26,6 +26,9 @@ spec:
   concurrency: 0
   environmentVariables:
     OTEL_RESOURCE_ATTRIBUTES: "service.name=istio-proxy"
+  selector:
+    matchLabels:
+      istio-injection: enabled
 ---
 # telemetry.yaml
 apiVersion: telemetry.istio.io/v1
