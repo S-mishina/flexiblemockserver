@@ -13,7 +13,7 @@ This README summarizes how to use grafana tempo with Kubernetes.
 
 > [!NOTE]
 > For more information about what you can do with this KIND CLUSTER and how it works
-> > <br> ref: [link]() TBU
+> <br> ref: [link]() TBU
 
 
 ## Step1: GrafanaTempo Install
