@@ -67,13 +67,13 @@ ref: [link](https://docs.flagger.app/usage/deployment-strategies#canary-release)
 ❯ kubectl apply -k sample_manifest/kubernetes/flagger/
 ```
 
-ref: [link](https://docs.flagger.app/usage/deployment-strategies#canary-release)
-
-### flaggerを動作確認するためのmock serverを用意する
-
 ```:terminal
 ❯ kubectl apply -f https://raw.githubusercontent.com/fluxcd/flagger/main/artifacts/flagger/crd.yaml
 ```
+
+ref: [link](https://docs.flagger.app/usage/deployment-strategies#canary-release)
+
+### flaggerを動作確認するためのmock serverを用意する
 
 ```:terminal
 ❯ kubectl apply -k sample_manifest/kubernetes/flagger/canary-test-flexiblemockserver
