@@ -3,6 +3,9 @@ kind: LocustTest
 metadata:
   name: demo.test
 spec:
+  annotations:
+    worker:
+      sidecar.istio.io/inject: "true"
   image: locustio/locust:latest
   masterCommandSeed:
     --locustfile /lotest/src/demo_test.py

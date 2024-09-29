@@ -20,7 +20,7 @@ spec:
       labels:
         app: canary-test-flexiblemockserver
         istio-injection: enabled
-        test: "test13"
+        test: "test17"
 
     spec:
       containers:
