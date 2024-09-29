@@ -63,10 +63,6 @@ Execute the following command
 ❯ kubectl apply -f sample_manifest/kubernetes/apm_tempo/otel-controller/config.yaml
 ```
 
-```:terminal
-❯ istioctl install -y sample_manifest/kubernetes/istio/istio-operator.yaml
-```
-
 ## Step3: Install metric servers
 
 Execute the following command

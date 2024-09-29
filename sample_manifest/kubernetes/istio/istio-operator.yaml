@@ -8,14 +8,10 @@ spec:
   meshConfig:
     accessLogFile: /dev/stdout
     enableTracing: true
-    extensionProviders:
-      - name: otel-tracing
-        opentelemetry:
-          port: 4317
-          service: simplest1-collector.monitoring.svc.cluster.local
-    defaultProviders:
+    defaultConfig:
       tracing:
-        - otel-tracing
+        zipkin:
+          address: "simplest1-collector.monitoring.svc.cluster.local:4317"
 ---
 apiVersion: networking.istio.io/v1beta1
 kind: ProxyConfig
@@ -31,7 +27,7 @@ spec:
       istio-injection: enabled
 ---
 # telemetry.yaml
-apiVersion: telemetry.istio.io/v1
+apiVersion: telemetry.istio.io/v1alpha1
 kind: Telemetry
 metadata:
   name: otel-tracing
@@ -41,4 +37,3 @@ spec:
     - providers:
         - name: otel-tracing
       randomSamplingPercentage: 100
-

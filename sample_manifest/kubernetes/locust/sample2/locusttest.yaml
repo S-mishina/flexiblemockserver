@@ -1,7 +1,7 @@
 apiVersion: locust.io/v1
 kind: LocustTest
 metadata:
-  name: demo.test1
+  name: demo.test2
 spec:
   image: locustio/locust:latest
   masterCommandSeed:
