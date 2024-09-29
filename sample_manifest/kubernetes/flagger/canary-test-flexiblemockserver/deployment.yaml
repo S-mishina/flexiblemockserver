@@ -14,11 +14,11 @@ spec:
   replicas: 4
   selector:
     matchLabels:
-      app: flexiblemockserver
+      app: canary-test-flexiblemockserver
   template:
     metadata:
       labels:
-        app: flexiblemockserver
+        app: canary-test-flexiblemockserver
         istio-injection: enabled
         test: "test13"
 
