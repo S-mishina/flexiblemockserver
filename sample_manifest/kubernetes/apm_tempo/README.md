@@ -6,7 +6,8 @@ This README summarizes how to use grafana tempo with Kubernetes.
 > Please Install istio before starting work on this Document.
 > ex) <br>
 > ```❯ istioctl operator init``` <br>
-> ```❯ istioctl install -f sample_manifest/kubernetes/istio/istio-operator.yaml```
+> ```❯ istioctl install -f sample_manifest/kubernetes/istio/istio-operator.yaml```<br>
+> ```❯ kubectl apply -f sample_manifest/kubernetes/istio/telemetry.yaml```
 > <br> ref: [link](../../README.md#istio)
 
 ## architecture
