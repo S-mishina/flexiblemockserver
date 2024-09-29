@@ -124,8 +124,10 @@ Execute the following command
 ❯ kubectl apply -k sample_manifest/kubernetes/apm_tempo/flexiblemockserver/
 ```
 
+once more
+
 ```:terminal
-❯ istioctl install -f sample_manifest/kubernetes/istio/istio-operator.yaml -y
+❯ kubectl apply -k sample_manifest/kubernetes/cluster/
 ```
 
 ```:terminal

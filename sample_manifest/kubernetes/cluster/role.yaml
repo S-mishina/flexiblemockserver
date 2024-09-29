@@ -93,3 +93,12 @@ rules:
     - "get"
     - "list"
     - "watch"
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: locusttest-clusterrole
+rules:
+- apiGroups: ["locust.io"]
+  resources: ["locusttests"]
+  verbs: ["get", "list", "watch", "create", "update", "patch", "delete"]
