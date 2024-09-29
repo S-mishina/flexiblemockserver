@@ -9,6 +9,13 @@ This README summarizes how to use grafana tempo with Kubernetes.
 > ```❯ istioctl install -f sample_manifest/kubernetes/istio/istio-operator.yaml```
 > <br> ref: [link](../../README.md#istio)
 
+## architecture
+
+> [!NOTE]
+> For more information about what you can do with this KIND CLUSTER and how it works
+> > <br> ref: [link]() TBU
+
+
 ## Step1: GrafanaTempo Install
 
 ### 1.1. [cert-manager](https://cert-manager.io/docs/installation/#default-static-install) Install
