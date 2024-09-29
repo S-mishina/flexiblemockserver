@@ -1,17 +1,21 @@
+#operator.yaml
 apiVersion: install.istio.io/v1alpha1
 kind: IstioOperator
-metadata:
-  name: istiocontrolplane
-  namespace: istio-system
 spec:
-  profile: default
+  profile: demo
   meshConfig:
     accessLogFile: /dev/stdout
     enableTracing: true
-    defaultConfig:
+    extensionProviders:
+      - name: otel-tracing
+        opentelemetry:
+          port: 4317
+          service: simplest1-collector.monitoring.svc.cluster.local
+          resource_detectors:
+            environment: {}
+    defaultProviders:
       tracing:
-        zipkin:
-          address: "simplest1-collector.monitoring.svc.cluster.local:4317"
+        - otel-tracing
 ---
 apiVersion: networking.istio.io/v1beta1
 kind: ProxyConfig
@@ -22,18 +26,3 @@ spec:
   concurrency: 0
   environmentVariables:
     OTEL_RESOURCE_ATTRIBUTES: "service.name=istio-proxy"
-  selector:
-    matchLabels:
-      istio-injection: enabled
----
-# telemetry.yaml
-apiVersion: telemetry.istio.io/v1alpha1
-kind: Telemetry
-metadata:
-  name: otel-tracing
-  namespace: istio-system
-spec:
-  tracing:
-    - providers:
-        - name: otel-tracing
-      randomSamplingPercentage: 100
