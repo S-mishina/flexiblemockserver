@@ -1,0 +1,12 @@
+# kustmize.yaml
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+namespace: default
+resources:
+- locusttest.yaml
+configMapGenerator:
+  - name: demo-test-map1
+    files:
+      - demo_test.py
+generatorOptions:
+  disableNameSuffixHash: true

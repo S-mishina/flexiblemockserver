@@ -11,16 +11,16 @@ spec:
     rollingUpdate:
       maxSurge: 25%
       maxUnavailable: 0
-  replicas: 1
+  replicas: 4
   selector:
     matchLabels:
-      app: flexiblemockserver
+      app: canary-test-flexiblemockserver
   template:
     metadata:
       labels:
-        app: flexiblemockserver
+        app: canary-test-flexiblemockserver
         istio-injection: enabled
-        test: "test4"
+        test: "test17"
 
     spec:
       containers:
@@ -32,6 +32,16 @@ spec:
         env:
         - name: CUSTOM_RULE_YAML_FILE
           value: config/custom_rule.yaml
+        - name: OTEL_SERVICE_NAME
+          value: "canary-test-flexiblemockserver"
+        - name: OPEN_TELEMETRY_FLG
+          value: "True"
+        - name: OPEN_TELEMETRY_OTLP_FLG
+          value: "True"
+        - name: OPEN_TELEMETRY_GRPC_FLG
+          value: "True"
+        - name: OTLP_HOST
+          value: simplest1-collector.monitoring:4317
         volumeMounts:
         - name: custom-rule
           mountPath: /config

@@ -1,0 +1,31 @@
+apiVersion: flagger.app/v1beta1
+kind: Canary
+metadata:
+  name: flexiblemockserver
+spec:
+  targetRef:
+    apiVersion: apps/v1
+    kind: Deployment
+    name: canary-test-flexiblemockserver
+  service:
+    port: 8080
+    name: canary-test-flexiblemockserver
+  analysis:
+    interval: 1m
+    threshold: 10
+    maxWeight: 50
+    stepWeight: 10
+    # skipanalysis: true
+    metrics:
+      - name: "my metric"
+        templateRef:
+          name: canary-test-my-metric
+          namespace: mockserver
+        # accepted values
+        thresholdRange:
+          max: 10
+        # metric query time window
+        interval: 1m
+        # custom variables used within the referenced metric template
+        templateVariables:
+          direction: inbound

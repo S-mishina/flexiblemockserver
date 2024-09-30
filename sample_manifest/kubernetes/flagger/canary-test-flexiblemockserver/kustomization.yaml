@@ -1,0 +1,26 @@
+# kustmize.yaml
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+namespace: mockserver
+namePrefix: canary-test-
+resources:
+  - ../../apm_tempo/flexiblemockserver
+  - canary.yaml
+  - sample-metric.yaml
+patches:
+  - path: deployment.yaml
+  - patch: |
+      $patch: delete
+      apiVersion: v1
+      kind: Service
+      metadata:
+        name: flexiblemockserver
+        namespace: mockserver
+  - patch: |
+      $patch: delete
+      apiVersion: v1
+      kind: Namespace
+      metadata:
+        labels:
+          istio-injection: enabled
+        name: mockserver

@@ -1,0 +1,104 @@
+---
+# kube-system namespace role for prometheus
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  name: prometheus-role
+  namespace: kube-system
+rules:
+- apiGroups:
+  - ""
+  resources:
+  - pods
+  - services
+  - endpoints
+  verbs:
+  - get
+  - list
+  - watch
+---
+# mockserver namespace role for prometheus
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  name: prometheus-role
+  namespace: mockserver
+rules:
+- apiGroups:
+  - ""
+  resources:
+  - pods
+  - services
+  - endpoints
+  verbs:
+  - get
+  - list
+  - watch
+---
+# monitoring namespace role for prometheus
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  name: prometheus-role
+  namespace: monitoring
+rules:
+- apiGroups:
+  - ""
+  resources:
+  - pods
+  - services
+  - endpoints
+  verbs:
+  - get
+  - list
+  - watch
+---
+# ClusterRole for prometheus with cluster-wide access
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: prometheus-cluster-role
+rules:
+- apiGroups:
+  - ""
+  resources:
+  - pods
+  - services
+  - endpoints
+  - nodes
+  - namespaces
+  verbs:
+  - get
+  - list
+  - watch
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: simplest1-collector-role
+rules:
+  - apiGroups:
+    - ""
+    resources:
+    - "pods"
+    verbs:
+    - "get"
+    - "list"
+    - "watch"
+  - apiGroups:
+    - "apps"
+    resources:
+    - "replicasets"
+    verbs:
+    - "get"
+    - "list"
+    - "watch"
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: locusttest-clusterrole
+rules:
+- apiGroups: ["locust.io"]
+  resources: ["locusttests"]
+  verbs: ["get", "list", "watch", "create", "update", "patch", "delete"]

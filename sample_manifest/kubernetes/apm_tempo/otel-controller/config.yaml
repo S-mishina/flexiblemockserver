@@ -5,7 +5,12 @@ metadata:
   namespace: monitoring
 spec:
   mode: deployment
-  image: otel/opentelemetry-collector-contrib:latest # Contrib イメージを指定
+  podAnnotations:
+    prometheus.io/scrape: 'true'
+    prometheus.io/port: '8888'
+  image: otel/opentelemetry-collector-contrib:0.108.0
+  args:
+    feature-gates: "-component.UseLocalHostAsDefaultHost"
   config: |
     receivers:
       otlp:
@@ -21,6 +26,12 @@ spec:
         endpoint: http://prometheus-operated.monitoring:9090/api/v1/write
         target_info:
           enabled: true
+    processors:
+      k8sattributes:
+        auth_type: serviceAccount
+        extract:
+          metadata:
+            - k8s.deployment.name
     connectors:
       spanmetrics:
         namespace: traces.spanmetrics
@@ -33,11 +44,20 @@ spec:
             default: GET
           - name: http.status_code
             default: "200"
+          - name: k8s.deployment.name
     service:
       pipelines:
         traces:
           receivers: [otlp]
+          processors: [k8sattributes]
           exporters: [otlp, spanmetrics]
         metrics:
           receivers: [spanmetrics]
           exporters: [prometheusremotewrite]
+---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: simplest1-collector
+  namespace: monitoring
+

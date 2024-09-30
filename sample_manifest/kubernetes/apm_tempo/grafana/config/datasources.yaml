@@ -31,7 +31,10 @@ datasources:
         datasourceUid: 'Prometheus'
         queries:
           - name: request rate
-            query: traces_spanmetrics_calls_total{$__tags}
+            query: "rate(traces_spanmetrics_calls_total{$$__tags}[$$__rate_interval])"
+          - name: request latency
+            query: "sum(rate(traces_spanmetrics_calls_total{$$__tags}[$$__rate_interval]))"
+
         tags:
           - key: service.name
             value: service_name

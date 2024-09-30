@@ -1,0 +1,10 @@
+apiVersion: flagger.app/v1beta1
+kind: MetricTemplate
+metadata:
+  name: my-metric
+spec:
+  provider:
+    type: prometheus
+    address: http://prometheus-operated.monitoring:9090
+  query: |
+    sum(rate(traces_spanmetrics_calls_total{service_name="canary-test-flexiblemockserver", http_status_code!~"20*"}[1m])) * 60 or vector(0)

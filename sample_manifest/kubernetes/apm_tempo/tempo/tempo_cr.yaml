@@ -9,13 +9,15 @@ spec:
       name: minio-test
       type: s3
   storageSize: 1Gi
-  resources:
-    total:
-      limits:
-        memory: 2Gi
-        cpu: 2000m
   template:
     queryFrontend:
       jaegerQuery:
         enabled: true
-
+    compactor:
+      resources:
+        limits:
+          memory: 2Gi
+          cpu: 1000m
+        requests:
+          memory: 1Gi
+          cpu: 500m

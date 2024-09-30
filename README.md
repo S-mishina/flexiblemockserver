@@ -4,29 +4,20 @@ This is a mock server used to verify the operation of service mesh tools. Servic
 
 ## Usage
 
-For use cases where you just want to check the operation of ServiceMesh, please click here.
-
 * Clsuter build and pure mockserver install
   * [Usage README](./sample_manifest/README.md)
     * Please click here to see the install for clusters.
 Click here to use Open Telemetry
 
-* OpenTelemetry
-  * Docker-Compose(GrafanaTempo)
-    * [Usage README](./sample_manifest/docker-compose/tempo/)
-  * Kubenretes(GrafanaTempo)
-    * [Usage README](./sample_manifest/kubernetes/apm_tempo)
-  * Docker-Compose(Zipkin)
-    * TBU
-  * Kubenretes(Zipkin)
-    * TBU
-  * Docker-Compose(Jaeger)
-    * TBU
-  * Kubernetes(Jaeger)
-    * TBU
-
 * OpenTelemetry + ServiceMesh
-  * TBU
+  * progressive delivery DEMO
+    * flagger
+      * [Usage README](./docs/flagger/README.md)
+  * istio DEMO
+    * [Usage README](./docs/istio/README.md)
+
+> [!NOTE]
+> When checking the operation of OpenTelemetry + ServiceMesh, it is recommended to start with progressive delivery.
 
 ## Example
 

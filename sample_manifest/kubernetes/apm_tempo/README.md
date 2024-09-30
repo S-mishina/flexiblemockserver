@@ -2,6 +2,21 @@
 
 This README summarizes how to use grafana tempo with Kubernetes.
 
+> [!NOTE]
+> Please Install istio before starting work on this Document.
+> ex) <br>
+> ```❯ istioctl operator init``` <br>
+> ```❯ istioctl install -f sample_manifest/kubernetes/istio/istio-operator.yaml```<br>
+> ```❯ kubectl apply -f sample_manifest/kubernetes/istio/telemetry.yaml```
+> <br> ref: [link](../../README.md#istio)
+
+## architecture
+
+> [!NOTE]
+> For more information about what you can do with this KIND CLUSTER and how it works
+> <br> ref: [link]() TBU
+
+
 ## Step1: GrafanaTempo Install
 
 ### 1.1. [cert-manager](https://cert-manager.io/docs/installation/#default-static-install) Install
@@ -56,6 +71,18 @@ Execute the following command
 ❯ kubectl apply -f sample_manifest/kubernetes/apm_tempo/otel-controller/config.yaml
 ```
 
+## Step3: Install metric servers
+
+Execute the following command
+
+```:terminal
+❯ kubectl apply -f sample_manifest/kubernetes/kube-state-metrics/output.yaml
+```
+
+```:terminal
+❯ kubectl apply -f sample_manifest/kubernetes/metric-server/components.yaml
+```
+
 ## Step4: [Prometheus Operator](https://github.com/prometheus-operator/prometheus-operator) Install
 
 ### 4.1. Install Prometheus Operator
@@ -67,13 +94,21 @@ Execute the following command
 curl -sL https://github.com/prometheus-operator/prometheus-operator/releases/download/${LATEST}/bundle.yaml | kubectl create -f -
 ```
 
-### 4.2. Install Prometheus Controller
+### 4.2. Install role & rrole_binding
+
+Execute the following command
+
+```:terminal
+❯ kubectl apply -k sample_manifest/kubernetes/cluster/
+```
+
+### 4.3. Install Prometheus Controller
 
 ```:terminal
 ❯ kubectl apply -k sample_manifest/kubernetes/apm_tempo/prometheus/
 ```
 
-## Step4: [Grafana](https://github.com/grafana/grafana) Install
+## Step5: [Grafana](https://github.com/grafana/grafana) Install
 
 Execute the following command
 
@@ -81,12 +116,18 @@ Execute the following command
 ❯ kubectl apply -k sample_manifest/kubernetes/apm_tempo/grafana
 ```
 
-## Step5: operation check
+## Step6: operation check
 
 Execute the following command
 
 ```:terminal
 ❯ kubectl apply -k sample_manifest/kubernetes/apm_tempo/flexiblemockserver/
+```
+
+once more
+
+```:terminal
+❯ kubectl apply -k sample_manifest/kubernetes/cluster/
 ```
 
 ```:terminal
