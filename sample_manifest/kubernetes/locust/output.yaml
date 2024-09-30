@@ -245,4 +245,47 @@ roleRef:
   kind: ClusterRole
   name: locusttests-access
   apiGroup: rbac.authorization.k8s.io
-
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: locust-jobs-access
+rules:
+- apiGroups: ["batch"]
+  resources: ["jobs"]
+  verbs: ["get", "list", "watch", "create", "patch", "update"]
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  name: locust-jobs-access-binding
+subjects:
+- kind: ServiceAccount
+  name: locust-operator-locust-k8s-operator
+  namespace: loadtest
+roleRef:
+  kind: ClusterRole
+  name: locust-jobs-access
+  apiGroup: rbac.authorization.k8s.io
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: locust-services-access
+rules:
+- apiGroups: [""]
+  resources: ["services"]
+  verbs: ["get", "list", "create", "update", "delete"]
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  name: locust-services-access-binding
+subjects:
+- kind: ServiceAccount
+  name: locust-operator-locust-k8s-operator
+  namespace: loadtest
+roleRef:
+  kind: ClusterRole
+  name: locust-services-access
+  apiGroup: rbac.authorization.k8s.io
