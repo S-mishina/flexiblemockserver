@@ -49,6 +49,10 @@ ref: [CRD](https://github.com/fluxcd/flagger/blob/b6ac5e19aa7fa2949bbc8bf37a0f6c
 
 ref: [schema](https://github.com/fluxcd/flagger/blob/b6ac5e19aa7fa2949bbc8bf37a0f6c1e31b1745d/pkg/apis/flagger/v1beta1/canary.go#L122-L221)
 
+構成を簡略化させた図
+
+![image](../image/19.png)
+
 ## Flaggerにおけるprogressive deliveryとは？
 
 > progressive deliveryが開始されると、Flaggerは事前に定義されたMetricTemplateを使用して、各モニタリングプロバイダー（PrometheusやDatadogなど）にクエリを送信し、リリースの健全性を監視します。モニタリングの結果に基づいて、問題がなければIstioのweightを調整し、トラフィックの割合を段階的にCanary環境へ移行させます。万が一、異常が検知された場合は、リリースを自動的に停止またはロールバックします。

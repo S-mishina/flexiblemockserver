@@ -1,8 +1,8 @@
 from locust import HttpUser, task
-
+import time
 class User(HttpUser):
-    @task 
+    @task
     def get_employees(self) -> None:
         """Get a list of employees."""
         self.client.get("/")
-        self.client.get("/status/500")
+        time.sleep(1)  # 1秒待機
