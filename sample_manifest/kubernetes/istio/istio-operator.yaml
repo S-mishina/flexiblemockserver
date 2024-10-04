@@ -1,6 +1,9 @@
 #operator.yaml
 apiVersion: install.istio.io/v1alpha1
 kind: IstioOperator
+metadata:
+  name: test
+  namespace: istio-system
 spec:
   profile: demo
   meshConfig:
