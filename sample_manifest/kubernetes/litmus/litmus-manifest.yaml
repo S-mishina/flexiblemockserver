@@ -387,10 +387,10 @@ metadata:
 spec:
   type: NodePort
   ports:
-    - name: http
+    - name: http-9091
       port: 9091
       targetPort: 8185
-    - name: http
+    - name: http-3003
       port: 3003
       targetPort: 8185
   selector:
