@@ -31,6 +31,12 @@ TBU
 
 ![環境構築](../../image/25.png)
 
+```:terminal
+[kind-sandbox-test|default] :ctx
+[arm64]⚡️
+❯ kubectl apply -f test-litmus-chaos-enable.yml
+```
+
 ## 実際に使ってみる
 
 ### control-planeに障害を起こしてみる
