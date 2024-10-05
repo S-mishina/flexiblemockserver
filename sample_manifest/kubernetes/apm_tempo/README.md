@@ -71,7 +71,7 @@ Execute the following command
 ❯ kubectl apply -f sample_manifest/kubernetes/apm_tempo/otel-controller/config.yaml
 ```
 
-## Step3: Install metric servers
+## Step3: Install metric servers & [HPA](https://kubernetes.io/docs/tasks/run-application/horizontal-pod-autoscale/)
 
 Execute the following command
 
