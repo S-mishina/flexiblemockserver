@@ -15,9 +15,15 @@ Click here to use Open Telemetry
       * [Usage README](./docs/servicemesh/flagger/README.md)
   * istio DEMO
     * [Usage README](./docs/servicemesh/istio/README.md)
+* khaos engineering
+  * litmus
+    * [Usage README](./docs/khaos/litmus/README.md)
 
 > [!NOTE]
 > When checking the operation of OpenTelemetry + ServiceMesh, it is recommended to start with progressive delivery.
+
+> [!NOTE]
+> For chaos engineering to work like a real application, it is recommended to build OpenTelemetry + ServiceMesh first.
 
 ## Example
 
