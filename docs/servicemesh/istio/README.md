@@ -12,7 +12,7 @@ istioとは、ざっくり説明すると数あるサービスメッシュツー
 
 ref: [The Istio service mesh](https://istio.io/latest/about/service-mesh/#what-is-istio)
 
-![Istioの構成](../image/4.svg)
+![Istioの構成](../../image/4.svg)
 
 ref: [The Istio service mesh](https://istio.io/latest/about/service-mesh/)
 
@@ -27,7 +27,7 @@ Istioは、Istio Control Planeによって通信の設定が追加、更新、�
 
 #### Discovery
 
-![Discovery](../image/5.png)
+![Discovery](../../image/5.png)
 
 Istioが有効化された状態でかつ、proxyがServiceに導入されることが有効化された状態で新規サービスをKubernetes上に構築すると、Istio Control Planeによって新しいサービスに自動的にProxyが注入されます。
 
@@ -35,7 +35,7 @@ ref: [Use discovery selectors to configure namespaces for your Istio service mes
 
 #### Configuration
 
-![Configuration](../image/6.png)
+![Configuration](../../image/6.png)
 
 開発者がサービスメッシュに関係する設定をapplyすると、Istio Control Planeがクラスター内に無数にあるproxyに対して、設定を追加、更新、削除を行います。
 
@@ -132,7 +132,7 @@ ref: [Sidecar](https://istio.io/latest/docs/reference/config/networking/sidecar/
 
 ###### サイドカーモードを図にすると
 
-![Istioの構成](../image/7.png)
+![Istioの構成](../../image/7.png)
 
 > [!TIP]
 > アンビエントモード紹介ドキュメントの下記でも解説されていますが、現状サイドカーモードがサポートされなくなるわけではありません。(2024/06/30現在)
