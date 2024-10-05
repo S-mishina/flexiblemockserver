@@ -4,22 +4,32 @@ This is a mock server used to verify the operation of service mesh tools. Servic
 
 ## Usage
 
+> [!NOTE]
+> To create a cluster, please see the documentation here
+
 * Clsuter build and pure mockserver install
   * [Usage README](./sample_manifest/README.md)
     * Please click here to see the install for clusters.
 Click here to use Open Telemetry
 
-* OpenTelemetry + ServiceMesh
-  * progressive delivery DEMO
-    * flagger
-      * [Usage README](./docs/flagger/README.md)
-  * istio DEMO
-    * [Usage README](./docs/istio/README.md)
-
 > [!NOTE]
 > When checking the operation of OpenTelemetry + ServiceMesh, it is recommended to start with progressive delivery.
 
-## Example
+* OpenTelemetry + ServiceMesh
+  * progressive delivery DEMO
+    * flagger
+      * [Usage README](./docs/servicemesh/flagger/README.md)
+  * istio DEMO
+    * [Usage README](./docs/servicemesh/istio/README.md)
+
+> [!NOTE]
+> For chaos engineering to work like a real application, it is recommended to build OpenTelemetry + ServiceMesh first.
+
+* khaos engineering
+  * litmus
+    * [Usage README](./docs/khaos/litmus/README.md)
+
+## FlexibleMockServer Example
 
 Here are the environment variables for changing the port and endpoint of a Flask application:
 

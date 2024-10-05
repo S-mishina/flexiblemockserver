@@ -16,7 +16,7 @@ Flaggerの動作確認はistioをベースに動作させます。
 
 > [!NOTE]
 > このドキュメントで負荷試験ツールを利用する場合には、locustをinstallする必要があります。
-> <br> ref: [link](../locust/README.md)
+> <br> ref: [link](../../loadtest/locust/README.md)
 
 ## そもそもFlaggerをどう理解すれば良いのか？
 
@@ -51,7 +51,7 @@ ref: [schema](https://github.com/fluxcd/flagger/blob/b6ac5e19aa7fa2949bbc8bf37a0
 
 構成を簡略化させた図
 
-![image](../image/19.png)
+![image](../../image/19.png)
 
 ## Flaggerにおけるprogressive deliveryとは？
 
@@ -61,7 +61,7 @@ ref: [schema](https://github.com/fluxcd/flagger/blob/b6ac5e19aa7fa2949bbc8bf37a0
 
 図で書くとこんな感じ
 
-![image](../image/18.png)
+![image](../../image/18.png)
 
 ref: [link](https://docs.flagger.app/usage/deployment-strategies#canary-release)
 
@@ -109,7 +109,7 @@ TBU
 
 #### 実行中
 
-![image](../image/14.png)
+![image](../../image/14.png)
 
 実行されると、weightがあがります。
 
@@ -152,7 +152,7 @@ spec:
 
 #### Progressive Delivery完了
 
-![image](../image/15.png)
+![image](../../image/15.png)
 
 ```yaml:yaml
 apiVersion: networking.istio.io/v1beta1
@@ -193,7 +193,7 @@ promoteフェイズになると、VirtualServiceをcanary:primaryを50:5050に�
 
 #### 完了後の動き
 
-![image](../image/16.png)
+![image](../../image/16.png)
 
 ```yaml:yaml
 apiVersion: networking.istio.io/v1beta1
@@ -254,7 +254,7 @@ Events:
 
 #### 参考値としてdashboard
 
-![image](../image/17.png)
+![image](../../image/17.png)
 
 ### 失敗パターン
 
@@ -276,14 +276,14 @@ TBU
 
 #### 実行中
 
-![image](../image/11.png)
+![image](../../image/11.png)
 
 今回はk9sの画面を表示していますが、`SUSPENDED`の数が増えていることがわかります。
 これは、metric_templateで定義した値がcanaryで設定してる閾値を満たしていないまたは、超えているためです。
 
 #### 失敗
 
-![image](../image/12.png)
+![image](../../image/12.png)
 
 今回はk9sの画面を表示していますが、`SUSPENDED`の数が設定している数を超えたため失敗したことがわかります。
 
@@ -309,7 +309,7 @@ TBU
 
 #### 参考値としてdashboard
 
-![image](../image/13.png)
+![image](../../image/13.png)
 
 ### tips
 
