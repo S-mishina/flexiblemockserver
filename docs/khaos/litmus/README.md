@@ -18,19 +18,21 @@ TBU
 
 ## 実際に使ってみる
 
-### aaa
+### control-planeに障害を起こしてみる
+
+#### aaa
 
 TBU
 
-### aaa1
+#### aaa1
 
 TBU
 
-### aaa2
+#### aaa2
 
 TBU
 
-### aaa3
+#### aaa3
 
 TBU
 
@@ -38,3 +40,24 @@ TBU
 
 TBU
 
+### worker-nodeに障害を起こしてみる
+
+#### aaa5
+
+TBU
+
+#### aaa6
+
+TBU
+
+#### aaa7
+
+TBU
+
+#### aaa8
+
+TBU
+
+### aaa9
+
+TBU
