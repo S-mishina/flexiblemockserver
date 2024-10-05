@@ -390,9 +390,11 @@ spec:
     - name: http-9091
       port: 9091
       targetPort: 8185
+      nodePort: 30004
     - name: http-3003
       port: 3003
       targetPort: 8185
+      nodePort: 30003
   selector:
     app.kubernetes.io/component: litmus-frontend
 ---
