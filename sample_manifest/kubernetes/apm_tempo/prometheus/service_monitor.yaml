@@ -54,3 +54,19 @@ spec:
     - sourceLabels: [__meta_kubernetes_pod_name]
       action: replace
       targetLabel: pod_name
+---
+apiVersion: monitoring.coreos.com/v1
+kind: PodMonitor
+metadata:
+  name: pod-metrics-monitor1
+  namespace: monitoring
+spec:
+  selector:
+    matchLabels:
+      app: flagger
+  podMetricsEndpoints:
+  - path: /metrics
+    interval: 30s
+  namespaceSelector:
+    matchNames:
+    - istio-system
