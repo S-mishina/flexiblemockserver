@@ -355,6 +355,7 @@ TBU
 ##### flaggerが提供しているmetricを活用する
 
 FlaggerはPrometheusタイプのメトリクスを公開してるのでPrometheusで取得を行うと、可視化、monitorの作成を行うことができる。
+
 ref: [flaggerのmetric取得部分(Prometheus pod_monitor)](../../sample_manifest/kubernetes/apm_tempo/prometheus/service_monitor.yaml)
 
 ref: [ドキュメント](https://docs.flagger.app/usage/monitoring)
