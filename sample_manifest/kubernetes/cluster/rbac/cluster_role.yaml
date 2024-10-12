@@ -1,0 +1,40 @@
+# ClusterRole for prometheus with cluster-wide access
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: prometheus-cluster-role
+rules:
+- apiGroups:
+  - ""
+  resources:
+  - pods
+  - services
+  - endpoints
+  - nodes
+  - namespaces
+  verbs:
+  - get
+  - list
+  - watch
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: simplest1-collector-role
+rules:
+  - apiGroups:
+    - ""
+    resources:
+    - "pods"
+    verbs:
+    - "get"
+    - "list"
+    - "watch"
+  - apiGroups:
+    - "apps"
+    resources:
+    - "replicasets"
+    verbs:
+    - "get"
+    - "list"
+    - "watch"
