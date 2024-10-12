@@ -90,15 +90,7 @@ Execute the following command
 curl -sL https://github.com/prometheus-operator/prometheus-operator/releases/download/${LATEST}/bundle.yaml | kubectl create -f -
 ```
 
-### 4.2. Install role & rrole_binding
-
-Execute the following command
-
-```:terminal
-❯ kubectl apply -k sample_manifest/kubernetes/cluster/
-```
-
-### 4.3. Install Prometheus Controller
+### 4.2. Install Prometheus Controller
 
 ```:terminal
 ❯ kubectl apply -k sample_manifest/kubernetes/apm_tempo/prometheus/
@@ -118,12 +110,6 @@ Execute the following command
 
 ```:terminal
 ❯ kubectl apply -k sample_manifest/kubernetes/apm_tempo/flexiblemockserver/
-```
-
-once more
-
-```:terminal
-❯ kubectl apply -k sample_manifest/kubernetes/cluster/
 ```
 
 ```:terminal
