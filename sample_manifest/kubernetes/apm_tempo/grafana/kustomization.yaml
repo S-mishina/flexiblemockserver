@@ -6,7 +6,6 @@ resources:
 - deployment.yaml
 - pvc.yaml
 - service.yaml
-- namespace.yaml
 configMapGenerator:
   - name: grafana-config
     files:

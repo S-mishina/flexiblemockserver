@@ -47,6 +47,12 @@ Have a question, bug, or feature request? Let us know! https://kind.sigs.k8s.io/
 
 ### step 2
 
+```:terminal
+❯ kubectl apply -f sample_manifest/kubernetes/cluster/namespace.yaml
+```
+
+### step 3
+
 Please import the required IMAGE onto kind.
 
 sample command
@@ -63,7 +69,7 @@ Image: "ghcr.io/s-mishina/flexiblemockserver:latest" with ID "sha256:96b36be4d13
 Image: "ghcr.io/s-mishina/flexiblemockserver:latest" with ID "sha256:96b36be4d13881b2567a42662dd3a613649740348d0a360d0b686b7eb4c7798e" not yet present on node "sandbox-test-worker", loading...
 ```
 
-### step 3
+### step 4
 
 > [!NOTE]
 > **If you want to use Open Telemetry, please refer to this document to install flexiblemockserver.** <br>

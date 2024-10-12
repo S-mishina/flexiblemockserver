@@ -64,10 +64,6 @@ Execute the following command
 Execute the following command
 
 ```:terminal
-❯ kubectl create ns monitoring
-```
-
-```:terminal
 ❯ kubectl apply -f sample_manifest/kubernetes/apm_tempo/otel-controller/config.yaml
 ```
 
