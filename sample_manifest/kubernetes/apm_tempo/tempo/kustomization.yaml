@@ -5,5 +5,3 @@ namespace: my-tempo
 resources:
 - tempo_cr.yaml
 - secret.yaml
-- namespace.yaml
-
