@@ -13,8 +13,9 @@ Click here to use Open Telemetry
   * progressive delivery DEMO
     * flagger
       * [Usage README](./docs/flagger/README.md)
-  * istio DEMO
-    * [Usage README](./docs/istio/README.md)
+  * Service Mesh
+    * istio DEMO
+      * [Usage README](./docs/istio/README.md)
 
 > [!NOTE]
 > When checking the operation of OpenTelemetry + ServiceMesh, it is recommended to start with progressive delivery.
