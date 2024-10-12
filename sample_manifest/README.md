@@ -51,6 +51,10 @@ Have a question, bug, or feature request? Let us know! https://kind.sigs.k8s.io/
 ❯ kubectl apply -f sample_manifest/kubernetes/cluster/namespace.yaml
 ```
 
+```:terminal
+❯ kubectl apply -k sample_manifest/kubernetes/cluster/rbac
+```
+
 ### step 3
 
 Please import the required IMAGE onto kind.
