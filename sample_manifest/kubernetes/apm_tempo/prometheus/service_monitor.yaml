@@ -70,3 +70,39 @@ spec:
   namespaceSelector:
     matchNames:
     - istio-system
+---
+apiVersion: monitoring.coreos.com/v1
+kind: PodMonitor
+metadata:
+  name: pod-metrics-monitor2
+  namespace: monitoring
+spec:
+  selector:
+    matchLabels:
+      app: node-exporter
+  podMetricsEndpoints:
+  - path: /metrics
+    interval: 30s
+  namespaceSelector:
+    matchNames:
+    - monitoring
+---
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  name: kubelet
+  namespace: monitoring
+spec:
+  endpoints:
+    - port: https-metrics
+      path: /metrics/cadvisor
+      scheme: https
+      bearerTokenFile: /var/run/secrets/kubernetes.io/serviceaccount/token
+      tlsConfig:
+        insecureSkipVerify: true
+  selector:
+    matchLabels:
+      k8s-app: kubelet
+  namespaceSelector:
+    matchNames:
+    - kube-system

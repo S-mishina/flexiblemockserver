@@ -8,3 +8,11 @@ providers:
   editable: true
   options:
     path: /var/lib/grafana/dashboards/mockserver.json
+- name: 'dashboard2'
+  orgId: 1
+  folder: ''
+  type: file
+  disableDeletion: true
+  editable: true
+  options:
+    path: /var/lib/grafana/dashboards/k8s-cluster.json
