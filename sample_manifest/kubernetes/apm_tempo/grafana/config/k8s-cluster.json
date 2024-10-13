@@ -965,6 +965,7 @@
     },
     {
       "datasource": {
+        "default": false,
         "type": "prometheus",
         "uid": "PBFA97CFB590B2093"
       },
@@ -1065,11 +1066,15 @@
             "type": "prometheus",
             "uid": "PBFA97CFB590B2093"
           },
-          "editorMode": "code",
-          "expr": "sum by(device) (rate(node_disk_written_bytes_total{device=\"sda\", instance=~\".+\"}[$__rate_interval]))",
+          "disableTextWrap": false,
+          "editorMode": "builder",
+          "expr": "sum by(device) (rate(node_disk_written_bytes_total{device=~\".+\", instance=~\".+\"}[$__rate_interval]))",
+          "fullMetaSearch": false,
+          "includeNullMetadata": true,
           "legendFormat": "__auto",
           "range": true,
-          "refId": "B"
+          "refId": "B",
+          "useBackend": false
         }
       ],
       "title": "Disk I/O",
@@ -1090,6 +1095,7 @@
     },
     {
       "datasource": {
+        "default": false,
         "type": "prometheus",
         "uid": "PBFA97CFB590B2093"
       },
@@ -1179,11 +1185,15 @@
             "type": "prometheus",
             "uid": "PBFA97CFB590B2093"
           },
+          "disableTextWrap": false,
           "editorMode": "builder",
-          "expr": "sum by(namespace) (rate(container_cpu_usage_seconds_total{namespace=~\"$namespace\"}[$__rate_interval]))",
+          "expr": "sum by(pod) (rate(container_cpu_usage_seconds_total[$__rate_interval]))",
+          "fullMetaSearch": false,
+          "includeNullMetadata": true,
           "legendFormat": "__auto",
           "range": true,
-          "refId": "A"
+          "refId": "A",
+          "useBackend": false
         }
       ],
       "title": "CPU Utilization by namespace",
@@ -1191,6 +1201,7 @@
     },
     {
       "datasource": {
+        "default": false,
         "type": "prometheus",
         "uid": "PBFA97CFB590B2093"
       },
@@ -1281,11 +1292,15 @@
             "type": "prometheus",
             "uid": "PBFA97CFB590B2093"
           },
+          "disableTextWrap": false,
           "editorMode": "builder",
-          "expr": "sum by(namespace) (rate(container_memory_working_set_bytes{namespace=~\"$namespace\"}[$__rate_interval]))",
+          "expr": "sum by(pod) (rate(container_memory_working_set_bytes[$__rate_interval]))",
+          "fullMetaSearch": false,
+          "includeNullMetadata": true,
           "legendFormat": "__auto",
           "range": true,
-          "refId": "A"
+          "refId": "A",
+          "useBackend": false
         }
       ],
       "title": "Memory Utilization by namespace",
@@ -1487,6 +1502,7 @@
     },
     {
       "datasource": {
+        "default": false,
         "type": "prometheus",
         "uid": "PBFA97CFB590B2093"
       },
@@ -1572,12 +1588,16 @@
             "type": "prometheus",
             "uid": "PBFA97CFB590B2093"
           },
+          "disableTextWrap": false,
           "editorMode": "builder",
-          "expr": "sum by(interface) (rate(container_network_receive_bytes_total{id=\"/\", interface=~\"$netface\"}[$__rate_interval]))",
+          "expr": "sum by(interface) (rate(container_network_receive_bytes_total{id=\"/\"}[$__rate_interval]))",
+          "fullMetaSearch": false,
           "hide": false,
+          "includeNullMetadata": true,
           "legendFormat": "__auto",
           "range": true,
-          "refId": "A"
+          "refId": "A",
+          "useBackend": false
         }
       ],
       "title": "Pod Network Utilization",
@@ -1585,6 +1605,7 @@
     },
     {
       "datasource": {
+        "default": false,
         "type": "prometheus",
         "uid": "PBFA97CFB590B2093"
       },
@@ -1670,12 +1691,16 @@
             "type": "prometheus",
             "uid": "PBFA97CFB590B2093"
           },
+          "disableTextWrap": false,
           "editorMode": "builder",
-          "expr": "avg by(pod) (rate(container_fs_writes_total{id=~\".+\", device=~\".+\", pod=~\"$pod\"}[$__rate_interval]))",
+          "expr": "avg by(pod) (rate(container_fs_writes_total{id=~\".+\", device=~\".+\"}[$__rate_interval]))",
+          "fullMetaSearch": false,
           "hide": false,
+          "includeNullMetadata": true,
           "legendFormat": "__auto",
           "range": true,
-          "refId": "A"
+          "refId": "A",
+          "useBackend": false
         }
       ],
       "title": "Pod Read/Write Iops",
@@ -2130,7 +2155,7 @@
       "type": "timeseries"
     }
   ],
-  "refresh": "5m",
+  "refresh": "",
   "schemaVersion": 39,
   "tags": [
     "kubernetes",
@@ -2141,13 +2166,13 @@
     "list": []
   },
   "time": {
-    "from": "now-5m",
-    "to": "now"
+    "from": "2024-10-13T13:10:10.888Z",
+    "to": "2024-10-13T13:19:55.438Z"
   },
   "timepicker": {},
   "timezone": "Asia/Yangon",
   "title": "Kubernetes Dashboard",
   "uid": "e1RXnCbVz",
-  "version": 8,
+  "version": 10,
   "weekStart": ""
 }
