@@ -70,3 +70,19 @@ spec:
   namespaceSelector:
     matchNames:
     - istio-system
+---
+apiVersion: monitoring.coreos.com/v1
+kind: PodMonitor
+metadata:
+  name: pod-metrics-monitor2
+  namespace: monitoring
+spec:
+  selector:
+    matchLabels:
+      app: node-exporter
+  podMetricsEndpoints:
+  - path: /metrics
+    interval: 30s
+  namespaceSelector:
+    matchNames:
+    - monitoring
