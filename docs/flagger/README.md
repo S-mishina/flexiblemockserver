@@ -362,7 +362,7 @@ ref: [ドキュメント](https://docs.flagger.app/usage/monitoring)
 
 sample)
 
-![image](../image/20.png)
+![image](../image/21.png)
 
 #### flaggerを採用する際に気を付けること
 
