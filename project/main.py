@@ -4,6 +4,7 @@ import time
 import yaml
 import json
 from flask import Flask, jsonify, make_response, Response, request
+import html
 from logging.config import dictConfig
 
 from opentelemetry import trace, metrics
@@ -269,10 +270,10 @@ def index(sleep_time, status_code):
             else:
                 app.logger.info("Miss Hit /")
                 r.set("{}/{}".format(sleep_time,status_code), json.dumps(data))
-                return make_response(json.dumps(data), status_code)
+                return make_response(json.dumps({'sleep_time': html.escape(str(sleep_time)), 'status_code': html.escape(str(status_code))}), status_code)
         else:
             time.sleep(sleep_time)
-            return make_response(json.dumps(data), status_code)
+            return make_response(json.dumps({'sleep_time': html.escape(str(sleep_time)), 'status_code': html.escape(str(status_code))}), status_code)
     else:
         return make_response(jsonify(err="Not status code"), 400)
 
@@ -294,7 +295,7 @@ def only_sleep_time(sleep_time):
             return make_response(jsonify(data), 200)
     else:
         time.sleep(sleep_time)
-        return make_response(jsonify(data), 200)
+        return make_response(jsonify({'sleep_time': html.escape(str(sleep_time)), 'status_code': 200}), 200)
 
 @app.route('/status/<int:status_code>', methods=HTTP_METHODS)
 @app.route('/status/<int:status_code>/', methods=HTTP_METHODS)
