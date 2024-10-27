@@ -2,6 +2,7 @@ import os
 import sys
 import time
 import yaml
+import json
 from flask import Flask, jsonify, make_response, Response, request
 from logging.config import dictConfig
 
@@ -30,6 +31,7 @@ from prometheus_client import start_http_server
 
 from opentelemetry.instrumentation.requests import RequestsInstrumentor
 
+from redis import Redis
 
 def get_yaml_file_path():
     return os.getenv('CUSTOM_RULE_YAML_FILE', 'config/custom_rule.yaml')
@@ -134,6 +136,21 @@ def check_open_telemetry():
             trace.set_tracer_provider(provider)
             tracer = trace.get_tracer("my.tracer.name")
 
+def get_cache_config():
+    if os.getenv('CACHE_FLAG', False) == "True":
+        redis_host = os.getenv('REDIS_HOST', 'localhost')
+        redis_port = os.getenv('REDIS_PORT', 16379)
+    return redis_host, redis_port
+
+def connection_cache():
+    if os.getenv('CACHE_CLUSTER_FLAG', True) is True:
+        redis_host, redis_port = get_cache_config()
+        r = Redis(host=redis_host, port=redis_port, decode_responses=True)
+        return r
+    else:
+        redis_host, redis_port = get_cache_config()
+        r = Redis(host=redis_host, port=redis_port)
+        return r
 
 dictConfig({
     'version': 1,
@@ -223,55 +240,143 @@ def after_request(response):
 
 @app.route('/')
 def top():
-    return make_response(jsonify(top='Hello mock server'), 200)
+    data = {'top': 'Hello mock server'}
+    if os.getenv('CACHE_FLAG') == 'True':
+        r = connection_cache()
+        value = r.get("/")
+        if value:
+            app.logger.info("Hit /")
+            return make_response(jsonify(json.loads(value)), 200)
+        else:
+            app.logger.info("Miss Hit /")
+            r.set("/", json.dumps(data))
+            return make_response(jsonify(data), 200)
+    else:
+        return make_response(jsonify(data), 200)
 
 @app.route('/<int:sleep_time>/<int:status_code>', methods=HTTP_METHODS)
 @app.route('/<int:sleep_time>/<int:status_code>/', methods=HTTP_METHODS)
 def index(sleep_time, status_code):
     if 100 <= status_code <= 599:
-        time.sleep(sleep_time)
-        return make_response(jsonify(sleep_time=sleep_time, status_code=status_code), status_code)
+        data = {'sleep_time': sleep_time, 'status_code': status_code}
+        if os.getenv('CACHE_FLAG') == 'True':
+            r = connection_cache()
+            value = r.get("{}/{}".format(sleep_time,status_code))
+            if value:
+                time.sleep(sleep_time)
+                app.logger.info("Hit /")
+                return make_response(jsonify(json.loads(value)), 200)
+            else:
+                app.logger.info("Miss Hit /")
+                r.set("{}/{}".format(sleep_time,status_code), json.dumps(data))
+                return make_response(json.dumps(data), status_code)
+        else:
+            time.sleep(sleep_time)
+            return make_response(json.dumps(data), status_code)
     else:
         return make_response(jsonify(err="Not status code"), 400)
 
 @app.route('/sleep/<int:sleep_time>', methods=HTTP_METHODS)
 @app.route('/sleep/<int:sleep_time>/', methods=HTTP_METHODS)
 def only_sleep_time(sleep_time):
-    time.sleep(sleep_time)
-    return make_response(jsonify(sleep_time=sleep_time, status_code=200), 200)
+    data = {'sleep_time': sleep_time, 'status_code': 200}
+    if os.getenv('CACHE_FLAG') == 'True':
+        r = connection_cache()
+        value = r.get("/sleep/{}".format(sleep_time))
+        if value:
+            time.sleep(sleep_time)
+            app.logger.info("Hit /sleep/{}".format(sleep_time))
+            return make_response(jsonify(data), 200)
+        else:
+            app.logger.info("Miss Hit /sleep/{}".format(sleep_time))
+            r.set("sleep/{}".format(sleep_time), json.dumps(value))
+            time.sleep(sleep_time)
+            return make_response(jsonify(data), 200)
+    else:
+        time.sleep(sleep_time)
+        return make_response(jsonify(data), 200)
 
 @app.route('/status/<int:status_code>', methods=HTTP_METHODS)
 @app.route('/status/<int:status_code>/', methods=HTTP_METHODS)
 def only_status_code(status_code, sleep_time=0):
     if 100 <= status_code <= 599:
         time.sleep(sleep_time)
-        return make_response(jsonify(sleep_time=sleep_time, status_code=status_code), status_code)
+        data = {'sleep_time': sleep_time, 'status_code': status_code}
+        if os.getenv('CACHE_FLAG') == 'True':
+            r = connection_cache()
+            value = r.get("/status/{}".format(status_code))
+            if value:
+                app.logger.info("Hit /status/{}".format(status_code))
+                return make_response(jsonify(json.loads(value)), 200)
+            else:
+                app.logger.info("Miss Hit /status/{}".format(status_code))
+                r.set("/status/{}".format(status_code), json.dumps(data))
+                return make_response(jsonify(data), status_code)
+        else:
+            return make_response(jsonify(data), status_code)
     else:
         return make_response(jsonify(err="Not status code"), 400)
 
 @app.route('/<int:sleep_time>/<int:status_code>/query', methods=HTTP_METHODS)
 def index_query(sleep_time, status_code):
     if 100 <= status_code <= 599:
-        time.sleep(sleep_time)
-        query_params_dict = request.args.to_dict()
-        return make_response(jsonify(sleep_time=sleep_time, status_code=status_code, output=str(query_params_dict)), status_code)
+        data = {'sleep_time': sleep_time, 'status_code': status_code, 'output': str(query_params_dict)}
+        if os.getenv('CACHE_FLAG') == 'True':
+            r = connection_cache()
+            query_params_dict = request.args.to_dict()
+            value = r.get("{}/{}/query".format(sleep_time,status_code))
+            if value:
+                time.sleep(sleep_time)
+                app.logger.info("Hit /{}/{}/query".format(sleep_time,status_code))
+                return make_response(jsonify(json.loads(value)), 200)
+            else:
+                app.logger.info("Miss Hit /{}/{}/query".format(sleep_time,status_code))
+                r.set("{}/{}/query".format(sleep_time,status_code), json.dumps(data))
+                time.sleep(sleep_time)
+                return make_response(jsonify(data), status_code)
+        else:
+            time.sleep(sleep_time)
+            query_params_dict = request.args.to_dict()
+        return make_response(jsonify(data), status_code)
     else:
         return make_response(jsonify(err="Not status code"), 400)
 
 
 @app.route('/sleep/<int:sleep_time>/query', defaults={'status_code': 200}, methods=HTTP_METHODS)
 def only_sleep_time_query(sleep_time, status_code):
-    time.sleep(sleep_time)
-    query_params_dict = request.args.to_dict()
-    return make_response(jsonify(sleep_time=sleep_time, status_code=status_code, output=str(query_params_dict)), status_code)
+    data = {'sleep_time': sleep_time, 'status_code': status_code, 'output': str(query_params_dict)}
+    if os.getenv('CACHE_FLAG') == 'True':
+        r = connection_cache()
+        query_params_dict = request.args.to_dict()
+        value = r.get("sleep/{}/query".format(sleep_time))
+        if value:
+            time.sleep(sleep_time)
+            app.logger.info("Hit /sleep/{}/query".format(sleep_time))
+            return make_response(jsonify(json.loads(value)), 200)
+        else:
+            app.logger.info("Miss Hit /sleep/{}/query".format(sleep_time))
+            r.set("sleep/{}/query".format(sleep_time), json.dumps(data))
+            time.sleep(sleep_time)
+            return make_response(jsonify(data), status_code)
+    return make_response(jsonify(data), status_code)
 
 
 @app.route('/status/<int:status_code>/query', methods=HTTP_METHODS)
 def only_status_code_query(status_code, sleep_time=0):
+    data = {'sleep_time': sleep_time, 'status_code': status_code, 'output': str(query_params_dict)}
     if 100 <= status_code <= 599:
-        time.sleep(sleep_time)
-        query_params_dict = request.args.to_dict()
-        return make_response(jsonify(sleep_time=sleep_time, status_code=status_code, output=str(query_params_dict)), status_code)
+        if os.getenv('CACHE_FLAG') == 'True':
+            r = connection_cache()
+            query_params_dict = request.args.to_dict()
+            value = r.get("status/{}/query".format(status_code))
+            if value:
+                app.logger.info("Hit /status/{}/query".format(status_code))
+                return make_response(jsonify(json.loads(value)), 200)
+            else:
+                app.logger.info("Miss Hit /status/{}/query".format(status_code))
+                r.set("status/{}/query".format(status_code), json.dumps(data))
+                time.sleep(sleep_time)
+                return make_response(jsonify(data), status_code)
     else:
         return make_response(jsonify(err="Not status code"), 400)
 
@@ -288,6 +393,7 @@ def custom_rule(path):
         if yaml_data["custom_rule"][i]["rule"]["path"] == path and yaml_data["custom_rule"][i]["rule"]["method"] == request.method:
             if response_body_pathx := yaml_data["custom_rule"][i]["rule"].get("response_body_path"):
                 try:
+                    # TODO: Corresponding Redis.
                     with open(response_body_pathx, "r") as response_body_file:
                         response_body = response_body_file.read()
                         if sleep_time := yaml_data["custom_rule"][i]["rule"].get("sleep_time"):
@@ -300,7 +406,7 @@ def custom_rule(path):
 
 @app.route('/favicon.ico')
 def favicon():
-    return '', 204  # 空のレスポンスで204 No Contentを返す
+    return '', 204
 
 @app.errorhandler(404)
 def page_not_found(e):

@@ -1,0 +1,13 @@
+# docker-compose
+version: '3.7'
+services:
+  redis:
+    image: redis:6.0.9
+    container_name: redis
+    ports:
+      - "16379:6379"
+  valkey:
+    image: valkey/valkey
+    container_name: valkey
+    ports:
+      - "26379:6379"
