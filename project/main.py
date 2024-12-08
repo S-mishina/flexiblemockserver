@@ -309,7 +309,10 @@ def max_memory(memory):
 
 @app.route('/<int:storage>/max-storage', methods=['GET'])
 def max_storage(storage):
-    with open(f'/tmp/{storage}MB', 'wb') as f:
+    if storage <= 0:
+        return make_response(jsonify(err="Invalid storage value"), 400)
+    file_path = os.path.join('/tmp', f'{storage}MB')
+    with open(file_path, 'wb') as f:
         f.write(bytearray(1024 * 1024 * storage))
     return jsonify({"message": f"{storage} MiB storage usage"}), 200
 
