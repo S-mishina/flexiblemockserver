@@ -59,4 +59,38 @@ CPU Usageが該当時間割り当てpodのmaxを超えていて、かつスロ�
 
 ### podで設定しているMemory(resource.limit)を超えたらどうなるのか？
 
-TBU
+podで設定しているCPU(resource.limit)がlimitを超えた時にはスロットリングが走ってアプリケーションに直接的な影響を与えることはなかったがmemoryがlimitを超えた時にどうなるかも記載する。
+
+今回も負荷をかけながら一定のタイミングでmemoryがlimitを超える処理をかけてみる。
+
+```
+> kubectl apply -k sample_manifest/kubernetes/locust/sample2/
+```
+
+上記のコマンドを実行して一定タイミングを超えた段階でCPUに高負荷を与える処理を走らせてみました。
+
+```
+root@flexiblemockserver-857d88469c-vtbzx:/# curl http://localhost:8080/1000/max-memory
+```
+
+実際にメトリクスをみると、
+
+![image](./image/5.png)
+
+負荷試験用のメトリクスでエラーが発生していることが分かる。
+
+![image](./image/6.png)
+
+リクエスト量も減っている。
+
+![image](./image/7.png)
+
+podの再起動も走っている。
+
+ここから分かるのは、CPUはlimitを超えてもpod自体に直接的な影響は出ないがメモリーはlimitを超えると再起動が走る。
+※今回memoryのメトリクスを表示していない理由は、Prometheusが巡回するタイミングでmax値が取れなかったため出していない。(逆に言うと、自前でk8sのメトリクスを取得する場合Prometheusの巡回タイミングも重要になる。)
+
+> [!NOTE]
+> ここまで検証してmemoryのlimitが超えた時の挙動を理解した上で知っておきたいこと。
+> * cpuが100%を超えてもpodは死なないが、memoryは100%を超えるとpodは再起動する。
+>   * したがって、memoryは余力を持った構成が必要
