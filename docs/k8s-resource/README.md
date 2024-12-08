@@ -10,6 +10,10 @@ TBU
 
 TBU
 
+### Storage
+
+TBU
+
 ## ハンズオン
 
 ### podで設定しているCPU(resource.limit)を超えたらどうなるのか？
@@ -94,3 +98,7 @@ podの再起動も走っている。
 > ここまで検証してmemoryのlimitが超えた時の挙動を理解した上で知っておきたいこと。
 > * cpuが100%を超えてもpodは死なないが、memoryは100%を超えるとpodは再起動する。
 >   * したがって、memoryは余力を持った構成が必要
+
+### podで設定しているstorage(resource.limit)を超えたらどうなるのか？
+
+TBU

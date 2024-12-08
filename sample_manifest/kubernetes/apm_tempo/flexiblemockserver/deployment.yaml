@@ -51,6 +51,7 @@ spec:
           limits:
             cpu: 1
             memory: "1Gi"
+            ephemeral-storage: "1Gi"
       volumes:
       - name: custom-rule
         configMap:
