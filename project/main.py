@@ -302,6 +302,11 @@ def max_cpu(duration,core):
     p.start()
     return jsonify({"message": f'{core}Core is used for {duration} seconds MAX'}), 202
 
+@app.route('/<int:memory>/max-memory', methods=['GET'])
+def max_memory(memory):
+    data = bytearray(1024 * 1024 * memory)
+    return jsonify({"message": f"{memory} MiB usage"}), 200
+
 
 @app.route('/<path:path>', methods=HTTP_METHODS)
 def custom_rule(path):
