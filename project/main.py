@@ -4,6 +4,8 @@ import time
 import yaml
 from flask import Flask, jsonify, make_response, Response, request
 from logging.config import dictConfig
+from multiprocessing import Process
+import math
 
 from opentelemetry import trace, metrics
 from opentelemetry.sdk.trace import TracerProvider
@@ -133,6 +135,23 @@ def check_open_telemetry():
             provider.add_span_processor(processor)
             trace.set_tracer_provider(provider)
             tracer = trace.get_tracer("my.tracer.name")
+
+def max_out_single_core(duration):
+    start_time = time.time()
+    while time.time() - start_time < duration:
+        math.sqrt(123456789) * math.sqrt(987654321)
+
+def multi_core_cpu_load(duration, core_count):
+    processes = []
+    for i in range(core_count):
+        p = Process(target=max_out_single_core, args=(duration,))
+        p.start()
+        processes.append(p)
+        print(f"Started process {i+1} to max out a core")
+
+    for p in processes:
+        p.join()
+    print("All processes completed")
 
 
 dictConfig({
@@ -274,6 +293,15 @@ def only_status_code_query(status_code, sleep_time=0):
         return make_response(jsonify(sleep_time=sleep_time, status_code=status_code, output=str(query_params_dict)), status_code)
     else:
         return make_response(jsonify(err="Not status code"), 400)
+
+@app.route('/<int:duration>/<int:core>/max-cpu', methods=['GET'])
+def max_cpu(duration,core):
+    duration = float(request.args.get('duration', duration))
+    core_count = int(request.args.get('cores', core))
+    p = Process(target=multi_core_cpu_load, args=(duration, core_count))
+    p.start()
+    return jsonify({"message": f'{core}Core is used for {duration} seconds MAX'}), 202
+
 
 @app.route('/<path:path>', methods=HTTP_METHODS)
 def custom_rule(path):
