@@ -311,7 +311,11 @@ def max_memory(memory):
 def max_storage(storage):
     if storage <= 0:
         return make_response(jsonify(err="Invalid storage value"), 400)
-    file_path = os.path.join('/tmp', f'{storage}MB')
+    base_path = '/tmp'
+    file_name = f'{storage}MB'
+    file_path = os.path.normpath(os.path.join(base_path, file_name))
+    if not file_path.startswith(base_path):
+        return make_response(jsonify(err="Invalid file path"), 400)
     with open(file_path, 'wb') as f:
         f.write(bytearray(1024 * 1024 * storage))
     return jsonify({"message": f"{storage} MiB storage usage"}), 200
