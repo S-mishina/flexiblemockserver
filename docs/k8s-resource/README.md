@@ -101,4 +101,32 @@ podの再起動も走っている。
 
 ### podで設定しているstorage(resource.limit)を超えたらどうなるのか？
 
-TBU
+ここまで、CPU、Memoryとlimitが超えた時にどうなるのかについて挙動を追ってきましたが、ここからはstorageを追っていきたいと思います。
+
+今回もある程度の負荷をかけながらその挙動を追っていきます。
+
+```
+> kubectl apply -k sample_manifest/kubernetes/locust/sample2/
+```
+
+上記のコマンドを実行して一定タイミングを超えた段階でstorageに高負荷を与える処理を走らせてみました。
+
+```
+root@flexiblemockserver-857d88469c-vtbzx:/# curl http://localhost:8080/1000/max-storage
+```
+
+![image](./image/8.png)
+![image](./image/9.png)
+![image](./image/10.png)
+
+今回もPrometheusの関係上storageレベルでは変化を体感することはできませんでしたが、podが再起動しました。
+
+storageもlimitを超えるとpodが再起動することがわかりました。
+
+> [!NOTE]
+> * storageもmemoryと同様にlimitを超えるとpodは再起動します。
+>  * storageにもlimitを設定する場合には、memory同様の設計をすることが重要です。
+> * storageのlimitもしっかりと設定しましょう。
+>   * storageのlimitを設定しないと、nodeのstorageを食い潰してしまうので、しっかりと設定しましょう。
+
+**※ 私の環境では、storageの使用率をpodやcontainer、namespace単位で見ることができなかったのでNode単位で見ています。**
