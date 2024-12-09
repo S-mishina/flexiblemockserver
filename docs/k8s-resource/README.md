@@ -4,15 +4,45 @@
 
 ### CPU
 
-TBU
+CPUリソースは、コンテナの処理速度やパフォーマンスに影響します。
+
+- **requests**: 最小限必要なCPU量。
+- **limits**: 最大許容CPU量。
+
+適切なCPUリソース設計により、Podのパフォーマンス劣化を防ぎます。
+
+#### 参考資料
+
+[assign-cpu-resource/](https://kubernetes.io/ja/docs/tasks/configure-pod-container/assign-cpu-resource/)
+[meaning-of-cpu](https://kubernetes.io/ja/docs/concepts/configuration/manage-resources-containers/?utm_source=chatgpt.com#meaning-of-cpu)
 
 ### Memory
 
-TBU
+メモリは、アプリケーションの安定動作に欠かせないリソースです。
+
+- **requests**: 最小限必要なメモリ量。
+- **limits**: 最大許容メモリ量。
+
+メモリ不足はPodの再起動を引き起こすため、余裕を持った設計が重要です。
+
+#### 参考資料
+
+[meaning-of-memory](https://kubernetes.io/ja/docs/concepts/configuration/manage-resources-containers/?utm_source=chatgpt.com#meaning-of-memory)
 
 ### Storage
 
-TBU
+### Storage
+
+エフェメラルストレージは、コンテナ内で一時的なデータ保存に使用します。
+
+- **requests**: 最小限必要なストレージ量。
+- **limits**: 最大許容ストレージ量。
+
+ストレージ不足はPodの再起動を引き起こすため、適切な設定が必要です。
+
+#### 参考資料
+
+[local-ephemeral-storage](https://kubernetes.io/ja/docs/concepts/configuration/manage-resources-containers/?utm_source=chatgpt.com#local-ephemeral-storage)
 
 ## ハンズオン
 
