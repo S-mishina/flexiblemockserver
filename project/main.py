@@ -300,8 +300,25 @@ def max_cpu(duration,core):
     core_count = int(request.args.get('cores', core))
     p = Process(target=multi_core_cpu_load, args=(duration, core_count))
     p.start()
-    return jsonify({"message": f'{core}Core is used for {duration} seconds MAX'}), 202
+    return jsonify({"message": f'{core}Core is used for {duration} seconds MAX'}), 200
 
+@app.route('/<int:memory>/max-memory', methods=['GET'])
+def max_memory(memory):
+    data = bytearray(1024 * 1024 * memory)
+    return jsonify({"message": f"{memory} MiB usage"}), 200
+
+@app.route('/<int:storage>/max-storage', methods=['GET'])
+def max_storage(storage):
+    if storage <= 0:
+        return make_response(jsonify(err="Invalid storage value"), 400)
+    base_path = '/tmp'
+    file_name = f'{storage}MB'
+    file_path = os.path.normpath(os.path.join(base_path, file_name))
+    if not file_path.startswith(base_path):
+        return make_response(jsonify(err="Invalid file path"), 400)
+    with open(file_path, 'wb') as f:
+        f.write(bytearray(1024 * 1024 * storage))
+    return jsonify({"message": f"{storage} MiB storage usage"}), 200
 
 @app.route('/<path:path>', methods=HTTP_METHODS)
 def custom_rule(path):
