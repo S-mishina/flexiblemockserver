@@ -11,7 +11,7 @@ spec:
     rollingUpdate:
       maxSurge: 25%
       maxUnavailable: 0
-  replicas: 4
+  replicas: 1
   selector:
     matchLabels:
       app: flexiblemockserver
@@ -47,6 +47,11 @@ spec:
           mountPath: /config
         - name: response
           mountPath: /config/json
+        resources:
+          limits:
+            cpu: 1
+            memory: "1Gi"
+            ephemeral-storage: "1Gi"
       volumes:
       - name: custom-rule
         configMap:

@@ -21,7 +21,6 @@ spec:
         app: flexiblemockserver
         istio-injection: enabled
         test: "test4"
-
     spec:
       containers:
       - name: flexiblemockserver
