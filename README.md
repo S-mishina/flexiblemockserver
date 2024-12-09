@@ -2,6 +2,8 @@
 
 This document will give you the knowledge you need to operate your application with Kubernetes.
 
+This document allows embedded SREs to follow the points they need to be aware of when running applications on Kubernetes.
+
 ## Usage
 
 ### How to Install
