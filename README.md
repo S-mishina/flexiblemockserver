@@ -1,24 +1,26 @@
 # introduction
 
-This is a mock server used to verify the operation of service mesh tools. Service mesh tools refer to Istio, Linkerd, and Kuma.
+This document will give you the knowledge you need to operate your application with Kubernetes.
+
+This document allows embedded SREs to follow the points they need to be aware of when running applications on Kubernetes.
 
 ## Usage
 
-* Clsuter build and pure mockserver install
-  * [Usage README](./sample_manifest/README.md)
-    * Please click here to see the install for clusters.
-Click here to use Open Telemetry
+### How to Install
 
-* OpenTelemetry + ServiceMesh
-  * progressive delivery DEMO
-    * flagger
-      * [Usage README](./docs/flagger/README.md)
-  * Service Mesh
-    * istio DEMO
-      * [Usage README](./docs/istio/README.md)
+[Usage README](./sample_manifest/README.md)
+
+### Verification and learning of each component
+
+| item | link |
+|------|------|
+| service mesh | [Usage README](./docs/istio/README.md) |
+| progressive delivery | [Usage README](./docs/flagger/README.md) |
+| resource design with kubernetes | [Usage README](./docs/k8s-resource//README.md) |
 
 > [!NOTE]
 > When checking the operation of OpenTelemetry + ServiceMesh, it is recommended to start with progressive delivery.
+> The document is written in Japanese.
 
 ## Example
 
