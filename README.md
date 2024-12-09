@@ -1,6 +1,6 @@
 # introduction
 
-This is a mock server used to verify the operation of service mesh tools. Service mesh tools refer to Istio, Linkerd, and Kuma.
+This document will give you the knowledge you need to operate your application with Kubernetes.
 
 ## Usage
 
