@@ -14,6 +14,7 @@ CPUリソースは、コンテナの処理速度やパフォーマンスに影�
 #### 参考資料
 
 [assign-cpu-resource/](https://kubernetes.io/ja/docs/tasks/configure-pod-container/assign-cpu-resource/)
+
 [meaning-of-cpu](https://kubernetes.io/ja/docs/concepts/configuration/manage-resources-containers/?utm_source=chatgpt.com#meaning-of-cpu)
 
 ### Memory
