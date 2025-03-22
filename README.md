@@ -4,24 +4,6 @@ This document will give you the knowledge you need to operate your application w
 
 This document allows embedded SREs to follow the points they need to be aware of when running applications on Kubernetes.
 
-## Usage
-
-### How to Install
-
-[Usage README](./sample_manifest/README.md)
-
-### Verification and learning of each component
-
-| item | link |
-|------|------|
-| service mesh | [Usage README](./docs/istio/README.md) |
-| progressive delivery | [Usage README](./docs/flagger/README.md) |
-| resource design with kubernetes | [Usage README](./docs/k8s-resource//README.md) |
-
-> [!NOTE]
-> When checking the operation of OpenTelemetry + ServiceMesh, it is recommended to start with progressive delivery.
-> The document is written in Japanese.
-
 ## Example
 
 Here are the environment variables for changing the port and endpoint of a Flask application:
@@ -218,3 +200,23 @@ custom_rule:
 ```terminal:
 docker run -p 8080:8080 -e CUSTOM_RULE_YAML_FILE=/config/custom_rule.yaml ghcr.io/s-mishina/flexiblemockserver:latest
 ```
+
+## Sandbox
+
+This session will provide a way to validate various cloud native tools using flexiblemockserver.
+
+### How to Install for Sandbox
+
+[Usage README](./sample_manifest/README.md)
+
+### Verification and learning of each component
+
+| item | link |
+|------|------|
+| service mesh | [Usage README](./docs/istio/README.md) |
+| progressive delivery | [Usage README](./docs/flagger/README.md) |
+| resource design with kubernetes | [Usage README](./docs/k8s-resource//README.md) |
+
+> [!NOTE]
+> When checking the operation of OpenTelemetry + ServiceMesh, it is recommended to start with progressive delivery.
+> The document is written in Japanese.
