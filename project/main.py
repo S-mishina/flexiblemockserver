@@ -42,6 +42,9 @@ def get_open_telemetry_flg():
 def get_debug_flg():
     return os.getenv('DEBUG_FLG', 'False')
 
+# def check_get_db_health():
+
+
 def get_file_check(yaml_file,log_flag):
     if not os.path.exists(yaml_file):
         if log_flag==True:
@@ -203,21 +206,48 @@ schema = {
                             "path": {"type": "string"},
                             "method": {"type": "string"},
                             "sleep_time": {"type": "integer", "minimum": 0},
-                            "status_code": {"type": "integer", "minimum": 100, "maximum": 599},
+                            "status_code": {
+                                "type": "integer",
+                                "minimum": 100,
+                                "maximum": 599,
+                            },
                             "response_body_path": {"type": "string"},
-                            "response_header": {"type": "string"}
+                            "response_header": {"type": "string"},
                         },
                         "required": ["path", "method", "status_code"],
-                        "additionalProperties": False
-                    }
+                        "additionalProperties": False,
+                    },
                 },
                 "required": ["name", "rule"],
-                "additionalProperties": False
-            }
-        }
+                "additionalProperties": False,
+            },
+        },
+        "health_check": {
+            "type": "array",
+            "items": {
+                "type": "object",
+                "properties": {
+                    "name": {"type": "string"},
+                    "data_source": {"type": "string", "enum": ["mysql"]},
+                    "endpoint": {
+                        "type": "object",
+                        "properties": {
+                            "type": {"type": "string", "enum": ["literal", "env"]},
+                            "value": {"type": "string"},
+                        },
+                        "required": ["type", "value"],
+                        "additionalProperties": False,
+                    },
+                    "id": {"type": "string"},
+                    "pass": {"type": "string"},
+                },
+                "required": ["name", "data_source", "endpoint"],
+                "additionalProperties": False,
+            },
+        },
     },
     "required": ["custom_rule"],
-    "additionalProperties": False
+    "additionalProperties": False,
 }
 
 
@@ -342,6 +372,10 @@ def custom_rule(path):
                     app.logger.info(e)
                     return make_response(jsonify(status=500), 500)
     return make_response(jsonify(status=500), 500)
+
+@app.route("health", methods="GET")
+def health():
+    return make_response(jsonify(status="ok"), 200)
 
 @app.route('/favicon.ico')
 def favicon():
