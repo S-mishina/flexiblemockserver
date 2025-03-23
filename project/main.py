@@ -156,6 +156,14 @@ def multi_core_cpu_load(duration, core_count):
         p.join()
     print("All processes completed")
 
+def mysql_health():
+    pass
+
+def postgres_health():
+    pass
+
+def redis_health():
+    pass
 
 dictConfig({
     'version': 1,
@@ -199,52 +207,71 @@ schema = {
             "items": {
                 "type": "object",
                 "properties": {
-                    "name": {"type": "string"},
+                    "name": { "type": "string" },
                     "rule": {
                         "type": "object",
                         "properties": {
-                            "path": {"type": "string"},
-                            "method": {"type": "string"},
-                            "sleep_time": {"type": "integer", "minimum": 0},
+                            "path": { "type": "string" },
+                            "method": { "type": "string" },
+                            "sleep_time": { "type": "integer", "minimum": 0 },
                             "status_code": {
                                 "type": "integer",
                                 "minimum": 100,
                                 "maximum": 599,
                             },
-                            "response_body_path": {"type": "string"},
-                            "response_header": {"type": "string"},
+                            "response_body_path": { "type": "string" },
+                            "response_header": {
+                                "type": "object",
+                                "additionalProperties": { "type": "string" }
+                            }
                         },
                         "required": ["path", "method", "status_code"],
                         "additionalProperties": False,
-                    },
+                    }
                 },
                 "required": ["name", "rule"],
                 "additionalProperties": False,
-            },
+            }
         },
         "health_check": {
             "type": "array",
             "items": {
                 "type": "object",
                 "properties": {
-                    "name": {"type": "string"},
-                    "data_source": {"type": "string", "enum": ["mysql"]},
+                    "name": { "type": "string" },
+                    "data_source": { "type": "string", "enum": ["mysql", "postgres", "redis"] },
                     "endpoint": {
                         "type": "object",
                         "properties": {
-                            "type": {"type": "string", "enum": ["literal", "env"]},
-                            "value": {"type": "string"},
+                            "type": { "type": "string", "enum": ["literal", "env"] },
+                            "value": { "type": "string" }
                         },
                         "required": ["type", "value"],
                         "additionalProperties": False,
                     },
-                    "id": {"type": "string"},
-                    "pass": {"type": "string"},
+                    "id": {
+                        "type": "object",
+                        "properties": {
+                            "type": { "type": "string", "enum": ["literal", "env"] },
+                            "value": { "type": "string" }
+                        },
+                        "required": ["type", "value"],
+                        "additionalProperties": False,
+                    },
+                    "pass": {
+                        "type": "object",
+                        "properties": {
+                            "type": { "type": "string", "enum": ["literal", "env"] },
+                            "value": { "type": "string" }
+                        },
+                        "required": ["type", "value"],
+                        "additionalProperties": False,
+                    }
                 },
                 "required": ["name", "data_source", "endpoint"],
                 "additionalProperties": False,
-            },
-        },
+            }
+        }
     },
     "required": ["custom_rule"],
     "additionalProperties": False,
