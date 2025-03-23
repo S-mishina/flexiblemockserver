@@ -4,3 +4,4 @@ config/*
 config/json/*
 .vscode/
 .DS_Store
+flexiblemockserver_env/*

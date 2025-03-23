@@ -32,6 +32,7 @@ from prometheus_client import start_http_server
 
 from opentelemetry.instrumentation.requests import RequestsInstrumentor
 
+import mysql.connector
 
 def get_yaml_file_path():
     return os.getenv('CUSTOM_RULE_YAML_FILE', 'config/custom_rule.yaml')
@@ -156,8 +157,25 @@ def multi_core_cpu_load(duration, core_count):
         p.join()
     print("All processes completed")
 
-def mysql_health():
-    pass
+def resolve_value(item):
+    return os.getenv(item["value"]) if item["type"] == "env" else item["value"]
+
+def mysql_health(endpoint, id, passward, port):
+    try:
+        cnx = mysql.connector.connect(
+            host=endpoint,
+            port=port,
+            user=id,
+            password=passward)
+        cur = cnx.cursor()
+        cur.execute("SELECT 1")
+        row = cur.fetchone()
+        app.logger.info("resource:{}".format(row))
+        cnx.close()
+        return True
+    except Exception as e:
+        app.logger.info("error:{}".format(e))
+        return False
 
 def postgres_health():
     pass
@@ -400,8 +418,23 @@ def custom_rule(path):
                     return make_response(jsonify(status=500), 500)
     return make_response(jsonify(status=500), 500)
 
-@app.route("health", methods="GET")
+@app.route("/health", methods=['GET'])
 def health():
+    yaml_file = get_yaml_file_path()
+    file_flag=get_file_check(yaml_file,False)
+    if file_flag==False:
+        return make_response(jsonify(status="ok"), 200)
+    with open(yaml_file, "r") as yaml_file:
+        yaml_data = yaml.safe_load(yaml_file)
+        mysql_checks = [check for check in yaml_data['health_check'] if check.get('data_source') == 'mysql']
+        if len(mysql_checks) > 0:
+            for mysql_len in range(len(mysql_checks)):
+                mysql_endpoint = resolve_value(mysql_checks[mysql_len]["endpoint"])
+                mysql_id = resolve_value(mysql_checks[mysql_len]["id"])
+                mysql_pass = resolve_value(mysql_checks[mysql_len]["pass"])
+                mysql_response=mysql_health(mysql_endpoint, mysql_id, mysql_pass, 3306)
+                if mysql_response==False:
+                    return make_response(jsonify(mysql_status="ng"), 500)
     return make_response(jsonify(status="ok"), 200)
 
 @app.route('/favicon.ico')
