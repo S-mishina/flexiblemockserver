@@ -32,6 +32,7 @@ from prometheus_client import start_http_server
 
 from opentelemetry.instrumentation.requests import RequestsInstrumentor
 
+import mysql.connector
 
 def get_yaml_file_path():
     return os.getenv('CUSTOM_RULE_YAML_FILE', 'config/custom_rule.yaml')
@@ -41,6 +42,9 @@ def get_open_telemetry_flg():
 
 def get_debug_flg():
     return os.getenv('DEBUG_FLG', 'False')
+
+# def check_get_db_health():
+
 
 def get_file_check(yaml_file,log_flag):
     if not os.path.exists(yaml_file):
@@ -153,6 +157,31 @@ def multi_core_cpu_load(duration, core_count):
         p.join()
     print("All processes completed")
 
+def resolve_value(item):
+    return os.getenv(item["value"]) if item["type"] == "env" else item["value"]
+
+def mysql_health(endpoint, id, passward, port):
+    try:
+        cnx = mysql.connector.connect(
+            host=endpoint,
+            port=port,
+            user=id,
+            password=passward)
+        cur = cnx.cursor()
+        cur.execute("SELECT 1")
+        row = cur.fetchone()
+        app.logger.info("resource:{}".format(row))
+        cnx.close()
+        return True
+    except Exception as e:
+        app.logger.info("error:{}".format(e))
+        return False
+
+def postgres_health():
+    pass
+
+def redis_health():
+    pass
 
 dictConfig({
     'version': 1,
@@ -196,28 +225,74 @@ schema = {
             "items": {
                 "type": "object",
                 "properties": {
-                    "name": {"type": "string"},
+                    "name": { "type": "string" },
                     "rule": {
                         "type": "object",
                         "properties": {
-                            "path": {"type": "string"},
-                            "method": {"type": "string"},
-                            "sleep_time": {"type": "integer", "minimum": 0},
-                            "status_code": {"type": "integer", "minimum": 100, "maximum": 599},
-                            "response_body_path": {"type": "string"},
-                            "response_header": {"type": "string"}
+                            "path": { "type": "string" },
+                            "method": { "type": "string" },
+                            "sleep_time": { "type": "integer", "minimum": 0 },
+                            "status_code": {
+                                "type": "integer",
+                                "minimum": 100,
+                                "maximum": 599,
+                            },
+                            "response_body_path": { "type": "string" },
+                            "response_header": {
+                                "type": "object",
+                                "additionalProperties": { "type": "string" }
+                            }
                         },
                         "required": ["path", "method", "status_code"],
-                        "additionalProperties": False
+                        "additionalProperties": False,
                     }
                 },
                 "required": ["name", "rule"],
-                "additionalProperties": False
+                "additionalProperties": False,
+            }
+        },
+        "health_check": {
+            "type": "array",
+            "items": {
+                "type": "object",
+                "properties": {
+                    "name": { "type": "string" },
+                    "data_source": { "type": "string", "enum": ["mysql", "postgres", "redis"] },
+                    "endpoint": {
+                        "type": "object",
+                        "properties": {
+                            "type": { "type": "string", "enum": ["literal", "env"] },
+                            "value": { "type": "string" }
+                        },
+                        "required": ["type", "value"],
+                        "additionalProperties": False,
+                    },
+                    "id": {
+                        "type": "object",
+                        "properties": {
+                            "type": { "type": "string", "enum": ["literal", "env"] },
+                            "value": { "type": "string" }
+                        },
+                        "required": ["type", "value"],
+                        "additionalProperties": False,
+                    },
+                    "pass": {
+                        "type": "object",
+                        "properties": {
+                            "type": { "type": "string", "enum": ["literal", "env"] },
+                            "value": { "type": "string" }
+                        },
+                        "required": ["type", "value"],
+                        "additionalProperties": False,
+                    }
+                },
+                "required": ["name", "data_source", "endpoint"],
+                "additionalProperties": False,
             }
         }
     },
     "required": ["custom_rule"],
-    "additionalProperties": False
+    "additionalProperties": False,
 }
 
 
@@ -342,6 +417,25 @@ def custom_rule(path):
                     app.logger.info(e)
                     return make_response(jsonify(status=500), 500)
     return make_response(jsonify(status=500), 500)
+
+@app.route("/health", methods=['GET'])
+def health():
+    yaml_file = get_yaml_file_path()
+    file_flag=get_file_check(yaml_file,False)
+    if file_flag==False:
+        return make_response(jsonify(status="ok"), 200)
+    with open(yaml_file, "r") as yaml_file:
+        yaml_data = yaml.safe_load(yaml_file)
+        mysql_checks = [check for check in yaml_data['health_check'] if check.get('data_source') == 'mysql']
+        if len(mysql_checks) > 0:
+            for mysql_len in range(len(mysql_checks)):
+                mysql_endpoint = resolve_value(mysql_checks[mysql_len]["endpoint"])
+                mysql_id = resolve_value(mysql_checks[mysql_len]["id"])
+                mysql_pass = resolve_value(mysql_checks[mysql_len]["pass"])
+                mysql_response=mysql_health(mysql_endpoint, mysql_id, mysql_pass, 3306)
+                if mysql_response==False:
+                    return make_response(jsonify(mysql_status="ng"), 500)
+    return make_response(jsonify(status="ok"), 200)
 
 @app.route('/favicon.ico')
 def favicon():
