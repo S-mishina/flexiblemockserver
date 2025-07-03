@@ -7,7 +7,7 @@ spec:
   mode: deployment
   podAnnotations:
     prometheus.io/scrape: 'true'
-    prometheus.io/port: '8888'
+    prometheus.io/port: '8889'
   image: otel/opentelemetry-collector-contrib:0.108.0
   args:
     feature-gates: "-component.UseLocalHostAsDefaultHost"
@@ -46,6 +46,9 @@ spec:
             default: "200"
           - name: k8s.deployment.name
     service:
+      telemetry:
+        metrics:
+          address: "0.0.0.0:8889"
       pipelines:
         traces:
           receivers: [otlp]
