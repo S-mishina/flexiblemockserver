@@ -8,19 +8,19 @@ on:
 
 jobs:
   test:
+    permissions:
+      contents: read
     uses: S-mishina/reusable-workflows/.github/workflows/python-test-pip.yml@main
     with:
       python-version: "3.12"
       test-command: "python -m unittest discover -s test -p '*.py'"
-    permissions:
-      contents: read
 
   deploy:
+    permissions:
+      contents: read
+      packages: write
     needs: test
     if: github.event.pull_request.merged == true
     uses: S-mishina/reusable-workflows/.github/workflows/docker-build-push.yml@main
     with:
       image-name: s-mishina/flexiblemockserver
-    permissions:
-      contents: read
-      packages: write
