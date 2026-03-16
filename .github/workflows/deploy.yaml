@@ -14,7 +14,6 @@ jobs:
     with:
       python-version: "3.12"
       test-command: "python -m unittest discover -s test -p '*.py'"
-
   deploy:
     permissions:
       contents: read
@@ -24,3 +23,6 @@ jobs:
     uses: S-mishina/reusable-workflows/.github/workflows/docker-build-push.yml@main
     with:
       image-name: s-mishina/flexiblemockserver
+    permissions:
+      contents: read
+      packages: write
